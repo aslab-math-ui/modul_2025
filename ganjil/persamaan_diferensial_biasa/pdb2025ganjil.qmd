@@ -5,7 +5,7 @@ toc: false
 format: html
 ---
 
-<a href="../../../../praktikum.qmd" class="btn btn-outline-primary mb-4">
+<a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum
 </a>
 

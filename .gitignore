@@ -1,0 +1,5 @@
+*.html
+*listing.json
+*.png
+*.svg
+*.quarto_ipynb

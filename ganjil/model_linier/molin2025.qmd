@@ -9,4 +9,4 @@ listing:
       - "title"
 ---
 
-Kembali ke [Praktikum](../../../../praktikum.qmd)
+Kembali ke [Praktikum](../../../../semuahalaman/praktikum.qmd)
