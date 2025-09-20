@@ -1,7 +1,7 @@
 ---
 title: "Review R dan Regresi Linier Sederhana"
 subtitle: "Simple Linear Regression"
-image: static\Plot regresi.png
+image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/plot_regresi.png
 description: "Offline di Departemen Matematika"
 date: 09/15/2025
 page-navigation: true
@@ -47,19 +47,19 @@ library(readr)
 
 1. Membuka Menu File pada RStudio
 
-![](static/File%20Menu.png)
+![](https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/file_menu.png)
 
 2. Memilih File / Data yang diinginkan
 
-![](static/File%20Name.png)
+![](https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/file_name.png)
 
 3. Memilih section `import dataset`
 
-![](static/File%20Section.png)
+![](https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/file_section.png)
 
 4. Megcopy File Path URL
 
-![](static/File%20URL.png)
+![](https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/file_url.png)
 
 setelah mendapatkan file url , selanjutnya akan dibaca menggunakan **<span style="color: #FF6F61;">read_csv</span>**
 (**<span style="color: #FF6F61;">`'file_url'`</span>**) , jangan lupa untuk mengubah file url sesuai file url yang didapatkan dari tahap mecari data. Selain itu jangan lupa untuk menambahkan tanda `' '` atau `" "` sebelum dan sesudah file url yang didapatkan. 
@@ -241,7 +241,7 @@ legend("bottomright",
        bty = "n")
 ```
 
-![](static/Plot%20regresi.png)
+![](https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/plot_regresi.png)
 
 ## Interval Kepercayaan dan Interval Prediksi 
 
