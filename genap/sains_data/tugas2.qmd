@@ -1,6 +1,6 @@
 ﻿---
 title: "Tugas 2 Praktikum Sains Data: Model Klasifikasi"
-image: static\svm.png
+image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/sains_data/static/svm.png
 description: "Deadline: Sabtu, 10 Mei 2025"
 date: 04/09/2025
 page-navigation: true
@@ -77,7 +77,7 @@ Kembali ke [Sains Data](./saindat2025genap.qmd)
 
 Diberikan dataset `insurance_claims.csv` yang berisi data pengajuan klaim asuransi kendaraan yang diajukan oleh para tertanggung (nasabah). Dataset dapat di-*download* pada tautan berikut:
 
-<a href="./insurance_claims.csv" class="btn">Download Dataset</a>
+<a href="https://raw.githubusercontent.com/aslab-math-ui/asset/main/sains_data/datasets/insurance_claims.csv" class="btn">Download Dataset</a>
 
 Dataset ini bertujuan untuk mengidentifikasi apakah suatu klaim merupakan fraud (penipuan) atau bukan, yang direpresentasikan oleh fitur target `fraud_reported`. Perhatikan, fitur ini memiliki dua kelas, yaitu "Y" dan "N", sehingga metode *machine learning* yang cocok untuk prediksi adalah metode klasifikasi biner. 
 

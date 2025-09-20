@@ -1,6 +1,6 @@
 ---
 title: "Tugas 3 Praktikum Sains Data: Klasifikasi Gambar"
-image: static\aggarwal_nndl_hal321.png
+image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/sains_data/static/aggarwal_nndl_hal321.png
 description: "Deadline: Sabtu, 8 Juni 2025"
 date: 05/25/2025
 page-navigation: true

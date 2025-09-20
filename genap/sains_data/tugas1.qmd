@@ -1,6 +1,6 @@
 ﻿---
 title: "Tugas 1 Praktikum Sains Data: Model Regresi"
-image: static\regresi.png
+image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/sains_data/static/regresi.png
 description: "Deadline: Sabtu, 10 Mei 2025"
 date: 04/09/2025
 page-navigation: true
@@ -77,7 +77,7 @@ Kembali ke [Sains Data](./saindat2025genap.qmd)
 
 Dataset yang digunakan adalah dataset harga properti rumah, `house_prices.csv`, yang bisa di-*download* dari tautan berikut:
 
-<a href="./house_prices.csv" class="btn">Download Dataset</a>
+<a href="https://raw.githubusercontent.com/aslab-math-ui/asset/main/sains_data/datasets/house_prices.csv" class="btn">Download Dataset</a>
 
 Di dataset ini, fitur target yang ingin diprediksi adalah harga properti rumah (`SalePrice`) dalam satuan dollar. Perhatikan, fitur ini berupa harga, sehingga metode *machine learning* yang cocok untuk prediksi adalah metode regresi. 
 
