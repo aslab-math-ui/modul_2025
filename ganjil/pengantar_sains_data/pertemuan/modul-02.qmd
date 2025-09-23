@@ -1,142 +1,218 @@
 ---
-title: "Modul 2: Excel"
-subtitle: "Table Creation, Pivot Table, dan Visualisasi"
-description: "Offline di Departemen Matematika"
+title: "Modul 2: Fondasi Analisis Data di Excel"
+subtitle: "Studi Kasus: Dari Data Mentah Menjadi Wawasan Awal"
 date: "today"
 author: "Tim Asisten Lab Matematika UI"
-image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1757568633/2024/psd/excel_pivot_viz.png"
-page-navigation: true
-format: html
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/coffee_shop_dashboard.png"
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
-<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
 </a>
 
 ## Tujuan Pembelajaran
 
 Setelah menyelesaikan modul ini, mahasiswa diharapkan mampu:
 
-* **1. Menyiapkan Data dengan Benar**
-    * Memahami pentingnya struktur data yang baik untuk analisis.
-    * Mengonversi rentang data mentah menjadi *Excel Table* yang dinamis dan terstruktur.
+#### **1. Memahami Konsep Fundamental dan Manipulasi Data**
 
-* **2. Meringkas Data Secara Cepat**
-    * Menjelaskan kegunaan *Pivot Table* untuk agregasi data.
-    * Membuat *Pivot Table* untuk menjawab pertanyaan bisnis sederhana (misalnya, total penjualan per kategori).
+* Mengidentifikasi dan membedakan tipe-tipe data fundamental di Excel, meliputi data **numerik**, **teks (*string*)**, dan **temporal** (tanggal/waktu).
+* Melakukan **Sort & Filter** pada *dataset* untuk mengurutkan dan menyaring informasi berdasarkan satu atau beberapa kriteria.
+* Membuat **kolom turunan (*Derived Data*)** menggunakan formula untuk menghasilkan informasi baru dari data yang ada (contoh: menghitung `Revenue` dari `quantity` dan `unit_price`).
+* Menerapkan **pemformatan bersyarat (*Conditional Formatting*)** untuk **menyorot (*highlight*)** sel atau baris data yang memenuhi kondisi tertentu (contoh: menandai penjualan di atas target).
 
-* **3. Membuat Visualisasi Data yang Tepat Guna**
-    * Membedakan kegunaan dari berbagai jenis *chart* dasar (Pie, Line, Bar, Scatter).
-    * Membuat berbagai jenis *chart* di Excel, termasuk *Pivot Chart* yang terhubung langsung dengan *Pivot Table*.
+#### **2. Menguasai Teknik Dasar Analitik Data**
+
+* Melakukan **agregasi data** menggunakan **analisis *Pivot Table*** untuk meringkas kumpulan data yang besar secara cepat.
+* **Mengelompokkan dan merangkum (*group & summarize*)** data di dalam *Pivot Table* untuk menjawab pertanyaan bisnis yang spesifik menggunakan *dataset* Coffee Shop.
+* **Mengonversi** tabel ringkasan data dari teks menjadi **visualisasi** (grafik) yang efektif dan mudah dipahami untuk mengomunikasikan temuan.
+
+#### **3. Mengenal Ekosistem dan Profesi Data**
+
+* Mendeskripsikan **sistem data** dengan menceritakan **alur hidup data** (*data lifecycle*)—dari bagaimana data dikumpulkan, disimpan, diproses, hingga dianalisis di Excel—sebagai **pondasi** untuk memahami alur kerja di *software* yang lebih canggih seperti Power BI.
+* Mendeskripsikan peran dan tujuan dari profesi data inti seperti **Data Analyst**, **Data Engineer**, dan **Database Administrator**, serta memahami bagaimana mereka berkolaborasi dengan profesi pendukung seperti **Data Scientist**, **Pengembang Aplikasi**, dan **Operator Infrastruktur**.
 
 ---
 
-## 1. Fondasi Analisis: Excel Table
+## Bagian 1: Konsep Fundamental dan Manipulasi Data
 
 Selamat datang di modul kedua! Kali ini kita akan fokus pada *software* yang mungkin sudah tidak asing lagi: Microsoft Excel. Sebelum kita bisa membuat grafik yang canggih atau ringkasan data yang kompleks, langkah pertama dan paling penting adalah memastikan data kita tersusun dengan baik. Di sinilah fitur **Excel Table** berperan.
+
+Hari ini, kita akan berperan sebagai seorang analis data untuk kedai kopi fiktif, "Maven Roasters". Tugas pertama kita berkenalan dengan "bahan mentah" kita, yaitu data transaksi mereka.
+
+Analisis yang baik selalu dimulai dari pemahaman data yang mendalam.
 
 :::{.callout-note}
 ### Apa itu Excel Table?
 Ini bukan sekadar memberi border pada sel. Menggunakan fitur "Format as Table" (Ctrl+T) akan mengubah rentang data statis Anda menjadi sebuah "objek" dinamis. Ini memberikan banyak keuntungan, seperti rentang data yang otomatis meluas saat ada data baru, pemfilteran yang mudah, dan formula yang lebih mudah dibaca.
 :::
 
-### 1.1. Kegunaan dan Manfaat Table
+:::{.callout-tip icon="true"}
+### Arena Eksperimen: Siapkan *Playground* Data Anda!
 
-* **Dinamis**: Jika Anda menambah baris data baru, semua formula dan *chart* yang terhubung ke *Table* ini akan otomatis ikut ter-update.
-* **Filter & Sortir**: Header kolom secara otomatis memiliki tombol *dropdown* untuk memfilter dan mengurutkan data.
-* **Total Row**: Anda bisa dengan mudah menambahkan baris total di bawah untuk menghitung `SUM`, `AVERAGE`, `COUNT`, dll., hanya dengan satu klik.
+Untuk mempraktikkan semua materi di modul ini, Anda akan membutuhkan *dataset* sebagai "arena bermain". Kami sangat merekomendasikan Anda untuk mengunduh *dataset* **Coffee Shop Sales** dari [Maven Analytics](https://mavenanalytics.io/data-playground).
 
-### 1.2. Cara Membuat Table
+*Dataset* ini bersih, mudah dipahami, dan memiliki semua komponen yang kita butuhkan untuk membuat *Table*, *Pivot Table*, dan berbagai macam visualisasi.
 
-Misalkan kita memiliki data penjualan sederhana seperti ini:
+<a href="https://mavenanalytics.io/data-playground/coffee-shop-sales" class="btn btn-primary" target="_blank" role="button">
+<i class="fa-solid fa-download"></i> Unduh Dataset Coffee Shop Sales
+</a>
 
-![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_raw_data.png)
+**Dataset Alternatif:**
 
-1.  **Klik di mana saja** di dalam rentang data Anda.
-2.  Pergi ke *tab* **Insert**, lalu klik **Table**. Alternatifnya, cukup tekan `Ctrl` + `T`.
-3.  Pastikan Excel sudah benar menebak rentang data Anda dan centang "My table has headers". Klik OK.
+- **[Financial Sample (Microsoft)](https://go.microsoft.com/fwlink/?LinkID=521962)**: *Dataset* penjualan fiktif yang sangat rapi, langsung dari Microsoft.
+- **[Data.world](https://data.world/datasets/csv)**: Perpustakaan data raksasa jika Anda ingin mencari data tentang topik lain (film, musik, game, dll.) untuk bereksperimen sendiri.
+:::
 
-Selesai! Data Anda sekarang sudah menjadi *Table* resmi, ditandai dengan perubahan warna dan munculnya *tab* "Table Design".
+### 1.1. Pengenalan Tipe Data
 
-![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_formatted_table.png)
+Setiap kolom dalam *dataset* kita menyimpan jenis informasi yang berbeda. Di Excel (dan di dunia data secara umum), ada tiga tipe data utama yang perlu kita kenali:
+
+* **Teks (*String*)**: Semua data yang berupa huruf atau kombinasi huruf dan angka. Tipe ini tidak bisa dihitung secara matematis.
+    * **Contoh di data kita**: `store_location`, `product_category`, `product_type`, `product_detail`.
+
+* **Numerik (*Numeric*)**: Semua data yang berupa angka dan bisa dihitung (dijumlah, dirata-rata, dll.).
+    * **Contoh di data kita**: `unit_price`, `transaction_qty`.
+
+* **Temporal** (Tanggal/Waktu): Data yang merepresentasikan waktu. Excel cukup pintar untuk mengenali ini dan memungkinkan kita melakukan analisis berbasis waktu.
+    * **Contoh di data kita**: `transaction_date`, `transaction_time`.
+
+### 1.2. Sort & Filter Data
+
+Ini adalah dua keterampilan paling dasar namun paling sering digunakan. *Sort* (mengurutkan) membantu kita melihat nilai ekstrem (tertinggi/terendah), sementara *Filter* membantu kita fokus pada data yang spesifik.
+
+**Misi**: Manajer ingin tahu, "Tunjukkan 5 transaksi dengan kuantitas (`transaction_qty`) penjualan tertinggi di lokasi *Lower Manhattan*."
+
+1.  **Ubah menjadi *Table***: Klik di mana saja pada data, lalu tekan `Ctrl + T`. Pastikan "My table has headers" tercentang, lalu klik **OK**. Header Anda sekarang memiliki tombol *dropdown*.
+
+    :::{.callout-note collapse="true"}
+    ### Kegunaan dan Manfaat Table
+
+    * **Dinamis**: Jika Anda menambah baris data baru, semua formula dan *chart* yang terhubung ke *Table* ini akan otomatis ikut ter-update.
+    * **Filter & Sortir**: Header kolom secara otomatis memiliki tombol *dropdown* untuk memfilter dan mengurutkan data.
+    * **Total Row**: Anda bisa dengan mudah menambahkan baris total di bawah untuk menghitung `SUM`, `AVERAGE`, `COUNT`, dll., hanya dengan satu klik.
+    :::
+
+2.  **Filter Lokasi**: Klik *dropdown* di *header* `store_location`. Hilangkan centang pada "(Select All)", lalu beri centang hanya pada **"Lower Manhattan"**. Tabel Anda sekarang hanya akan menampilkan data dari lokasi tersebut.
+    
+3.  **Sortir Kuantitas**: Klik *dropdown* di *header* `transaction_qty`, lalu pilih **"Sort Largest to Smallest"**.
+
+**Hasil**: Anda akan langsung melihat transaksi dengan kuantitas penjualan tertinggi di bagian atas. Misi selesai!
+
+### 1.3. *Derived Data* (Membuat Informasi Baru)
+
+Terkadang, data yang kita butuhkan belum ada di *dataset*. Kita harus membuatnya dari kolom yang sudah ada. Ini disebut *derived data* atau data turunan.
+
+**Misi**: Kita perlu tahu berapa total pendapatan (*revenue*) dari setiap transaksi.
+
+1.  **Buat Kolom Baru**: Pergi ke kolom kosong pertama di sebelah kanan *Table* Anda (kolom **L**). Ketik `Revenue` sebagai nama *header* dan tekan Enter. *Excel Table* akan otomatis memperluas dirinya.
+2.  **Masukkan Formula**: Di sel pertama di bawah *header* `Revenue` (sel `L2`), ketik formula untuk mengalikan kuantitas dengan harga:
+    `=[@transaction_qty]*[@unit_price]`
+3.  Tekan **Enter**. Formula ini akan otomatis disalin ke semua baris di bawahnya.
+
+Anda baru saja "merekayasa" sebuah fitur baru yang sangat penting untuk analisis keuntungan.
+
+### 1.4. *Highlight* Data (Conditional Formatting)
+
+Bagaimana cara cepat melihat transaksi mana yang paling berharga tanpa harus menyortirnya? Kita bisa "mewarnai" sel secara otomatis berdasarkan nilainya.
+
+**Misi**: Tandai semua transaksi dengan `Revenue` di atas $6 agar mudah terlihat.
+
+1.  **Pilih Kolom**: Klik *header* kolom `Revenue` untuk memilih seluruh datanya.
+2.  **Buka Conditional Formatting**: Pergi ke *tab* **Home**, klik **Conditional Formatting**.
+3.  **Pilih Aturan**: Pilih **Highlight Cells Rules** > **Greater Than...**.
+    
+4.  **Atur Kondisi**: Di kotak yang muncul, masukkan `6`. Di sebelah kanan, pilih format pewarnaan yang Anda suka (misalnya, "Green Fill with Dark Green Text"). Klik **OK**.
+
+**Hasil**: Sekarang, semua transaksi dengan pendapatan di atas $6 akan otomatis menyala hijau, memberikan Anda wawasan instan hanya dengan melihat sekilas.
 
 ---
 
-## 2. Meringkas Data: Pivot Table
+## Bagian 2: Menguasai Teknik Dasar Analitik Data
 
-Setelah data kita rapi dalam sebuah *Table*, kita bisa mulai menganalisisnya. *Pivot Table* adalah alat paling ampuh di Excel untuk meringkas ribuan baris data menjadi tabel ringkasan yang informatif dalam hitungan detik.
+Anda sudah berhasil merapikan dan memperkaya data mentah. Sekarang, saatnya kita menambang "emas" dari data tersebut. Di bagian ini, kita akan menjawab pertanyaan-pertanyaan dari manajer "Maven Roasters" menggunakan alat analisis paling ampuh di Excel: **Pivot Table**.
 
-### 2.1. Cara Membuat Pivot Table
+### 2.1. Agregasi Data dengan Pivot Table
 
-1.  **Klik di mana saja** di dalam *Table* yang sudah kita buat.
-2.  Pergi ke *tab* **Insert**, lalu klik **PivotTable**.
-3.  Di jendela yang muncul, Excel biasanya sudah benar memilih *Table* Anda dan akan menempatkan *Pivot Table* di lembar kerja (*worksheet*) baru. Cukup klik **OK**.
+*Pivot Table* memungkinkan kita untuk mengambil ribuan baris data transaksi dan meringkasnya menjadi tabel yang informatif dalam hitungan detik.
 
-Anda akan melihat area *Pivot Table* kosong di sebelah kiri dan panel "PivotTable Fields" di sebelah kanan. Panel inilah "ruang kendali" kita.
+**Misi**: Manajer ingin tahu, "Kategori produk mana yang paling menguntungkan?"
 
-![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_pivot_fields.png)
+1.  **Buat Pivot Table**: Klik di mana saja di dalam *Excel Table* Anda, lalu pergi ke *tab* **Insert** > **PivotTable**, dan klik **OK**.
+2.  **Susun Laporan**: Di panel "PivotTable Fields" yang muncul di sebelah kanan, seret (*drag*) *field* berikut:
+    * Seret **`product_category`** ke area **Rows**.
+    * Seret **`Revenue`** (kolom yang kita buat di Bagian 1) ke area **Values**.
 
-### 2.2. Contoh Penggunaan
+**Hasil**: Secara instan, Anda akan melihat tabel ringkasan total pendapatan untuk setiap kategori. Untuk membuatnya lebih mudah dibaca, klik kanan pada salah satu angka di kolom "Sum of Revenue", pilih "Number Format...", lalu pilih "Currency".
 
-**Pertanyaan**: "Berapa total penjualan (dalam Rupiah) untuk setiap Kategori Produk?"
+<!-- ![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_coffee_pivot.png) -->
 
-1.  Dari daftar *field*, seret (*drag*) **Kategori** ke area **Rows**.
-2.  Kita perlu membuat kolom total penjualan. Seret **Jumlah** dan **Harga Satuan** ke area **Values**.
-3.  Secara *default*, Excel akan menampilkan "Sum of Jumlah" dan "Sum of Harga Satuan". Ini belum benar. Kita perlu mengalikan keduanya.
-4.  Di *tab* "PivotTable Analyze", klik "Fields, Items, & Sets" > "Calculated Field".
-5.  Beri nama *field* baru, misalnya `Total Penjualan`, dan masukkan formula `=Jumlah* 'Harga Satuan'`. Klik OK.
-6.  Hapus *field* "Sum of Jumlah" dan "Sum of Harga Satuan" dari area Values.
+### 2.2. Mengelompokkan dan Merangkum Data
 
-Hasilnya, Anda akan mendapatkan ringkasan total penjualan per kategori secara instan!
+*Pivot Table* juga sangat pintar dalam mengelompokkan data, terutama data tanggal.
 
-![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_pivot_result.png)
+**Misi**: Manajer bertanya, "Bagaimana tren penjualan kita dari waktu ke waktu?"
+
+1.  **Buat Pivot Table Baru**: Buat *Pivot Table* kedua di lembar kerja baru.
+2.  **Susun Laporan Berbasis Waktu**:
+    * Seret **`transaction_date`** ke area **Rows**. Excel secara otomatis akan mengelompokkannya menjadi `Years`, `Quarters`, dan `Months`.
+    * Seret **`Revenue`** ke area **Values**.
+
+**Hasil**: Anda kini memiliki ringkasan pendapatan per bulan dan tahun, siap untuk divisualisasikan menjadi grafik tren.
+
+### 2.3. Mengonversi Data Menjadi Visualisasi (Pivot Chart)
+
+Cara terbaik untuk menyajikan temuan kita kepada manajer adalah melalui grafik. **Pivot Chart** adalah grafik yang terhubung langsung ke *Pivot Table* Anda, membuatnya interaktif.
+
+**Misi**: Buatlah sebuah *Bar Chart* untuk menunjukkan perbandingan pendapatan antar kategori produk.
+
+1.  Klik di mana saja di dalam *Pivot Table* pertama yang Anda buat (pendapatan per kategori).
+2.  Pergi ke *tab* **PivotTable Analyze**.
+3.  Klik **PivotChart**.
+4.  Pilih **Bar** atau **Column**, lalu klik **OK**.
+
+**Hasil**: Anda akan mendapatkan sebuah *chart* yang secara visual merepresentasikan tabel ringkasan Anda. Jika Anda memfilter *Pivot Table* (misalnya, hanya untuk satu lokasi toko), *chart* tersebut akan otomatis ikut berubah.
+
+<!-- ![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_coffee_pivotchart.png) -->
 
 ---
 
-## 3. Macam-Macam Chart dan Penggunaannya
+## Bagian 3: Mengenal Ekosistem dan Profesi Data
 
-Data yang sudah diringkas akan lebih mudah dipahami jika disajikan dalam bentuk visual. Mari kita pelajari beberapa jenis *chart* dasar dan kapan waktu yang tepat untuk menggunakannya.
+Setelah melakukan analisis langsung, mari kita mundur sejenak untuk melihat gambaran besarnya. Di mana posisi analisis Excel ini dalam dunia data yang lebih luas?
 
-### 3.1. Pie Chart (Diagram Pai)
-* **Kegunaan**: Menunjukkan **proporsi** atau persentase dari sebuah keseluruhan. Terbaik jika hanya memiliki 2-5 kategori.
-* **Contoh**: "Berapa persen kontribusi penjualan setiap kategori terhadap total penjualan?"
-* **Cara Membuat**: Pilih data ringkasan Anda (misalnya, Kategori dan Total Penjualan dari *Pivot Table*), lalu pergi ke *tab* **Insert** > **Pie Chart**.
+### 3.1. Alur Hidup Data (Fondasi untuk Power BI)
 
-### 3.2. Line Chart (Grafik Garis)
-* **Kegunaan**: Menampilkan **tren data dari waktu ke waktu**. Sangat baik untuk melihat naik-turunnya suatu nilai.
-* **Contoh**: "Bagaimana tren penjualan harian selama sebulan terakhir?"
-* **Cara Membuat**: Siapkan data dengan satu kolom berisi tanggal dan kolom lain berisi nilai (misalnya, Total Penjualan). Pilih kedua kolom tersebut, lalu **Insert** > **Line Chart**.
+Pekerjaan yang baru saja kita lakukan adalah bagian dari sebuah siklus yang lebih besar yang disebut **alur hidup data (*data lifecycle*)**. Memahaminya akan membantu Anda mengerti mengapa ada begitu banyak alat dan profesi yang berbeda di dunia data.
 
-### 3.3. Bar Chart (Diagram Batang)
-* **Kegunaan**: **Membandingkan nilai** antar kategori yang berbeda. Ini adalah salah satu *chart* yang paling umum dan mudah dibaca.
-* **Contoh**: "Produk mana yang penjualannya paling tinggi?"
-* **Cara Membuat**: Pilih data kategori (misalnya, Produk) dan nilainya (misalnya, Total Penjualan), lalu **Insert** > **Bar Chart**.
+Secara sederhana, alurnya seperti ini:
 
-### 3.4. Stacked Bar Chart (Diagram Batang Tumpuk)
-* **Kegunaan**: Mirip dengan *Bar Chart*, tetapi juga menunjukkan **komposisi** dari setiap batang.
-* **Contoh**: "Membandingkan total penjualan antar bulan, sambil melihat kontribusi setiap kategori produk di setiap bulannya."
+1.  **Pengumpulan (*Collection*)**: Data dicatat. Di kasus kita, setiap transaksi di kasir "Maven Roasters" adalah titik pengumpulan data.
+2.  **Penyimpanan (*Storage*)**: Data mentah ini disimpan di suatu tempat, biasanya *database*.
+3.  **Pemrosesan (*Processing*)**: Data dibersihkan dan ditransformasi. Ini yang kita lakukan saat membuat *Excel Table* dan kolom `Revenue`.
+4.  **Analisis (*Analysis*)**: Kita mencari pola dan wawasan. Inilah yang kita lakukan dengan *Pivot Table*.
+5.  **Presentasi (*Presentation*)**: Temuan dikomunikasikan kepada pengambil keputusan. Inilah gunanya *Pivot Chart* dan *dashboard*.
 
-### 3.5. Scatter Plot (Diagram Pencar)
-* **Kegunaan**: Menunjukkan **hubungan atau korelasi** antara dua variabel numerik.
-* **Contoh**: "Apakah ada hubungan antara jumlah barang yang terjual dengan harga satuannya?"
+Excel sangat hebat untuk langkah 3, 4, dan 5 dalam skala kecil. Namun, jika data kita jutaan baris dan perlu di-update otomatis setiap hari, kita butuh alat yang lebih kuat. Itulah peran **Power BI**, yang akan menyatukan semua langkah ini ke dalam *dashboard* otomatis yang canggih.
 
-### 3.6. People Graph
-* **Kegunaan**: Ini adalah *chart* infografis yang lebih bersifat **ilustratif** daripada analitis. Berguna untuk presentasi agar lebih menarik.
-* **Cara Membuat**: Ini adalah *Add-in*. Pergi ke *tab* **Insert** > **Add-ins** > **Get Add-ins**, lalu cari "People Graph". Setelah ditambahkan, Anda bisa memasukkannya ke lembar kerja Anda.
+### 3.2. Peran dan Profesi di Dunia Data
 
-### 3.7. Pivot Chart
-* **Kegunaan**: Ini adalah *chart* yang **terhubung langsung** ke *Pivot Table* Anda. Keunggulan utamanya adalah sifatnya yang **dinamis**. Jika Anda memfilter data di *Pivot Table*, *Pivot Chart* akan otomatis ikut berubah.
-* **Cara Membuat**: Klik di mana saja di dalam *Pivot Table* Anda. Pergi ke *tab* **PivotTable Analyze**, lalu klik **PivotChart**. Pilih jenis *chart* yang Anda inginkan.
+Tim data di sebuah perusahaan mirip seperti kru film; setiap orang punya peran spesialisnya. Analisis yang kita lakukan adalah pekerjaan seorang **Data Analyst**.
 
-![](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto/v1/2024/psd/excel_pivot_chart.png)
+* **Data Analyst (Analis Data)**: Inilah peran kita dalam studi kasus ini. Tugasnya adalah mengambil data yang sudah ada, menganalisisnya, dan mengubahnya menjadi wawasan bisnis yang bisa dimengerti. *Output* utamanya adalah laporan dan *dashboard*.
 
-### Latihan
-1.  Gunakan data penjualan yang ada, buatlah sebuah *Pivot Table* baru untuk menjawab pertanyaan: "Produk mana yang paling banyak terjual (berdasarkan jumlah unit)?"
-2.  Dari *Pivot Table* tersebut, buatlah sebuah **Pivot Chart** dalam bentuk **Bar Chart** untuk memvisualisasikan hasilnya.
-3.  Buatlah **Pie Chart** untuk menunjukkan persentase total penjualan (dalam Rupiah) dari setiap kategori produk.
+Mereka bekerja sama dengan banyak peran lain:
+
+* **Data Engineer (Insinyur Data)**: "Kontraktor" data. Mereka membangun dan memelihara "pipa-pipa" yang mengalirkan data dari sumbernya (seperti mesin kasir) ke tempat penyimpanan (database).
+* **Database Administrator (Admin Database)**: "Penjaga gudang" data. Mereka memastikan *database* tempat data disimpan aman, terorganisir, dan berjalan efisien.
+* **Data Scientist (Ilmuwan Data)**: Fokus pada masa depan. Mereka menggunakan statistika dan *machine learning* untuk membuat model prediksi, seperti "memprediksi penjualan bulan depan".
+* **Pengembang Aplikasi (*Developer*)**: Membangun aplikasi yang digunakan sehari-hari (misalnya, aplikasi kasir yang mencatat data penjualan).
+* **Operator Infrastruktur**: Mengelola server dan *hardware* (baik fisik maupun *cloud*) tempat semua sistem ini berjalan.
+
+Memahami ekosistem ini membantu Anda melihat bahwa analisis data adalah sebuah kerja sama tim yang besar.
 
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
-<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum 2025
+<i class="fa-solid fa/arrow-left"></i> Kembali ke Arsip Praktikum PSD
 </a>
