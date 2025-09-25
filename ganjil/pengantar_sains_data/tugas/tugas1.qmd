@@ -5,6 +5,10 @@ date: 2025-09-26
 author: "Tim Asisten Lab Matematika UI"
 ---
 
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
+</a>
+
 :::{.justify}
 Selamat! Akhirnya Anda telah sampai di penghujung pembelajaran. Anda telah mempelajari banyak hal.
 Baca informasi di bawah ini untuk memahami instruksi dari tugas PSD.
@@ -188,3 +192,7 @@ Kami memiliki hak mutlak untuk mengenakan sanksi kepada peserta plagiat.
 Anda **diperbolehkan dan didorong** untuk mempublikasikan proyek ini ke platform publik seperti LinkedIn, GitHub, atau portofolio pribadi Anda. Pihak Lab tidak akan mengambil hak cipta apapun atas karya Anda. Dibebaskan juga jika ingin menautkan pihak Lab maupun perorangan asisten.
 
 :::
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
+</a>
