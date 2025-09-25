@@ -20,7 +20,7 @@ Pastikan Anda mengirimkan submisi sebelum waktu tersebut. Submisi yang dikumpulk
 
 ::: {.panel-accordion}
 
-## Pengantar
+## Pengantar {.open icon="1-square-fill"}
 
 :::{.justify}
 
@@ -36,7 +36,7 @@ Tugas ini akan meminta Anda bermain peran sebagai analis data dan menjelaskan wa
 
 :::
 
-## Ketentuan Tugas
+## Ketentuan Tugas {icon="2-square-fill"}
 
 :::{.justify}
 Anda wajib menggunakan templat pengumpulan submisi untuk menggarap proyek ini. Templat pengumpulan submisi ini hanya berisi satu berkas `README.md`. Silakan gunakan link berikut untuk mendapatkannya.
@@ -63,7 +63,7 @@ Berikut tampilan markdown di RStudio
 ![gambar-markdwon-di-RStudio](https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/static/gambar-markdwon-di-RStudio.webp)
 :::
 
-## Kriteria wajib
+## Kriteria wajib {icon="3-square-fill"}
 
 :::{.justify}
 Hai, kriteria wajib kita kali ini adalah Anda akan bermain peran sebagai analis data di suatu perusahaan fiktif, PT XYZ. Anda diharuskan memberikan wawasan dengan tujuan mensejahterakan perusahaan XYZ tersebut dengan berkas Excel/Spreadsheet dan sebuah presentasi video.
@@ -131,14 +131,14 @@ Anda wajib membuat sebuah presentasi video yang menjelaskan proyek analisis Anda
 4.  **Alasan Pemilihan Visualisasi**: Justifikasi mengapa Anda memilih jenis *chart* tertentu. Gambar bisa mewakili ribuan deskripsi, jadi jelaskan makna apa yang ingin Anda sampaikan dan mengapa bentuk *chart* tersebut adalah cara bercerita yang paling efektif.
 5.  **Kesimpulan & Refleksi**: Jelaskan *output* atau jawaban akhir dari analisis Anda. Apakah sesuai dengan yang diharapkan? Jika meleset, hikmah atau temuan tak terduga apa yang Anda peroleh dari proses tersebut?
 
-## Kriteria Opsional
+## Kriteria Opsional {icon="4-square-fill"}
 Untuk mendapatkan nilai lebih dan menunjukkan keahlian tingkat *expert*, Anda bisa menambahkan salah satu atau lebih dari kriteria berikut:
 
 - **Automasi dengan Makro**: Merekam atau menulis sebuah *macro* sederhana untuk mengotomatisasi tugas yang berulang (misalnya, *macro* untuk membersihkan semua filter di *dashboard* dengan satu klik).
 - **Impor & Transformasi dengan Power Query**: Menggunakan Power Query untuk mengimpor dan membersihkan data Anda sebelum dianalisis, sebagai ganti dari pembersihan manual dengan formula.
 - **Analisis Statistik**: Menggunakan *add-in* **Analysis ToolPak** untuk melakukan analisis statistik sederhana seperti regresi atau statistik deskriptif.
 
-## Penilaian
+## Penilaian {icon="5-square-fill"}
 Proyek Anda akan dinilai berdasarkan beberapa komponen:
 
 * **Wawasan & *Storytelling* (Total 60%)**:
@@ -147,35 +147,40 @@ Proyek Anda akan dinilai berdasarkan beberapa komponen:
 * **Pemenuhan Kriteria Teknis (Wajib) (30%)**: Ketepatan dan keberhasilan Anda dalam mengimplementasikan Kriteria 1-5 di file Excel/Spreadsheet.
 * **Penerapan Kriteria Opsional (10%)**: Poin bonus untuk setiap kriteria opsional yang berhasil Anda implementasikan.
 
-## Ketentuan Berkas & Review
+## Ketentuan Berkas & Review {icon="6-square-fill"}
 
 ### Ketentuan Berkas Submission
+
 - Berkas submission yang dikirim merupakan folder proyek dalam bentuk `.zip`.
 - Format penamaan: `tugas1-PSD-NPM.zip`. Untuk revisi, gunakan `revisi01-tugas1-PSD-NPM.zip`.
 - Pastikan file Excel/Spreadsheet ada di dalam folder `lampiran/` atau tautannya tercantum di `README.md`.
 - Pastikan tautan video presentasi tercantum di `README.md` dan **aksesnya terbuka** untuk umum selama periode penilaian.
 
 ### Ketentuan Proses Review
+
 - Tim Asisten akan mengulas *submission* Anda dalam waktu selambat-lambatnya **14 hari kerja** (tidak termasuk Sabtu, Minggu, dan libur nasional).
 - Tidak disarankan melakukan *submit* berkali-kali karena akan memperlama proses penilaian.
 - Anda akan mendapatkan notifikasi hasil *review* melalui surel. Jika tidak mendapat balasan dalam 14 hari kerja, mohon hubungi tim asisten lab.
 
 ### Ketentuan Submission yang Akan Ditolak
+
 - Ada kriteria wajib yang tidak terpenuhi.
 - Ketentuan berkas *submission* tidak terpenuhi (format nama salah, file tidak lengkap, tautan video/spreadsheet tidak bisa diakses).
 
-## Perhatian
+## Perhatian {icon="7-square-fill"}
 
 ### 1. Plagiarisme
 Plagiarisme sangat dilarang di lingkungan akademik Universitas Indonesia. Sesuai dengan *terms of use*, *submission* Lab haruslah hasil karya Anda sendiri.
 
 **Kriteria Plagiarisme:**
+
 - Mengirimkan proyek *submission* milik mahasiswa lain.
 - Menyalin sebagian besar *submission* dari proyek mahasiswa lain.
 - Memiliki kesamaan substansial (>70%) dengan sumber lain tanpa atribusi yang layak.
 
 **Konsekuensi:**
 Kami memiliki hak mutlak untuk mengenakan sanksi kepada peserta plagiat.
+
 - Tim Asisten berhak melapor ke dosen pengampu mata kuliah.
 - Atas izin dosen, Tim Asisten berhak memberikan matriks penilaian **0 (nol)**, tanpa terkecuali.
 
