@@ -1,0 +1,175 @@
+---
+title: "Modul Diskusi 2: Toolkit Reproducibility Lengkap"
+subtitle: "Dari venv dan conda hingga Mereproduksi Dokumentasi XGBoost"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-30"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/software_environment_containers.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Kode Ini Jalan di Laptop Saya!" 🤔
+
+Kalimat "aneh, kodenya jalan kok di laptop saya" adalah lelucon sekaligus mimpi buruk di dunia pengembangan perangkat lunak dan sains data. Ini terjadi karena setiap laptop memiliki "resep" lingkungan yang berbeda—versi Python yang berbeda, versi *library* yang tidak cocok, dan dependensi yang hilang.
+
+Kekacauan ini disebut ***Dependency Hell***. Di modul ini, kita akan belajar cara menjadi "insinyur lingkungan kerja" yang andal, memastikan "resep" kita selalu sama di mana pun, kapan pun, untuk siapa pun. Kemampuan ini disebut **reproducibility**, dan ini adalah pilar dari sains dan kolaborasi yang baik.
+
+---
+
+## Bagian 1: Mengelola Paket & Lingkungan Proyek
+
+Untuk menghindari *Dependency Hell*, kita harus mengisolasi setiap proyek.
+
+### 1.1. Filosofi Isolasi: Analogi "Dapur Terpisah"
+
+Bayangkan setiap proyek Anda adalah resep masakan. Resep kue butuh `tepung==v1.0`. Resep rendang butuh `santan==v2.5`. Anda tidak akan mencampur semua bahan ini di satu meja yang sama karena akan kacau.
+
+**Virtual environment** adalah **dapur terpisah** untuk setiap resep. Setiap dapur memiliki bahan-bahannya sendiri (versi *library* yang spesifik) dan tidak akan mengganggu dapur lain.
+
+### 1.2. Alur Kerja 1: Pendekatan Bawaan Python (`venv` + `pip`)
+
+Ini adalah cara minimalis dan standar untuk mengelola lingkungan khusus proyek Python.
+
+**Walkthrough Praktis:**
+1.  **Membuat Lingkungan:** Di terminal, navigasi ke folder proyek Anda, lalu jalankan:
+    ```bash
+    # Membuat folder 'venv' yang berisi instalasi Python terisolasi
+    python -m venv venv 
+    ```
+2.  **Aktivasi Lingkungan:**
+    ```bash
+    # Windows
+    .\venv\Scripts\activate
+
+    # macOS/Linux
+    source venv/bin/activate
+    ```
+    (Prompt terminal Anda akan berubah, diawali dengan `(venv)`)
+
+3.  **Menginstal Paket:** Gunakan `pip` untuk menginstal *library* yang dibutuhkan.
+    ```bash
+    pip install pandas matplotlib
+    ```
+4.  **Mencatat "Resep" (`requirements.txt`):**
+    ```bash
+    # Menyimpan daftar semua paket dan versinya ke dalam file
+    pip freeze > requirements.txt
+    ```
+5.  **Membuat Ulang Lingkungan (di komputer lain):**
+    ```bash
+    # Orang lain bisa membuat ulang dapur Anda dengan resep yang sama
+    pip install -r requirements.txt
+    ```
+
+### 1.3. Alur Kerja 2: Pendekatan Terintegrasi (`conda`)
+
+Conda lebih dari sekadar manajer paket; ia juga manajer lingkungan yang kuat, bahkan bisa mengelola non-Python *dependencies*.
+
+**Walkthrough Praktis:**
+1.  **Membuat Lingkungan (sekaligus menentukan versi Python):**
+    ```bash
+    conda create --name proyek_ksd python=3.9
+    ```
+2.  **Aktivasi Lingkungan:**
+    ```bash
+    conda activate proyek_ksd
+    ```
+3.  **Menginstal Paket:**
+    ```bash
+    conda install numpy scikit-learn
+    ```
+4.  **Mencatat "Resep" (`environment.yml`):**
+    ```bash
+    conda env export > environment.yml
+    ```
+5.  **Membuat Ulang Lingkungan:**
+    ```bash
+    conda env create -f environment.yml
+    ```
+
+### 1.4. Kapan Menggunakan yang Mana?
+
+| Pertimbangan | Gunakan `venv` + `pip` | Gunakan `conda` |
+| :--- | :--- | :--- |
+| **Skenario** | Proyek murni Python, pengembangan web. | Sains data, *machine learning*, butuh paket non-Python (misal: CUDA). |
+| **Kelebihan** | Ringan, standar bawaan Python. | Manajemen dependensi lebih kuat, lintas platform. |
+| **Kekurangan**| Terkadang kesulitan dengan dependensi kompleks. | Instalasi Miniconda/Anaconda lebih besar. |
+
+---
+
+## Bagian 2: Mengelola Versi Python Itu Sendiri dengan `pyenv`
+
+Masalah selanjutnya: Proyek A butuh Python 3.8, Proyek B butuh Python 3.11. Menginstal banyak versi Python secara manual sangat merepotkan. Solusinya adalah **`pyenv`**, sang manajer versi Python.
+
+### 2.1. Alur Kerja `pyenv`
+
+1.  **Melihat Semua Versi yang Bisa Diinstal:**
+    ```bash
+    pyenv install --list
+    ```
+2.  **Menginstal Versi Python Spesifik:**
+    ```bash
+    # Menginstal versi Python 3.8.10
+    pyenv install 3.8.10
+    ```
+3.  **Mengatur Versi Python untuk Proyek Tertentu:**
+    Navigasi ke folder proyek Anda, lalu jalankan:
+    ```bash
+    pyenv local 3.8.10
+    ```
+    Perintah ini akan membuat file `.python-version` di folder tersebut. Sekarang, setiap kali Anda masuk ke folder ini, terminal akan otomatis menggunakan Python 3.8.10.
+
+---
+
+## Latihan & Studi Kasus Utama: Mereproduksi Dokumentasi XGBoost
+
+:::{.callout-note icon="true"}
+### Skenario
+Kita ingin mempelajari cara kerja *library* **XGBoost** dengan menjalankan contoh-contoh dari dokumentasi resminya di laptop kita. Ini adalah cara terbaik untuk memvalidasi ide dan belajar dari kode profesional. Kita akan mensintesis semua yang telah dipelajari (`git`, `pyenv`, `venv`).
+:::
+
+### Langkah-langkah Investigasi & Reproduksi
+
+1.  **Langkah 1 (Git): *Clone* Repositori**
+    Pertama, kita unduh kode sumber XGBoost dari GitHub.
+    ```bash
+    git clone [https://github.com/dmlc/xgboost.git](https://github.com/dmlc/xgboost.git)
+    cd xgboost
+    ```
+
+2.  **Langkah 2 (pyenv): Atur Versi Python yang Tepat**
+    Proyek besar biasanya mencantumkan versi Python yang didukung. Misalkan, setelah membaca dokumentasi, kita tahu XGBoost butuh Python 3.9. Kita atur versi lokal kita.
+    ```bash
+    # (Asumsikan Anda sudah 'pyenv install 3.9.18')
+    pyenv local 3.9.18
+    ```
+
+3.  **Langkah 3 (venv): Buat Lingkungan Terisolasi**
+    Sekarang kita buat "dapur" khusus untuk proyek XGBoost ini.
+    ```bash
+    python -m venv venv-xgboost
+    source venv-xgboost/bin/activate
+    ```
+
+4.  **Langkah 4 (pip): Instal Semua *Dependency***
+    Proyek seperti ini biasanya menyertakan "resep" lingkungannya. Mari kita cari dan instal.
+    ```bash
+    # Instal dependency untuk membangun dokumentasi
+    pip install -r docs/requirements.txt
+
+    # Instal XGBoost dalam mode 'editable' agar kita bisa mengotak-atik kodenya
+    pip install -e python-package
+    ```
+
+5.  **Langkah 5 (Build & Validasi):**
+    Sekarang lingkungan Anda sudah siap. Anda bisa mengikuti instruksi di dalam folder `docs` untuk me-*render* dokumentasinya secara lokal atau menjalankan *notebook* contoh mereka. Anda telah berhasil mereplikasi lingkungan pengembangan dari salah satu *library* ML paling penting di dunia!
+
+---
+
+## Penutup & Jembatan ke Modul Berikutnya
+
+Luar biasa! Anda tidak hanya bisa mengelola paket di dalam proyek, tetapi juga mengelola versi Python itu sendiri, dan bahkan mereplikasi lingkungan kerja dari proyek-proyek *open-source* terbesar. Anda sudah memiliki *skillset* teknis yang sangat solid.
+
+Di **Modul Diskusi 3**, kita akan memperdalam alat yang menjadi lem perekat dari semua ini: **Git dan GitHub** untuk kolaborasi, melacak eksperimen, dan membangun portofolio.
