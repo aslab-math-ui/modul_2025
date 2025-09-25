@@ -1,0 +1,256 @@
+---
+title: "Modul 2: Algoritma & Pemrograman Dasar dengan Python"
+subtitle: "Mempelajari Peralatan Inti Sang Detektif Data"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-25"
+image: "[https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/python_code_magnifying_glass.png](https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/python_code_magnifying_glass.png)"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: Dari Rencana Menjadi Aksi
+
+Di Modul 1, kita belajar menyusun **rencana investigasi** layaknya seorang detektif. Kita tahu bahwa sains data adalah sebuah proses yang terstruktur. Namun, rencana sebagus apa pun tidak akan ada artinya tanpa eksekusi yang tepat.
+
+Jika Modul 1 adalah saat kita menyusun denah sebuah bangunan, maka Modul 2 adalah saatnya kita belajar cara menggunakan **palu, paku, dan meteran**. Sebelum bisa membangun *dashboard* canggih, setiap analis data harus menguasai dua peralatan paling fundamental: **logika (algoritma)** dan **buku catatan serbaguna (pemrograman Python)**.
+
+---
+
+## Bagian 1: Pola Pikir Algoritmik (Resep Sebelum Memasak)
+
+Sebelum kita menulis satu baris pun kode Python, kita harus belajar *berpikir* seperti komputer: secara logis, runut, dan tanpa ambigu. Inilah inti dari **algoritma**.
+
+### 1.1. Apa itu Algoritma?
+
+Pikirkan algoritma sebagai sebuah **resep masakan**. Resep tersebut memberikan serangkaian instruksi yang jelas (`"Ambil 2 butir telur," "Kocok hingga mengembang," "Panggang selama 20 menit"`) yang harus diikuti secara berurutan untuk mencapai hasil akhir yang diinginkan (sebuah kue). Jika Anda melewatkan satu langkah atau salah menginterpretasikannya, hasilnya tidak akan sesuai harapan.
+
+Algoritma dalam pemrograman adalah resep untuk menyelesaikan masalah.
+
+:::{.callout-note}
+### Definisi Formal
+Dalam ilmu komputer, sebuah algoritma harus memiliki tiga sifat utama:
+* **Finiteness (Terbatas):** Sebuah algoritma harus selalu berakhir setelah sejumlah langkah yang terbatas. Ia tidak boleh berjalan selamanya.
+* **Definiteness (Pasti):** Setiap langkah harus didefinisikan secara presisi dan tidak ambigu. Tidak boleh ada ruang untuk interpretasi ganda.
+* **Effectiveness (Efektif):** Setiap instruksi harus cukup mendasar sehingga secara prinsip dapat dieksekusi oleh seseorang hanya dengan pensil dan kertas.
+:::
+
+### 1.2. Tiga Blok Bangunan Dasar Logika
+
+Hampir semua algoritma di dunia, dari yang paling sederhana hingga yang paling rumit (seperti algoritma rekomendasi YouTube), dibangun dari tiga blok logika dasar ini. Kita akan menjelaskannya menggunakan *pseudocode*, yaitu cara menuliskan logika tanpa terikat pada sintaks bahasa pemrograman tertentu.
+
+1.  **Urutan (*Sequence*)**: Instruksi dieksekusi satu per satu, dari atas ke bawah.
+    ```
+    MULAI
+      Ambil Angka1
+      Ambil Angka2
+      Jumlahkan Angka1 dan Angka2, simpan di Hasil
+      Tampilkan Hasil
+    SELESAI
+    ```
+
+2.  **Percabangan (*Selection*)**: Membuat keputusan di "persimpangan jalan". Logika ini menggunakan kondisi `JIKA... MAKA...`.
+    ```
+    MULAI
+      Ambil NilaiUjian
+      JIKA NilaiUjian lebih besar atau sama dengan 75 MAKA
+        Tampilkan "Lulus"
+      JIKA TIDAK MAKA
+        Tampilkan "Remedial"
+    SELESAI
+    ```
+
+3.  **Perulangan (*Iteration*)**: Melakukan tugas yang sama berulang kali selama kondisi tertentu terpenuhi.
+    ```
+    MULAI
+      UNTUK setiap mahasiswa DI dalam daftar_absensi
+        LAKUKAN Panggil nama mahasiswa
+    SELESAI
+    ```
+
+Dengan menguasai tiga blok bangunan ini, kita bisa menyusun "resep" untuk menyelesaikan hampir semua masalah komputasi.
+
+---
+
+## Bagian 2: Pengenalan Python (Mengenal Peralatan Anda)
+
+Sekarang saatnya menerjemahkan "resep" algoritmik kita ke dalam bahasa yang dimengerti komputer. Kita akan menggunakan **Python**, bahasa yang sangat populer di kalangan analis data karena sintaksnya yang bersih dan mudah dibaca.
+
+### 2.1. Variabel & Tipe Data
+
+**Analogi:** Variabel adalah seperti **kotak penyimpanan yang diberi label**. Kita bisa memasukkan sesuatu ke dalamnya (sebuah nilai) dan mengambilnya lagi nanti dengan memanggil nama labelnya.
+
+```python
+# Membuat "kotak" berlabel `nama_produk` dan mengisinya dengan teks
+nama_produk = "Kopi Latte"
+
+# Membuat "kotak" berlabel `jumlah_terjual` dan mengisinya dengan angka
+jumlah_terjual = 15
+
+# Membuat "kotak" berlabel `harga_satuan`
+harga_satuan = 25000.0
+
+# Kita bisa melihat isi kotaknya
+print(nama_produk)
+print(jumlah_terjual)
+```
+
+:::{.callout-note}
+### Definisi Formal
+Secara teknis, variabel adalah **nama simbolik yang merujuk ke sebuah alamat di memori komputer**, tempat sebuah nilai disimpan. Saat Anda membuat `jumlah_terjual = 15`, Python memesan sepotong kecil memori, menyimpan nilai `15` di sana, dan menempelkan "stiker" `jumlah_terjual` pada alamat memori tersebut.
+:::
+
+Setiap "kotak" juga memiliki tipe, yang menentukan jenis barang apa yang bisa disimpannya:
+* **String (`str`)**: Untuk menyimpan teks. Harus diapit tanda kutip `"` atau `'`.
+* **Integer (`int`)**: Untuk menyimpan bilangan bulat.
+* **Float (`float`)**: Untuk menyimpan bilangan desimal.
+
+### 2.2. Operator
+
+Operator adalah simbol yang melakukan operasi pada variabel dan nilai.
+
+* **Aritmatika**: `+` (tambah), `-` (kurang), `*` (kali), `/` (bagi), `**` (pangkat).
+* **Perbandingan**: `==` (sama dengan), `!=` (tidak sama dengan), `>` (lebih besar dari), `<` (lebih kecil dari). Menghasilkan `True` atau `False`.
+* **Logika**: `and` (dan), `or` (atau), `not` (bukan).
+
+### 2.3. Struktur Kontrol (Menerapkan Algoritma)
+
+Ini adalah cara kita mengimplementasikan **percabangan** dan **perulangan** di Python.
+
+* **Percabangan dengan `if-elif-else`**:
+    ```python
+    nilai = 85
+
+    if nilai >= 80:
+        print("Nilai Anda A")
+    elif nilai >= 70:
+        print("Nilai Anda B")
+    else:
+        print("Nilai Anda C")
+    ```
+
+* **Perulangan dengan `for`**: Untuk mengulang sejumlah kali yang sudah pasti.
+    ```python
+    daftar_belanja = ["Kopi", "Gula", "Susu"]
+
+    for barang in daftar_belanja:
+        print("Jangan lupa beli:", barang)
+    ```
+
+### 2.4. Fungsi (Membungkus Resep)
+
+**Analogi:** Fungsi adalah seperti resep yang sudah kita beri nama. Daripada menulis ulang semua langkah setiap kali ingin membuat kue yang sama, kita cukup memanggil nama resepnya.
+
+```python
+# Mendefinisikan "resep" bernama `hitung_pendapatan`
+def hitung_pendapatan(jumlah, harga):
+    total = jumlah * harga
+    return total
+
+# Menggunakan "resep" tersebut
+pendapatan_kopi = hitung_pendapatan(15, 25000)
+pendapatan_teh = hitung_pendapatan(10, 20000)
+
+print("Pendapatan Kopi:", pendapatan_kopi)
+print("Pendapatan Teh:", pendapatan_teh)
+```
+
+:::{.callout-note}
+### Anatomi Fungsi
+Sebuah fungsi memiliki tiga bagian utama:
+* **Parameter (Input):** Nilai yang diterima oleh fungsi (dalam contoh di atas, `jumlah` dan `harga`).
+* **Badan Fungsi (Proses):** Serangkaian instruksi yang dijalankan di dalam fungsi.
+* **Return Value (Output):** Nilai yang "dikeluarkan" oleh fungsi setelah selesai bekerja, menggunakan kata kunci `return`.
+:::
+
+---
+
+## Latihan Utama: "Kasus Pertama - Menganalisis Struk Belanja"
+
+Sekarang, mari kita gabungkan semua yang telah kita pelajari.
+
+:::{.callout-note icon="true"}
+### Skenario
+Kita diberikan sebuah file teks sederhana bernama `transaksi.csv` yang berisi daftar penjualan. Setiap baris berisi `nama_produk,jumlah,harga_satuan`. Tanpa menggunakan *library* canggih seperti Pandas, tugas kita adalah menulis sebuah *script* Python untuk membaca file ini dan menjawab dua pertanyaan:
+1.  Berapa total pendapatan dari semua transaksi?
+2.  Produk apa yang paling sering muncul (paling laris)?
+:::
+
+**File `transaksi.csv` (Anda bisa membuat file ini sendiri):**
+```csv
+Kopi Latte,2,25000
+Teh Melati,1,20000
+Croissant,3,18000
+Kopi Latte,1,25000
+Air Mineral,2,8000
+Kopi Latte,1,25000
+```
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+
+Berikut adalah salah satu cara untuk menyelesaikan masalah ini.
+
+```python
+def analisis_struk(nama_file):
+    """
+    Menganalisis file transaksi untuk menghitung total pendapatan
+    dan produk terlaris.
+    """
+    total_pendapatan = 0
+    frekuensi_produk = {} # Menggunakan dictionary untuk menghitung frekuensi
+
+    try:
+        with open(nama_file, 'r') as file:
+            for baris in file:
+                # 1. Memecah setiap baris menjadi bagian-bagiannya
+                bagian = baris.strip().split(',')
+                
+                # 2. Mengambil data dan mengonversinya
+                nama_produk = bagian[0]
+                jumlah = int(bagian[1])
+                harga = int(bagian[2])
+                
+                # 3. Menghitung total pendapatan
+                total_pendapatan += jumlah * harga
+                
+                # 4. Menghitung frekuensi produk
+                if nama_produk in frekuensi_produk:
+                    frekuensi_produk[nama_produk] += 1
+                else:
+                    frekuensi_produk[nama_produk] = 1
+                    
+    except FileNotFoundError:
+        return "Error: File tidak ditemukan.", None
+
+    # 5. Mencari produk terlaris
+    produk_terlaris = max(frekuensi_produk, key=frekuensi_produk.get)
+
+    return total_pendapatan, produk_terlaris
+
+# Menjalankan fungsi
+pendapatan, terlaris = analisis_struk("transaksi.csv")
+
+if pendapatan:
+    print(f"Total Pendapatan: Rp {pendapatan}")
+    print(f"Produk Terlaris: {terlaris}")
+
+```
+
+:::{.callout-note}
+### Catatan Rigor: Mengapa Menggunakan Dictionary?
+Kita menggunakan *dictionary* (`frekuensi_produk`) untuk menghitung frekuensi karena ini adalah struktur data yang mengimplementasikan konsep matematis **peta (*map*)**, yang memetakan *key* unik (nama produk) ke *value* (jumlah kemunculan). Ini sangat efisien karena waktu pencarian dan penyisipan rata-ratanya adalah konstan, atau dalam notasi Big-O, **O(1)**.
+:::
+
+:::
+
+---
+
+## Penutup & Jembatan ke Modul Berikutnya
+
+Selamat! Anda baru saja melakukan pekerjaan dasar seorang analis data dari nol. Anda membaca data mentah, memprosesnya baris per baris, dan mengekstrak wawasan yang berguna.
+
+Anda mungkin berpikir, "Wow, ini proses yang cukup panjang untuk data sekecil itu." Anda benar! Inilah sebabnya para analis data tidak bekerja seperti ini setiap hari.
+
+Di **Modul 3**, kita akan bertemu dengan *toolkit* "kelas berat" yaitu **NumPy** dan **Pandas**, yang bisa melakukan semua pekerjaan di atas (dan lebih banyak lagi) hanya dalam beberapa baris kode yang jauh lebih sederhana dan cepat.
