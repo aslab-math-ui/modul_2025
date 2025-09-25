@@ -42,7 +42,7 @@ Tugas ini akan meminta Anda bermain peran sebagai analis data dan menjelaskan wa
 Anda wajib menggunakan templat pengumpulan submisi untuk menggarap proyek ini. Templat pengumpulan submisi ini hanya berisi satu berkas `README.md`. Silakan gunakan link berikut untuk mendapatkannya.
 :::
 
-[template-pengumpulan.zip](https://link-ke-template-zip)
+[template-pengumpulan.zip](https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/tugas/tugas1-PSD-NPM.zip)
 
 ### Tata Cara Pengerjaan Tugas
 
@@ -57,10 +57,10 @@ Berikut tata cara dalam pengerjaan tugas:
 Berkas README.md ditulis dengan format markdown. Agar Anda nyaman membaca isi berkasnya, kami sarankan untuk memanfaatkan markdown viewer. VSCode memiliki fitur markdown viewer dengan menekan tombol “Open Preview to the Side” (CTRL+Shift+V) sembari membuka berkas markdown tersebut.
 
 Berikut tampilan markdown viewer di VSCode.
-![gambar-markdown-di-vscode](https://link-ke-gambar)
+![gambar-markdown-di-vscode](https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/static/gambar-markdown-di-vscode.webp)
 
 Berikut tampilan markdown di RStudio
-![gambar-markdwon-di-RStudio](https://link-ke-gambar)
+![gambar-markdwon-di-RStudio](https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/static/gambar-markdwon-di-RStudio.webp)
 :::
 
 ## Kriteria wajib
