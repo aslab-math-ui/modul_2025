@@ -194,6 +194,21 @@ Anda **diperbolehkan dan didorong** untuk mempublikasikan proyek ini ke platform
 
 :::
 
+:::{.justify}
+Itu saja informasi yang dapat diberikan, semangat mengerjakannya. Semoga mendapatkan Ilmu yang bermanfaat.
+:::
+
+:::{.justify}
+Kolom Pengumpulan akan ada di halaman ini juga. Kedepannya halaman ini akan terus diperbaharui untuk menyediakan tempat pengumpulan. Terima Kasih.
+:::
+
+:::{.RIGHT}
+Narahubung:
+
+- Jason (LINE: jack550k)
+:::
+
+
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
 </a>
