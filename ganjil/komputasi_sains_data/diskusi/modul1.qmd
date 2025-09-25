@@ -1,0 +1,101 @@
+---
+title: "Modul Diskusi 1: Siklus Hidup Proyek Sains Data"
+subtitle: "Dari Eksperimen, Frustrasi, hingga Otomatisasi"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-29"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/data_lifecycle_iterative.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Perjalanan yang Tak Pernah Lurus" 🧭
+
+Selamat datang di seri Modul Diskusi! Di sini, kita akan membahas keterampilan dan pola pikir yang akan membedakan Anda di dunia industri.
+
+Di perkuliahan, kita sering diberikan data yang bersih dan masalah dengan jawaban yang sudah pasti. Tapi di industri, perjalanannya jarang sekali lurus. Selamat datang di siklus hidup proyek yang sebenarnya: sebuah labirin penuh eksperimen, kegagalan yang informatif, dan pencerahan yang didapat dengan susah payah. Modul ini bukan tentang menghafal langkah, tapi tentang membangun **mentalitas** seorang praktisi data.
+
+---
+
+## Bagian 1: Realitas Proses Iteratif (Putaran Tanpa Akhir)
+
+Di Modul 1 KSD, kita belajar tentang kerangka kerja formal seperti CRISP-DM. Kerangka itu sangat berguna sebagai peta, tetapi di lapangan, kita tidak berjalan lurus dari titik A ke Z.
+
+### 1.1. Dari Garis Lurus ke Spiral
+
+Proses sains data di dunia nyata lebih mirip sebuah **spiral** daripada garis lurus.
+
+
+
+* Anda mulai dengan **Pemahaman Bisnis**, lalu masuk ke **Pemahaman Data** dan **Persiapan Data**.
+* Anda membangun **Model** pertama Anda.
+* Saat **Evaluasi**, Anda menemukan bahwa modelnya kurang baik.
+* Di sinilah putarannya terjadi. Anda tidak maju ke *Deployment*, melainkan **kembali lagi** ke tahap **Persiapan Data** untuk mencoba teknik *feature engineering* yang baru, atau bahkan kembali ke **Pemahaman Bisnis** untuk mengklarifikasi apakah tujuan awalnya sudah tepat.
+
+Proses "mundur untuk maju" ini adalah hal yang **normal dan diharapkan**.
+
+### 1.2. Seni Eksperimen
+
+Inti pekerjaan seorang *data scientist* bukanlah membuat model yang sempurna pada percobaan pertama, melainkan **merancang dan menjalankan eksperimen secara sistematis**.
+
+"Mencocokkan model berkali-kali" atau mencoba puluhan kombinasi parameter bukanlah tanda kegagalan. Itu adalah proses ilmiah untuk menemukan solusi terbaik. Setiap percobaan memberikan kita informasi baru. Ini membawa kita ke poin berikutnya.
+
+---
+
+## Bagian 2: Psikologi Seorang Saintis Data (Mengelola Frustrasi)
+
+Pekerjaan ini akan sering membuat Anda frustrasi. Model tidak bekerja, data lebih kotor dari yang dibayangkan, atau tujuan bisnis tiba-tiba berubah. Mengelola aspek psikologis ini adalah *hardskill* yang tersembunyi.
+
+### 2.1. "Gagal" adalah Data Baru
+
+Ini adalah perubahan paradigma terpenting.
+* Model prediksi *churn* dengan akurasi hanya 60% **bukanlah kegagalan**.
+* Itu adalah **data baru** yang memberitahu kita:
+    * "Data yang kita gunakan sekarang tidak cukup informatif untuk memprediksi *churn*."
+    * "Asumsi kita bahwa 'lama berlangganan' adalah prediktor utama mungkin salah."
+    * "Mungkin kita perlu mencari sumber data baru, misalnya data aktivitas pengguna."
+
+Setiap hasil yang "buruk" adalah petunjuk yang mempersempit area pencarian kita, layaknya seorang detektif yang mencoret satu tersangka dari daftarnya.
+
+### 2.2. Jurnal Laboratorium Digital
+
+Karena banyaknya eksperimen, sangat mudah untuk lupa apa yang sudah Anda coba. Seorang praktisi profesional selalu mendokumentasikan pekerjaannya.
+
+* **Apa yang dicatat?** Parameter yang digunakan, versi *dataset* yang dipakai, hasil metrik, dan kesimpulan singkat ("Mencoba model X dengan parameter Y, hasilnya Z, sepertinya tidak efektif karena...").
+* **Mengapa ini penting?** Ini mencegah Anda mengulang kesalahan yang sama dan membantu Anda membangun argumen yang kuat saat presentasi. Ini juga fondasi dari **kolaborasi tim**.
+* **Jembatan ke Git:** Di dunia nyata, "jurnal lab" ini seringkali adalah sistem kontrol versi seperti **Git**, yang akan kita bahas di modul diskusi selanjutnya.
+
+---
+
+## Bagian 3: Jembatan Menuju Otomatisasi (Dari Notebook ke Produksi)
+
+Hasil akhir dari proyek data seringkali bukan hanya sebuah presentasi, tetapi sebuah sistem yang berjalan otomatis.
+
+### 3.1. Dua Dunia: Eksplorasi vs. Produksi
+* **Dunia Eksplorasi (Dapur Koki):** Ini adalah tempat Anda "bermain" dan bereksperimen, biasanya di dalam **Jupyter Notebook**. Di sini, kode boleh berantakan, Anda mencoba berbagai resep, dan tujuannya adalah menemukan satu resep yang berhasil.
+* **Dunia Produksi (Lini Perakitan Pabrik):** Setelah Anda menemukan "resep" terbaik, Anda harus menuliskannya kembali dalam bentuk *script* Python (`.py`) yang bersih, efisien, dan andal. *Script* inilah yang akan dijalankan secara otomatis setiap hari/minggu untuk menghasilkan prediksi atau laporan.
+
+### 3.2. Konsep *Pipeline* Data
+Proses mengubah hasil eksplorasi menjadi *script* produksi yang otomatis disebut membangun **pipeline**. Tujuannya adalah agar tim lain (seperti *developer* atau analis bisnis) bisa menggunakan hasil kerja Anda tanpa perlu menjalankan *notebook* Anda secara manual. Ini adalah jembatan antara analisis data dan rekayasa data (*data engineering*).
+
+---
+
+## Poin Diskusi & Studi Kasus
+
+:::{.callout-note icon="true"}
+### Kasus untuk Diskusi
+Anda ditugaskan untuk membuat model prediksi *churn* (pelanggan berhenti berlangganan) untuk sebuah layanan *streaming* musik. Setelah dua minggu bereksperimen, model terbaik yang Anda hasilkan hanya memiliki akurasi 65%, dan manajer produk mulai tidak sabar.
+
+Berdasarkan apa yang telah kita diskusikan tentang proses iteratif dan psikologi seorang analis:
+1.  Apa **tiga langkah konkret** pertama yang akan Anda lakukan selanjutnya dalam investigasi Anda?
+2.  Bagaimana cara Anda **mengomunikasikan** "kegagalan" awal ini (akurasi 65%) kepada manajer agar mereka tetap percaya pada proses dan proyeknya?
+:::
+
+---
+
+## Penutup & Jembatan ke Modul Berikutnya
+
+Inti dari siklus hidup sains data adalah **ketekunan yang terstruktur**. Prosesnya memang seringkali tidak lurus dan penuh frustrasi, tapi setiap iterasi membawa kita lebih dekat ke solusi.
+
+Tentu, proses yang terkadang berantakan ini butuh alat yang andal agar tidak kacau balau, terutama saat Anda mencoba berbagai *library* atau bahkan mengerjakan ulang proyek lama. Di **Modul Diskusi 2**, kita akan belajar alat pertama untuk menjaga kewarasan kita dan memastikan pekerjaan kita bisa direproduksi: **Manajemen Lingkungan Kerja dengan Conda.**
