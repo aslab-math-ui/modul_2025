@@ -1,13 +1,21 @@
 ---
 title: "Tugas 1: Pemahaman Analisis Data dengan Excel"
-subtitle: "Studi Kasus: Dari Data Mentah Menjadi Wawasan Awal"
-date: 2025-10-04
+subtitle: "Studi Kasus: Dari Data Mentah Menjadi Wawasan Bisnis Interaktif"
+date: 2025-09-26
 author: "Tim Asisten Lab Matematika UI"
 ---
 
 :::{.justify}
 Selamat! Akhirnya Anda telah sampai di penghujung pembelajaran. Anda telah mempelajari banyak hal.
 Baca informasi di bawah ini untuk memahami instruksi dari tugas PSD.
+:::
+
+:::{.callout-danger icon="true"}
+### Tenggat Pengumpulan Tugas
+
+Mohon diperhatikan, tenggat waktu pengumpulan untuk Tugas 1 ini adalah pada hari **Minggu, 12 Oktober 2025, pukul 23.59 WIB**.
+
+Pastikan Anda mengirimkan submisi sebelum waktu tersebut. Submisi yang dikumpulkan setelah tenggat waktu yang ditentukan tidak akan diterima.
 :::
 
 ::: {.panel-tabset}
