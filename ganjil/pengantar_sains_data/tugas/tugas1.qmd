@@ -16,7 +16,7 @@ Baca informasi di bawah ini untuk memahami instruksi dari tugas PSD.
 
 :::{.justify}
 
-Untuk laporan evaluasi mata kuliah PSD, Anda harus mengerjakan tugas, yakni story telling terkait analis Data dengan Excel. Tim reviewer akan memeriksa pekerjaan Anda dan memberikan umpan balik pada proyek yang dibuat.
+Untuk laporan evaluasi mata kuliah PSD, Anda harus mengerjakan tugas, yakni *story telling* terkait analisis data dengan Excel. Tim asisten akan memeriksa pekerjaan Anda dan memberikan umpan balik pada proyek yang dibuat.
 
 :::
 
@@ -24,44 +24,116 @@ Untuk laporan evaluasi mata kuliah PSD, Anda harus mengerjakan tugas, yakni stor
 
 :::{.justify}
 
-Submission ini akan meminta Anda bermain peran sebagai data analyst dan menjelaskan wawasan yang kalian dapatkan ke pemangku kepentingan. Ini kita jadikan sebagai salah satu matriks evaluasi pemahaman excel kelas PSD. Kami mengedepankan **kreativitas Anda** dalam mengomunikasikan kepada pemangku kepentingan, tetapi pastikan gaya penyampaian yang dibuat memenuhi kriteria yang akan kami jelaskan.
+Tugas ini akan meminta Anda bermain peran sebagai analis data dan menjelaskan wawasan yang Anda dapatkan kepada pemangku kepentingan (misalnya, manajer PT XYZ). Ini akan menjadi salah satu matriks evaluasi pemahaman Excel Anda. Kami mengedepankan **kreativitas Anda** dalam mengomunikasikan temuan, tetapi pastikan gaya penyampaian memenuhi kriteria yang akan kami jelaskan.
 
 :::
 
 ## Ketentuan Tugas
 
 :::{.justify}
-Anda wajib menggunakan templat pengumpulan submisi untuk menggarap proyek submission ini. Templat pengumpulan submisi ini hanya berisi satu berkas README. Silakan gunakan link berikut untuk mendapatkannya.
+Anda wajib menggunakan templat pengumpulan submisi untuk menggarap proyek ini. Templat pengumpulan submisi ini hanya berisi satu berkas `README.md`. Silakan gunakan link berikut untuk mendapatkannya.
 :::
 
-[template-pengumpulan.zip](https://google.com)
+[template-pengumpulan.zip](https://link-ke-template-zip)
 
 ### Tata Cara Pengerjaan Tugas
 
 Berikut tata cara dalam pengerjaan tugas:
 
 - Unduh proyek yang tertera pada tautan di atas.
-- Ekstrak berkas ZIP tersebut dan pastikan terdapat berkas dan folder yang dikeluarkan, yaitu README.md dan lampiran/.
-- Pada berkas README.md, kami telah menyediakan templat biodata, deskripsi dataset, ide-pertanyaan bisnis yang ditawarkan, dan wawasan yang diperoleh. Namun, pastikan Anda membaca bagian Ketentuan Pengerjaan Tugas sebelum mulai mengerjakan tugas, ya.
-- Ketentuan Pengerjaan Tugas juga dapat Anda lihat pada berkas README.md.
+- Ekstrak berkas ZIP tersebut dan pastikan terdapat berkas dan folder yang dikeluarkan, yaitu `README.md` dan `lampiran/`.
+- Pada berkas `README.md`, kami telah menyediakan templat untuk biodata, deskripsi *dataset*, pertanyaan bisnis, proses analisis, dan wawasan yang diperoleh. Pastikan Anda membaca bagian "Ketentuan Pengerjaan Tugas" di bawah ini sebelum mulai mengerjakan.
 
 :::{.callout-tip icon="true"}
 Berkas README.md ditulis dengan format markdown. Agar Anda nyaman membaca isi berkasnya, kami sarankan untuk memanfaatkan markdown viewer. VSCode memiliki fitur markdown viewer dengan menekan tombol “Open Preview to the Side” (CTRL+Shift+V) sembari membuka berkas markdown tersebut.
 
 Berikut tampilan markdown viewer di VSCode.
-![gambar-markdown-di-vscode](#)
+![gambar-markdown-di-vscode](https://link-ke-gambar)
+
+Berikut tampilan markdown di RStudio
+![gambar-markdwon-di-RStudio](https://link-ke-gambar)
 :::
 
 ### Ketentuan Pengerjaan Tugas
 
-Untuk mempermudah penilaian submission yang dikirim, Anda perlu memahami ketentuan-ketentuan berikut dalam mengerjakan tugas ini.
+Untuk mempermudah penilaian, Anda perlu memahami ketentuan-ketentuan berikut dalam mengerjakan tugas ini.
 
 - Anda wajib menggunakan templat pengumpulan yang telah kami sediakan.
+- Anda wajib menempatkan file Excel Anda di dalam folder `lampiran/` **kecuali** jika kalian menggunakan layanan berbasis web, seperti google spreadsheet. Maka, lampirkan tautan sharing web spreadsheet kalian di `README.md`. **PASTIKAN TAUTAN BEKERJA** dan **RESTRICTED LINK DIBUKA** selama periode penilaian. Tim Asisten **berhak tidak mengoreksi** jika terkendala restricted dari peserta.
 
 ## Kriteria wajib
-## Kriteria opsional
-## Penilaian 
-## Lainnya
 
+:::{.justify}
+Hai, kriteria wajib kita kali ini adalah Anda akan bermain peran data analis di suatu perusahaan PT XYZ. Kalian diharuskan memberikan wawasan dengan tujuan mensejahterakan perusahaan XYZ tersebut dengan salah satu berkasnya ialah excel.
+
+Definisi sejahtera dibebaskan kepada Anda. Entah sejahtera berarti meningkatkan kekayaan, meningkatkan customer, atau apa pun sesuai dengan konteks dan ide anda.
+
+Untuk lebih jelasnya, ada lima kriteria wajib yang harus Anda penuhi.
+:::
+
+### Kriteria Wajib 1: Cari dan Temukan Dataset
+
+Kalian dibebaskan untuk mencari dan menggunakan dataset apapun yang bersesuaian dengan format excel. Ketentuannya sebagai berikut:
+
+- Sumber diperoleh dibebaskan (Kaggle, Maven Analytics, dll.).
+- Boleh menggunakan *dataset* tunggal ataupun lebih dari satu yang perlu digabungkan.
+- *Dataset* memiliki lebih dari satu *sheet* (lembar kerja).
+- Dataset setidaknya memiliki 4 column dan 500 baris.
+- *Dataset* setidaknya memiliki 4 kolom dan 500 baris.
+- *Dataset* harus memiliki potensi untuk menghasilkan wawasan yang menarik.
+
+Data mentah jarang sekali bisa langsung digunakan. Anda harus mampu memanipulasi, membersihkan, dan memodelkan data Anda agar siap untuk dianalisis.
+
+- **Wajib mengubah** data mentah Anda menjadi **Excel Table** resmi (`Ctrl+T`) dan memberinya nama yang jelas (misalnya, `tabel_penjualan`).
+- Wajib melakukan **transformasi data tingkat lanjut**. Anda harus membuat minimal dua kolom turunan baru menggunakan kombinasi fungsi teks, tanggal, atau logika.
+    - **Contoh 1 (Teks):** Jika ada kolom `ID_Produk` seperti "PROD-LAP-001", pecah menjadi kolom `Kategori` ("LAP") dan `ID_Unik` ("001") menggunakan fungsi seperti `LEFT`, `RIGHT`, `MID`, atau `TEXTSPLIT`.
+    - **Contoh 2 (Tanggal):** Membuat kolom `HariKerja_vs_AkhirPekan` menggunakan fungsi `WEEKDAY` dan `IF`.
+- Wajib membuat **kolom kalkulasi** dasar (seperti `Revenue`).
+
+### Kriteria Wajib 3: Analisis Agregat dengan Pivot Table
+
+Tunjukkan kemampuan Anda untuk mengekstrak wawasan dari data yang sudah bersih menggunakan *Pivot Table*.
+
+- Buat minimal **dua *Pivot Table*** yang berbeda di *sheet* `Analisis`.
+- *Pivot Table* Anda wajib terhubung dengan minimal **dua *Slicer*** (misalnya, *Slicer* untuk `Kota` dan `Kategori Produk`) untuk memungkinkan analisis interaktif.
+- Wajib mendemonstrasikan pemahaman fitur **Calculated Field** untuk membuat metrik baru di dalam *Pivot Table* (misalnya, menghitung `Persentase_Pajak` atau `Biaya_Pengiriman_per_Unit`).
+
+### Kriteria Wajib 4: Analisis Hipotetikal dan Formula Lanjutan
+
+Seorang analis tidak hanya melaporkan masa lalu, tetapi juga membantu merencanakan masa depan.
+
+- Di *sheet* baru bernama `Analisis Lanjutan`, Anda wajib menggunakan salah satu dari fitur **What-If Analysis** Excel:
+    - **Goal Seek**: Untuk mencari tahu input yang dibutuhkan untuk mencapai target tertentu. (Contoh: "Berapa banyak unit 'Laptop' yang harus terjual di bulan depan untuk mencapai target pendapatan Rp 500 juta?")
+    - **Scenario Manager / Data Table**: Untuk membandingkan beberapa kemungkinan hasil berdasarkan perubahan variabel. (Contoh: "Tampilkan perbandingan total profit jika harga naik 5%, 10%, atau 15%").
+- Wajib menggunakan fungsi pencarian modern **`XLOOKUP`** (atau `INDEX/MATCH`) untuk menarik data dari tabel referensi di *sheet* lain.
+
+### Kriteria Wajib 5: Dashboard & *Storytelling* Interaktif
+
+Ini adalah puncak dari tugas Anda: mengomunikasikan semua temuan Anda dalam satu *dashboard* yang efektif dan interaktif.
+
+- Buat *sheet* baru bernama `Dashboard`.
+- *Dashboard* wajib memiliki minimal **tiga elemen visual** yang berbeda (misalnya, dua *Pivot Chart* dan satu tabel ringkasan).
+- Wajib menyertakan minimal satu **Combination Chart** (grafik kombinasi batang dan garis).
+- Semua elemen di *dashboard* wajib **terhubung dan merespons secara dinamis** pada *Slicer* yang sama.
+- Wajib membuat **judul *chart* yang dinamis**. Judul harus berubah secara otomatis berdasarkan pilihan pada *Slicer*. (Contoh: "Laporan Penjualan untuk Kota: **Jakarta**").
+- Wajib menyertakan **"KPI Cards"**: Kotak teks besar yang menampilkan angka-angka kunci (seperti Total Pendapatan atau Total Pelanggan) yang juga berubah secara dinamis mengikuti *Slicer*.
+
+## Kriteria Opsional
+Untuk mendapatkan nilai lebih dan menunjukkan keahlian tingkat *expert*, Anda bisa menambahkan salah satu atau lebih dari kriteria berikut:
+
+- **Automasi dengan Makro**: Merekam atau menulis sebuah *macro* sederhana untuk mengotomatisasi tugas yang berulang (misalnya, *macro* untuk membersihkan semua filter di *dashboard* dengan satu klik).
+- **Impor & Transformasi dengan Power Query**: Menggunakan Power Query untuk mengimpor dan membersihkan data Anda sebelum dianalisis, sebagai ganti dari pembersihan manual dengan formula.
+- **Analisis Statistik**: Menggunakan *add-in* **Analysis ToolPak** untuk melakukan analisis statistik sederhana seperti regresi atau statistik deskriptif.
+
+## Penilaian
+Proyek Anda akan dinilai berdasarkan beberapa komponen:
+
+* **Wawasan & *Storytelling* (40%)**: Seberapa baik Anda menjelaskan masalah bisnis, proses analisis, dan wawasan yang didapat di file `README.md`.
+* **Pemenuhan Kriteria Wajib (40%)**: Ketepatan dan keberhasilan Anda dalam mengimplementasikan kelima kriteria wajib secara teknis di file Excel.
+* **Penerapan Kriteria Opsional (10%)**: Poin bonus untuk setiap kriteria opsional yang berhasil Anda implementasikan.
+* **Kerapian & Profesionalisme (10%)**: Organisasi file Excel Anda (pemberian nama *sheet*, kejelasan tabel) dan kelengkapan file `README.md`.
+
+## Lainnya
+Informasi lainnya akan menyusul.
 
 :::
