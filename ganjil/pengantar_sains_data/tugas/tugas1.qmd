@@ -13,6 +13,21 @@ Baca informasi di bawah ini untuk memahami instruksi dari tugas PSD.
 ::: {.panel-tabset}
 
 ## Pengantar
+
+:::{.justify}
+
+Untuk laporan evaluasi mata kuliah PSD, Anda harus mengerjakan tugas, yakni story telling terkait analis Data dengan Excel. Tim reviewer akan memeriksa pekerjaan Anda dan memberikan umpan balik pada proyek yang dibuat.
+
+:::
+
+### Tujuan Akhir
+
+:::{.justify}
+
+Submission ini akan meminta Anda bermain peran sebagai data analyst dan menjelaskan wawasan yang kalian dapatkan ke pemangku kepentingan. Ini kita jadikan sebagai salah satu matriks evaluasi pemahaman excel kelas PSD. Kami mengedepankan **kreativitas Anda** dalam mengomunikasikan kepada pemangku kepentingan, tetapi pastikan gaya penyampaian yang dibuat memenuhi kriteria yang akan kami jelaskan.
+
+:::
+
 ## Ketentuan Tugas
 ## Kriteria wajib
 ## Kriteria opsional
