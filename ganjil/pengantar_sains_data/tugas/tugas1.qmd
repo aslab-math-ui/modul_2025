@@ -20,7 +20,7 @@ Pastikan Anda mengirimkan submisi sebelum waktu tersebut. Submisi yang dikumpulk
 
 ::: {.panel-accordion}
 
-## Pengantar {.open icon="1-square-fill"}
+## Pengantar {icon="1-square-fill"}
 
 :::{.justify}
 
