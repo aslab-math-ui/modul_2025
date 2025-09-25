@@ -1,0 +1,251 @@
+---
+title: "Modul 3: Toolkit Inti - Manipulasi Data dengan NumPy & Pandas"
+subtitle: "Dari Komputasi Vektor Hingga Analisis Data Tingkat Lanjut"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-26"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/numpy_pandas_logo_grid.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: Era Baru Analisis Data
+
+Selamat datang di *game changer*. Di Modul 2, kita belajar "berjalan" dengan Python dasar, menganalisis 6 baris data dengan 20 baris kode. Di Modul 3, kita akan belajar "terbang".
+
+**NumPy** dan **Pandas** adalah dua *library* yang menjadi fondasi bagi hampir semua pekerjaan sains data profesional. Keduanya memungkinkan kita untuk memproses jutaan baris data dalam sekejap mata dengan kode yang ringkas dan ekspresif. Mari kita buka *toolkit* canggih sang detektif data.
+
+---
+
+## Bagian 1: NumPy - Fondasi Komputasi Bertenaga Tinggi
+
+Sebelum kita bisa memanipulasi tabel data yang kompleks, kita perlu memahami "tulang punggung"-nya. NumPy (*Numerical Python*) adalah *library* yang menyediakan objek *array* multi-dimensi yang super cepat dan fungsi-fungsi matematika untuk beroperasi di atasnya.
+
+### 1.1. NumPy Array: Lebih dari Sekadar List
+
+Objek utama NumPy adalah `ndarray` (N-dimensional array). Pikirkan ini sebagai *list* Python yang diberi steroid.
+
+```python
+import numpy as np
+
+# Membuat array dari list Python
+list_angka = [1, 2, 3, 4, 5]
+array_angka = np.array(list_angka)
+
+print("List Python biasa:", list_angka)
+print("NumPy array:", array_angka)
+
+# Membuat array dengan cepat
+array_urutan = np.arange(1, 11) # Array dari 1 sampai 10
+print("Array urutan:", array_urutan)
+
+array_kosong = np.zeros((2, 3)) # Array 2x3 berisi angka nol
+print("Array 2x3 berisi nol:\n", array_kosong)
+```
+
+### 1.2. Kekuatan Sebenarnya: *Vectorization*
+
+Inilah keajaiban NumPy. Daripada menggunakan *loop*, kita bisa melakukan operasi matematika pada seluruh *array* sekaligus.
+
+```python
+# Cara lama dengan list (lambat)
+hasil_loop = []
+for angka in list_angka:
+    hasil_loop.append(angka * 2)
+
+# Cara baru dengan NumPy (super cepat)
+hasil_vectorized = array_angka * 2
+
+print("Hasil dengan loop:", hasil_loop)
+print("Hasil dengan vectorization:", hasil_vectorized)
+```
+Operasi *vectorized* ini ribuan kali lebih cepat karena dieksekusi di latar belakang menggunakan kode C/Fortran yang sangat teroptimasi, bukan Python murni.
+
+### 1.3. Seleksi Data Tingkat Lanjut
+
+*Indexing* dan *slicing* di NumPy sangat kuat, terutama untuk data multi-dimensi.
+
+```python
+arr_2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+# Mengambil elemen di baris pertama, kolom kedua (angka 3)
+print("Elemen [0, 2]:", arr_2d[0, 2])
+
+# Mengambil seluruh kolom kedua (angka 2, 5, 8)
+print("Kolom kedua:", arr_2d[:, 1])
+
+# Boolean indexing: ambil semua angka yang lebih besar dari 5
+print("Angka > 5:", arr_2d[arr_2d > 5])
+```
+
+### 1.4. Konsep Kunci: *Broadcasting*
+
+*Broadcasting* adalah kemampuan NumPy untuk melakukan operasi antara *array* dengan bentuk (*shape*) yang berbeda.
+
+**Analogi:** Bayangkan Anda ingin mengecat dinding (`array` besar) dengan satu rol cat (`array` kecil). Anda tidak perlu rol cat seukuran dinding; Anda cukup "meregangkan" atau mengaplikasikan rol cat kecil itu ke seluruh permukaan dinding. Itulah *broadcasting*.
+
+```python
+# Normalisasi data: mengurangi setiap nilai dengan rata-ratanya
+data = np.array([10, 20, 30, 40, 50])
+rata_rata = data.mean() # Hasilnya adalah satu angka (scalar)
+
+# Broadcasting terjadi di sini: array (5 elemen) - scalar (1 elemen)
+data_ternormalisasi = data - rata_rata
+print("Data ternormalisasi:", data_ternormalisasi)
+```
+
+### 1.5. Agregasi Universal
+
+NumPy menyediakan fungsi agregat yang bisa bekerja pada seluruh *array* atau sepanjang sumbu (`axis`) tertentu.
+* `axis=0` berarti melakukan operasi secara vertikal (per kolom).
+* `axis=1` berarti melakukan operasi secara horizontal (per baris).
+
+```python
+arr_2d = np.array([[1, 2, 3], [4, 5, 6]])
+
+print("Jumlah semua elemen:", arr_2d.sum())
+print("Jumlah per kolom (axis=0):", arr_2d.sum(axis=0)) # Hasil: [1+4, 2+5, 3+6] -> [5, 7, 9]
+print("Rata-rata per baris (axis=1):", arr_2d.mean(axis=1)) # Hasil: [mean(1,2,3), mean(4,5,6)] -> [2., 5.]
+```
+
+---
+
+## Bagian 2: Pandas - Analisis Data Dunia Nyata
+
+Jika NumPy adalah fondasi dan tulang punggung, maka **Pandas** adalah "pisau Swiss Army" yang kita gunakan sehari-hari. Pandas menyediakan struktur data dan alat analisis yang dirancang untuk data tabular (seperti tabel Excel atau SQL).
+
+### 2.1. Anatomi DataFrame
+
+Objek utama di Pandas adalah **DataFrame**, sebuah tabel dua dimensi.
+* **Index**: Label untuk setiap baris.
+* **Columns**: Label untuk setiap kolom.
+* **Data**: Isinya, yang merupakan satu atau lebih NumPy *array*.
+
+### 2.2. Seleksi Data Presisi: `.loc` vs `.iloc`
+
+Ini adalah salah satu konsep paling penting (dan sering membingungkan) di Pandas.
+* **`.loc` (location)**: Memilih data berdasarkan **NAMA LABEL** dari *index* dan kolom.
+* **`.iloc` (integer location)**: Memilih data berdasarkan **POSISI INTEGER** (angka urutan 0, 1, 2, ...).
+
+```python
+import pandas as pd
+
+# Membuat DataFrame sederhana
+data = {'Nama': ['Ali', 'Budi', 'Cici'],
+        'Usia': [20, 21, 22]}
+df = pd.DataFrame(data, index=['mhs1', 'mhs2', 'mhs3'])
+
+# --- Menggunakan .loc ---
+# Ambil data Budi berdasarkan label index 'mhs2'
+print("Data Budi (.loc):\n", df.loc['mhs2'])
+# Ambil Usia Cici berdasarkan label index 'mhs3' dan label kolom 'Usia'
+print("\nUsia Cici (.loc):", df.loc['mhs3', 'Usia'])
+
+# --- Menggunakan .iloc ---
+# Ambil data Budi berdasarkan posisi integer 1 (baris kedua)
+print("\nData Budi (.iloc):\n", df.iloc[1])
+# Ambil Usia Cici berdasarkan posisi integer baris 2, kolom 1
+print("\nUsia Cici (.iloc):", df.iloc[2, 1])
+```
+
+### 2.3. Manipulasi Kolom & *Method Chaining*
+
+Membuat kolom baru sangatlah mudah. Gaya *coding* profesional sering menggunakan *method chaining* untuk melakukan beberapa operasi dalam satu alur yang elegan.
+
+```python
+# Misalkan df adalah DataFrame Titanic
+# Buat kolom baru 'FamilySize'
+df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
+
+# Method chaining: filter penumpang kelas 1, lalu buat kolom baru 'FareInIDR'
+df_kelas1_rupiah = (
+    df[df['Pclass'] == 1]
+    .assign(FareInIDR = df['Fare'] * 15000)
+)
+```
+
+### 2.4. Mengurutkan dan Memberi Peringkat
+
+Gunakan `sort_values()` untuk mengurutkan data Anda.
+
+```python
+# Mengurutkan penumpang berdasarkan usia, dari yang tertua
+df_sorted = df.sort_values(by='Age', ascending=False)
+
+# Mengurutkan berdasarkan beberapa kolom
+df_sorted_multi = df.sort_values(by=['Pclass', 'Age'], ascending=[True, False])
+```
+
+### 2.5. Statistik Deskriptif & Menangani Data Hilang (*Missing Data*)
+
+* `df.describe()`: Memberikan ringkasan statistik untuk kolom numerik.
+* `df.value_counts()`: Menghitung frekuensi nilai unik dalam sebuah *Series* (kolom).
+* `df.isna().sum()`: **Sangat penting!** Menghitung jumlah nilai kosong (`NaN`) di setiap kolom.
+
+Untuk menangani nilai kosong, ada dua strategi utama:
+* `df.dropna()`: Menghapus baris (atau kolom) yang memiliki nilai kosong.
+* `df.fillna()`: Mengisi nilai kosong dengan nilai tertentu (misalnya, rata-rata, median, atau modus).
+
+---
+
+## Latihan Utama: "Investigasi Mendalam Data Penumpang Titanic"
+
+:::{.callout-note icon="true"}
+### Skenario
+Kita mendapat tugas untuk melakukan analisis eksplorasi mendalam pada data Titanic untuk menemukan faktor-faktor yang paling berpengaruh terhadap tingkat keselamatan penumpang.
+**Unduh Dataset:** [Titanic.csv di Kaggle](https://www.kaggle.com/datasets/heshamhosny/titanic-dataset)
+:::
+
+**Tugas-tugas:**
+1.  Muat `titanic.csv` ke dalam DataFrame Pandas. Lakukan inspeksi awal untuk melihat tipe data dan jumlah nilai kosong di setiap kolom.
+2.  Data `Age` memiliki banyak nilai kosong. Isi nilai kosong tersebut dengan **nilai median** dari kolom `Age`.
+3.  Buat kolom baru `AgeGroup` yang mengkategorikan penumpang menjadi 'Anak' (di bawah 18), 'Dewasa' (18-60), dan 'Lansia' (di atas 60). (*Hint*: Gunakan `pd.cut`).
+4.  Gunakan `.loc` untuk memilih penumpang wanita (`Sex == 'female'`) di kelas ketiga (`Pclass == 3`) dan hanya tampilkan kolom `Name`, `Age`, dan `Survived`.
+5.  Siapa nama 5 penumpang yang membayar harga tiket (`Fare`) paling mahal?
+6.  Berapa rata-rata usia penumpang yang **selamat** vs. yang **tidak selamat**?
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+
+```python
+import pandas as pd
+import numpy as np
+
+# 1. Muat & Inspeksi Data
+df = pd.read_csv('titanic.csv')
+print("Info Awal:\n", df.info())
+print("\nNilai Kosong:\n", df.isna().sum())
+
+# 2. Isi Nilai Kosong pada 'Age'
+median_age = df['Age'].median()
+df['Age'].fillna(median_age, inplace=True)
+print("\nNilai kosong di 'Age' setelah diisi:", df['Age'].isna().sum())
+
+# 3. Buat Kolom 'AgeGroup'
+bins = [0, 18, 60, 100]
+labels = ['Anak', 'Dewasa', 'Lansia']
+df['AgeGroup'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
+print("\nContoh AgeGroup:\n", df[['Age', 'AgeGroup']].head())
+
+# 4. Gunakan .loc untuk seleksi spesifik
+wanita_kelas3 = df.loc[(df['Sex'] == 'female') & (df['Pclass'] == 3), ['Name', 'Age', 'Survived']]
+print("\nWanita Kelas 3:\n", wanita_kelas3.head())
+
+# 5. 5 Penumpang dengan tiket termahal
+penumpang_termahal = df.sort_values(by='Fare', ascending=False).head(5)
+print("\n5 Penumpang Termahal:\n", penumpang_termahal[['Name', 'Fare']])
+
+# 6. Rata-rata usia berdasarkan status keselamatan
+rata_rata_usia_per_status = df.groupby('Survived')['Age'].mean()
+print("\nRata-rata Usia (0=Tidak Selamat, 1=Selamat):\n", rata_rata_usia_per_status)
+```
+:::
+
+---
+
+## Penutup
+
+Luar biasa! Anda sekarang tidak hanya bisa memfilter, tetapi juga membersihkan, mentransformasi, dan menganalisis data secara mendalam menggunakan NumPy dan Pandas. Anda sudah menguasai fondasi *toolkit* seorang analis data.
+
+Namun, bagaimana jika data kita terpisah di beberapa tabel (misalnya, data penumpang dan data kru kapal)? Di **Modul 4**, kita akan belajar cara **menggabungkan data (*merging* & *joining*)** dan melakukan **agregasi tingkat lanjut (*advanced grouping*)**.
