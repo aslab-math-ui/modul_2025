@@ -1,0 +1,104 @@
+---
+title: "Modul 1: Pengenalan Proses Sains Data"
+subtitle: "Berpikir Seperti Seorang Detektif Data"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-24"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/data_detective_magnifying_glass.png"
+---
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
+</a>
+
+## Pembukaan: "Cerita di Balik Data" 🕵️
+
+Selamat datang di modul pertama Ilmu Data! Sebelum kita menyentuh *coding* atau rumus yang rumit, kita perlu menjawab satu pertanyaan fundamental: *Apa itu sains data?*
+
+Daripada definisi formal, mari kita mulai dengan sebuah cerita. Pernahkah Anda mendengar kisah legendaris tentang bagaimana sebuah supermarket di Amerika menempatkan **bir di sebelah popok bayi** dan penjualannya meroket? Kisah ini, meskipun sering diperdebatkan kebenarannya, menangkap inti dari sains data: **menemukan pola tersembunyi dalam data untuk membuat keputusan yang lebih baik.** Tim analis menemukan bahwa para ayah yang disuruh istri mereka membeli popok di malam hari, seringkali juga membeli bir sebagai "hadiah" untuk diri sendiri.
+
+Sains data bukanlah tentang *coding* atau matematika, melainkan tentang **rasa penasaran** dan **kemampuan memecahkan teka-teki** menggunakan data sebagai petunjuk. Di modul ini, kita akan belajar menjadi "detektif data".
+
+---
+
+## Peta Jalan: Siklus Hidup Proyek Sains Data
+
+Setiap investigasi detektif yang baik mengikuti sebuah proses yang terstruktur. Di dunia data, proses ini disebut **Siklus Hidup Proyek Sains Data**. Ini adalah peta jalan yang memandu kita dari awal sebuah "kasus" hingga penemuan solusinya.
+
+
+
+Kerangka kerja yang paling umum digunakan adalah CRISP-DM, yang terdiri dari 6 langkah:
+
+1.  **Pemahaman Bisnis (*Business Understanding*)**: Apa masalah yang sebenarnya ingin kita pecahkan? Apa tujuan klien? Ini adalah saat klien datang "melapor kasus".
+2.  **Pemahaman Data (*Data Understanding*)**: Petunjuk apa yang kita miliki? Kita mengumpulkan data yang ada dan mencoba memahaminya secara sekilas.
+3.  **Persiapan Data (*Data Preparation*)**: Membersihkan petunjuk. Ini adalah tahap forensik di mana kita membersihkan data yang "kotor", menangani data yang hilang, dan menyusunnya agar siap dianalisis.
+4.  **Pemodelan (*Modeling*)**: Menghubungkan titik-titik. Di sinilah kita menggunakan teknik statistik atau *machine learning* untuk menemukan pola.
+5.  **Evaluasi (*Evaluation*)**: Apakah temuan kita valid? Kita menguji model atau hasil analisis kita untuk memastikan temuan tersebut masuk akal dan benar-benar menjawab pertanyaan awal.
+6.  **Penyebaran (*Deployment*)**: Menyajikan laporan. Kita mempresentasikan hasil temuan kita kepada klien dalam bentuk laporan, *dashboard*, atau aplikasi.
+
+---
+
+## Studi Kasus Mini Terpandu: "Misteri Keterlambatan Bus Sekolah"
+
+Mari kita lihat bagaimana peta jalan ini bekerja dalam sebuah kasus sederhana.
+
+* **Masalah**: Sebuah sekolah ingin tahu mengapa bus antar-jemput mereka sering terlambat tiba di sekolah.
+
+1.  **Pemahaman Bisnis**: Tujuannya adalah mengurangi jumlah keterlambatan bus untuk memastikan siswa tidak telat masuk kelas.
+2.  **Pemahaman Data**: Sekolah memberikan data catatan perjalanan bus selama 3 bulan terakhir. Datanya berisi: `ID Bus`, `Rute`, `Jam Berangkat`, `Jam Tiba`, dan `Catatan Cuaca`.
+3.  **Persiapan Data**: Kita menemukan beberapa data `Jam Tiba` kosong. Kita memutuskan untuk menghapus baris data tersebut karena tidak bisa dianalisis.
+4.  **Pemodelan/Analisis**: Kita tidak perlu model canggih. Kita cukup membuat tabel ringkasan yang menghitung **rata-rata keterlambatan per rute** dan **jumlah keterlambatan saat cuaca hujan vs. cerah**.
+5.  **Evaluasi**: Kita menemukan pola yang sangat kuat: **90% keterlambatan terjadi di Rute C, dan hampir semuanya terjadi saat cuaca hujan.** Temuan ini masuk akal karena Rute C melewati area yang rawan banjir.
+6.  **Penyebaran**: Kita membuat laporan satu halaman untuk kepala sekolah yang berisi *bar chart* perbandingan keterlambatan antar rute dan merekomendasikan untuk mengubah jadwal keberangkatan bus di Rute C menjadi 15 menit lebih awal, khusus saat prakiraan cuaca menunjukkan akan hujan.
+
+---
+
+## Latihan Utama: Anda sebagai Detektif Data
+
+Sekarang giliran Anda. Gunakan kerangka berpikir yang baru saja kita pelajari untuk merancang sebuah rencana investigasi.
+
+:::{.callout-note icon="true"}
+### Kasus: Kedai Kopi dan Hari Hujan 
+Pemilik "Kedai Kopi Senja" meminta bantuan Anda. Dia merasa bisnisnya lesu saat cuaca hujan. Dia ingin membuat promo yang tepat sasaran, tapi tidak tahu harus mempromosikan apa. Pertanyaannya: **"Menu apa yang sebenarnya paling laku saat cuaca hujan?"**
+
+Berdasarkan "Peta Jalan Detektif Data", tuliskan **langkah-langkah investigasi** yang akan Anda lakukan, mulai dari pertanyaan yang akan Anda ajukan hingga kesimpulan yang ingin Anda capai. **Anda tidak perlu melakukan *coding*, cukup tuliskan rencana Anda.**
+:::
+
+:::{.callout-tip collapse="true"}
+### Contoh Jawaban (Klik untuk Membuka)
+
+Berikut adalah salah satu contoh pendekatan yang bisa diambil. Jawaban Anda bisa berbeda dan itu tidak masalah, selama alurnya logis.
+
+* **1. Pemahaman Bisnis:**
+    * **Tujuan:** Meningkatkan penjualan selama hari hujan.
+    * **Pertanyaan Kunci:** Menu apa yang penjualannya paling tinggi (atau paling rendah) saat hujan dibandingkan saat cerah?
+    * **Rencana Aksi:** Membuat promo "Beli 1 Gratis 1" untuk produk yang paling diminati saat hujan.
+
+* **2. Pemahaman Data:**
+    * **Data yang Dibutuhkan:** Saya akan meminta data transaksi penjualan selama 6 bulan terakhir. Data ini harus berisi: Tanggal, Jam Transaksi, Nama Menu yang Terjual, Jumlah, dan Harga. Saya juga akan meminta data cuaca historis (Cerah/Hujan) untuk periode yang sama.
+
+* **3. Persiapan Data:**
+    * Saya akan menggabungkan data transaksi dengan data cuaca berdasarkan tanggal.
+    * Saya akan memeriksa apakah ada data yang hilang (misalnya, transaksi tanpa nama menu) dan membersihkannya.
+
+* **4. Analisis:**
+    * Saya akan memisahkan data menjadi dua kelompok: "Transaksi Hari Hujan" dan "Transaksi Hari Cerah".
+    * Untuk masing-masing kelompok, saya akan menghitung total penjualan untuk setiap menu.
+    * Saya akan membandingkan peringkat penjualan menu di kedua kondisi cuaca tersebut.
+
+* **5. Evaluasi:**
+    * Apakah ada menu yang peringkatnya naik drastis saat hujan? Misalnya, *Hot Chocolate* mungkin dari peringkat #10 saat cerah menjadi #2 saat hujan. Temuan ini sangat signifikan.
+    * Apakah ada menu yang penjualannya anjlok? Mungkin *Ice Coffee* tidak laku saat hujan.
+
+* **6. Penyebaran (Rekomendasi):**
+    * Saya akan membuat laporan singkat untuk pemilik kedai.
+    * **Rekomendasi:** "Berdasarkan data, penjualan *Hot Chocolate* dan *Croissant* meningkat signifikan saat hujan. Saya merekomendasikan untuk membuat promo paket 'Combo Hujan': diskon untuk pembelian Hot Chocolate dan Croissant bersamaan saat cuaca hujan."
+
+:::
+
+---
+
+## Penutup & Jembatan ke Modul Berikutnya
+
+Selamat, Anda sekarang sudah berpikir seperti seorang detektif data! Anda telah belajar bahwa sains data bukanlah sekadar *coding*, melainkan sebuah **proses investigasi yang terstruktur**.
+
+Sekarang setelah kita memiliki peta jalannya, di **Modul 2** kita akan mulai belajar cara menggunakan "kaca pembesar" dan "alat forensik" pertama kita: **Algoritma dan Pemrograman Dasar dengan Python.**
