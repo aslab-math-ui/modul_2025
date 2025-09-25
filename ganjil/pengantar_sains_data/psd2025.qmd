@@ -19,9 +19,9 @@ listing:
 
   - id : tugas
     contents: "tugas/*.qmd"
-    type: grid
+    type: table
     sort: "title asc"
-    fields: [title, subtitle, date]
+    fields: [image, title, subtitle, date]
 ---
 
 <a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">

@@ -3,6 +3,7 @@ title: "Tugas 1: Pemahaman Analisis Data dengan Excel"
 subtitle: "Studi Kasus: Dari Data Mentah Menjadi Wawasan Bisnis Interaktif"
 date: 2025-09-26
 author: "Tim Asisten Lab Matematika UI"
+image: "https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/static/thumbnail-tugas1-psd2025.webp"
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
