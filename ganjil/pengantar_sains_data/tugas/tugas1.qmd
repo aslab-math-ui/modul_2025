@@ -194,12 +194,10 @@ Anda **diperbolehkan dan didorong** untuk mempublikasikan proyek ini ke platform
 
 :::
 
-:::{.justify}
-Itu saja informasi yang dapat diberikan, semangat mengerjakannya. Semoga mendapatkan Ilmu yang bermanfaat.
-:::
+<br>
 
 :::{.justify}
-Kolom Pengumpulan akan ada di halaman ini juga. Kedepannya halaman ini akan terus diperbaharui untuk menyediakan tempat pengumpulan. Terima Kasih.
+Kolom Pengumpulan akan ada di halaman ini juga. Kedepannya halaman ini akan terus **diperbaharui** untuk menyediakan tempat pengumpulan. Terima Kasih.
 :::
 
 :::{.RIGHT}
