@@ -1,0 +1,227 @@
+---
+title: "Modul 4: Manipulasi Data Relasional dengan Pandas"
+subtitle: "Studi Kasus Northwind: Menguasai Join dan Agregasi Data"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-26"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/database_schema_diagram.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Data Tidak Hidup di Pulau Terpencil"
+
+Di Modul 3, kita telah membedah satu *dataset* dan berhasil mengekstrak informasi darinya. Namun, di dunia nyata, data jarang sekali datang dalam satu file yang rapi. Data transaksi penjualan terpisah dari data detail produk, dan data pelanggan tersimpan di tabel yang lain lagi.
+
+Di modul ini, kita akan fokus menguasai dua senjata paling ampuh dalam *toolkit* Pandas: **menggabungkan data (`merge`)** dan **meringkas data (`groupby`)**. Sebagai bonus, kita akan lihat bagaimana konsep yang sama diekspresikan dalam bahasa *database* universal, **SQL**.
+
+---
+
+## Bagian 1: Memahami Peta Data (Skema Relasional)
+
+Sebelum memulai investigasi, seorang detektif harus memahami "peta" lokasinya. Dalam analisis data, peta kita adalah **skema relasional**.
+
+### 1.1. Dataset Northwind
+
+*Dataset* Northwind merepresentasikan data perusahaan fiktif dan terbagi menjadi beberapa file `.csv`. Untuk modul ini, kita akan fokus pada 5 tabel utama: `orders`, `order_details`, `products`, `customers`, dan `employees`.
+
+:::{.callout-tip icon="true"}
+### Arena Eksperimen: Siapkan *Playground* Northwind!
+Untuk modul ini, kita akan menggunakan *dataset* klasik **Northwind Traders**. Silakan unduh file-file `.csv` yang relevan dari salah satu repositori di bawah ini.
+
+* [**Northwind Traders CSV di GitHub (just4jc)**](https://github.com/just4jc/Northwind-Traders-Dataset)
+:::
+
+### 1.2. Apa itu Skema Relasional?
+Skema relasional adalah diagram yang menunjukkan bagaimana tabel-tabel saling terhubung. Hubungan ini terjalin melalui **kunci** (*keys*).
+* **Primary Key**: Kolom yang menjadi identitas unik untuk setiap baris di sebuah tabel (misalnya, `customerID` di tabel `customers`).
+* **Foreign Key**: Kolom di satu tabel yang merujuk ke *Primary Key* di tabel lain (misalnya, `customerID` di tabel `orders`).
+
+
+
+Memahami peta ini sangat penting untuk mengetahui tabel mana yang perlu kita gabungkan untuk menjawab pertanyaan tertentu.
+
+---
+
+## Bagian 2: Menggabungkan Data dengan Pandas (`pd.merge`)
+
+Mari kita langsung praktikkan cara menyatukan petunjuk-petunjuk yang terpisah ini.
+
+```python
+import pandas as pd
+
+# Muat beberapa tabel kunci dari Northwind
+customers = pd.read_csv('northwind-data/customers.csv')
+orders = pd.read_csv('northwind-data/orders.csv')
+products = pd.read_csv('northwind-data/products.csv')
+order_details = pd.read_csv('northwind-data/order_details.csv')
+```
+
+### 2.1. Studi Kasus Join Multi-Tabel
+
+**Pertanyaan:** "Tampilkan 5 pesanan pertama untuk produk 'Chai'."
+
+Untuk menjawab ini, kita butuh informasi dari 3 tabel: `products` (untuk menemukan ID produk 'Chai'), `order_details` (untuk menemukan pesanan yang berisi ID produk tersebut), dan `orders` (untuk melihat detail pesanan).
+
+```python
+# Langkah 1: Cari productID untuk 'Chai'
+chai_id = products[products['productName'] == 'Chai']['productID'].iloc[0]
+
+# Langkah 2: Gabungkan (join) order_details dengan orders
+merged_df = pd.merge(
+    orders,
+    order_details,
+    on='orderID',
+    how='inner'
+)
+
+# Langkah 3: Filter hasil gabungan untuk produk 'Chai'
+chai_orders = merged_df[merged_df['productID'] == chai_id]
+
+print(chai_orders.head())
+```
+
+### 2.2. Tipe-Tipe Join dalam Konteks Bisnis
+
+* **`inner join` (Default)**: Hanya menampilkan irisan data. Sangat berguna untuk analisis seperti "Pelanggan mana yang pernah melakukan pemesanan?".
+* **`left join`**: Mempertahankan semua data dari tabel kiri. Berguna untuk menemukan data yang tidak memiliki pasangan.
+    **Contoh Pertanyaan:** "Apakah ada pelanggan yang belum pernah melakukan pemesanan sama sekali?"
+    ```python
+    customer_orders = pd.merge(
+        customers,
+        orders,
+        on='customerID',
+        how='left'
+    )
+    # Pelanggan yang belum pernah pesan akan memiliki nilai NaN di kolom orderID
+    pelanggan_tanpa_order = customer_orders[customer_orders['orderID'].isna()]
+    print(pelanggan_tanpa_order[['customerID', 'companyName']])
+    ```
+
+### 2.3. Padanan dalam SQL: `JOIN` (Bonus)
+
+Di SQL, operasi penggabungan yang kita lakukan di atas ditulis seperti ini:
+
+```sql
+SELECT
+    o.orderID,
+    c.companyName,
+    o.orderDate
+FROM
+    orders o
+INNER JOIN
+    customers c ON o.customerID = c.customerID;
+```
+
+---
+
+## Bagian 3: Agregasi Tingkat Lanjut dengan Pandas (`.groupby`)
+
+Setelah data digabungkan, saatnya meringkasnya untuk menemukan pola.
+
+### 3.1. Menjawab Pertanyaan Bisnis dengan Agregasi
+
+**Pertanyaan:** "Negara mana yang menjadi 5 pasar dengan penjualan tertinggi?"
+
+```python
+# Asumsikan kita sudah menggabungkan semua tabel menjadi `df_full`
+# dan sudah membuat kolom `Revenue`
+# df_full['Revenue'] = df_full['unitPrice'] * df_full['quantity'] * (1 - df_full['discount'])
+
+# pendapatan_per_negara = df_full.groupby('shipCountry')['Revenue'].sum()
+# top_5_negara = pendapatan_per_negara.sort_values(ascending=False).head(5)
+
+# print(top_5_negara)
+```
+
+### 3.2. Agregasi Kustom dengan `.agg()`
+
+**Pertanyaan:** "Buat laporan ringkas yang menunjukkan, untuk setiap negara pengiriman (`shipCountry`), berapa **total pendapatan**, **jumlah pesanan unik**, dan **rata-rata biaya pengiriman** (`freight`)?"
+
+```python
+# Laporan per negara
+# report_per_country = df_full.groupby('shipCountry').agg(
+#     Total_Pendapatan=('Revenue', 'sum'),
+#     Jumlah_Pesanan_Unik=('orderID', 'nunique'),
+#     Rata_Rata_Biaya_Kirim=('freight', 'mean')
+# )
+
+# print(report_per_country.sort_values(by='Total_Pendapatan', ascending=False).round(2))
+```
+
+### 3.3. Padanan dalam SQL: `GROUP BY` (Bonus)
+
+Di SQL, agregasi di atas ditulis seperti ini:
+```sql
+SELECT
+    shipCountry,
+    SUM(unitPrice * quantity * (1 - discount)) AS Total_Pendapatan,
+    COUNT(DISTINCT orderID) AS Jumlah_Pesanan_Unik,
+    AVG(freight) AS Rata_Rata_Biaya_Kirim
+FROM
+    -- (tabel-tabel yang sudah di-JOIN)
+GROUP BY
+    shipCountry
+ORDER BY
+    Total_Pendapatan DESC;
+```
+
+---
+
+## Latihan Utama: "Laporan Performa Produk & Karyawan Tahunan"
+
+:::{.callout-note icon="true"}
+### Skenario
+Manajemen Northwind Traders membutuhkan laporan performa komprehensif untuk **tahun 1997**. Tugas Anda adalah membuat ringkasan data menggunakan semua keterampilan yang telah dipelajari.
+:::
+
+**Tugas-tugas:**
+1.  Gabungkan semua tabel yang diperlukan (`orders`, `order_details`, `products`, `employees`, `categories`).
+2.  Filter *dataset* gabungan tersebut untuk menampilkan data dari tahun 1997 saja. (*Hint*: Kolom `orderDate` perlu diubah menjadi tipe data tanggal terlebih dahulu menggunakan `pd.to_datetime()`).
+3.  Buat sebuah tabel ringkasan yang menunjukkan, untuk setiap **`categoryName`**:
+    * Total Pendapatan (`Revenue`).
+    * Jumlah Produk Terjual (`quantity`).
+    * Nama Karyawan (Top Performer) yang paling banyak menghasilkan pendapatan untuk kategori tersebut. (*Tantangan: ini memerlukan `.groupby()` yang diikuti dengan `.idxmax()`*).
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+```python
+# # Muat semua data...
+# orders['orderDate'] = pd.to_datetime(orders['orderDate'])
+
+# # 1 & 2. Gabungkan dan filter
+# df_merged = pd.merge(order_details, orders[orders['orderDate'].dt.year == 1997], on='orderID')
+# df_merged = pd.merge(df_merged, products, on='productID')
+# df_merged = pd.merge(df_merged, categories, on='categoryID')
+# df_merged = pd.merge(df_merged, employees, on='employeeID')
+
+# # Buat kolom Revenue
+# df_merged['Revenue'] = df_merged['unitPrice'] * df_merged['quantity'] * (1 - df_merged['discount'])
+
+# # 3. Buat laporan ringkasan
+# # Agregasi dasar
+# report = df_merged.groupby('categoryName').agg(
+#     Total_Pendapatan=('Revenue', 'sum'),
+#     Total_Unit_Terjual=('quantity', 'sum')
+# )
+
+# # Cari karyawan top per kategori (langkah lanjutan)
+# top_performers = df_merged.loc[df_merged.groupby('categoryName')['Revenue'].idxmax()]
+# top_performers = top_performers[['categoryName', 'firstName', 'lastName']].rename(columns={'firstName': 'Top_Performer_FirstName', 'lastName': 'Top_Performer_LastName'})
+
+# # Gabungkan laporan
+# final_report = pd.merge(report, top_performers, on='categoryName').sort_values(by='Total_Pendapatan', ascending=False)
+# final_report['Top_Performer'] = final_report['Top_Performer_FirstName'] + ' ' + final_report['Top_Performer_LastName']
+
+# print(final_report[['Total_Pendapatan', 'Total_Unit_Terjual', 'Top_Performer']].round(2))
+```
+:::
+
+---
+
+## Penutup
+
+Anda sekarang bisa bekerja dengan data dari berbagai sumber. Anda telah belajar cara menggabungkan tabel, melakukan agregasi kompleks, dan bahkan menerjemahkan logika Anda ke dalam SQL. Ini adalah keterampilan inti yang memisahkan seorang analis pemula dari seorang analis profesional.
+
+Namun, seringkali data di dunia nyata sangat 'kotor' dan jarang (*sparse*). Di **Modul 5**, kita akan belajar teknik-teknik khusus untuk menangani data yang tidak sempurna.
