@@ -1,0 +1,23 @@
+---
+title: "Tugas 1: Pemahaman Analisis Data dengan Excel"
+subtitle: "Studi Kasus: Dari Data Mentah Menjadi Wawasan Awal"
+date: 2025-10-04
+author: "Tim Asisten Lab Matematika UI"
+---
+
+:::{.justify}
+Selamat! Akhirnya Anda telah sampai di penghujung pembelajaran. Anda telah mempelajari banyak hal.
+Baca informasi di bawah ini untuk memahami instruksi dari tugas PSD.
+:::
+
+::: {.panel-tabset}
+
+## Pengantar
+## Ketentuan Tugas
+## Kriteria wajib
+## Kriteria opsional
+## Penilaian 
+## Lainnya
+
+
+:::
