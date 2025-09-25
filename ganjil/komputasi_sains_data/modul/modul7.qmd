@@ -1,0 +1,158 @@
+---
+title: "Modul 7: Visualisasi Data & Storytelling"
+subtitle: "Mengubah Analisis Menjadi Cerita yang Meyakinkan"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-29"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/storytelling_with_data_dashboard.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Analisis Terbaik Sekalipun Akan Sia-sia..."
+
+...jika tidak bisa dikomunikasikan dengan baik. Selamat datang di modul terakhir dari fondasi ilmu data! Sejauh ini, Anda telah belajar cara menjadi detektif: mengumpulkan petunjuk (data), menggabungkannya, dan menemukan pola tersembunyi.
+
+Namun, tugas terakhir seorang detektif adalah mempresentasikan temuannya di "ruang sidang" (rapat manajemen). Laporan setebal 50 halaman atau tabel berisi 500 baris angka tidak akan berguna bagi seorang CEO. Di sinilah **visualisasi data** berperan. Tugas kita sekarang adalah menjadi **penerjemah** dan **pencerita**: menerjemahkan temuan kompleks menjadi visual yang sederhana dan menceritakan kisah di balik angka. Di modul ini, kita akan belajar seni tersebut menggunakan **Matplotlib** dan **Seaborn**.
+
+---
+
+## Bagian 1: Prinsip Dasar Visualisasi Efektif
+
+Sebelum menyentuh kode, kita perlu memahami teori di balik pembuatan grafik yang baik. Grafik yang efektif bukanlah yang paling berwarna-warni, melainkan yang paling jelas menyampaikan pesan.
+
+### 1.1. Memilih Grafik yang Tepat
+
+Setiap jenis grafik memiliki tujuan spesifik. Menggunakan grafik yang salah adalah cara tercepat untuk membingungkan audiens Anda.
+
+* **Line Chart (Grafik Garis)**: Terbaik untuk menunjukkan **tren dari waktu ke waktu**.
+* **Bar Chart (Diagram Batang)**: Terbaik untuk **membandingkan nilai** antar kategori.
+* **Histogram**: Terbaik untuk memahami **distribusi** dari satu variabel numerik.
+* **Scatter Plot (Diagram Pencar)**: Terbaik untuk melihat **hubungan atau korelasi** antara dua variabel numerik.
+
+### 1.2. Anatomi Sebuah Plot
+
+Setiap grafik yang baik harus memiliki komponen-komponen ini untuk memberikan konteks yang jelas:
+1.  **Judul yang Informatif**: Memberitahu audiens apa isi dari grafik tersebut.
+2.  **Label Sumbu X dan Y**: Menjelaskan apa yang diukur oleh setiap sumbu, lengkap dengan satuannya.
+3.  **Legenda**: Diperlukan jika ada beberapa seri data (misalnya, beberapa garis atau warna batang) untuk menjelaskan arti masing-masing.
+4.  **Sumber Data**: Menambahkan catatan kecil tentang sumber data akan meningkatkan kredibilitas Anda.
+
+---
+
+## Bagian 2: *Toolkit* Visualisasi di Python
+
+Python memiliki ekosistem visualisasi yang sangat kaya. Kita akan fokus pada dua *library* yang menjadi fondasi utamanya.
+
+:::{.callout-tip icon="true"}
+### Persiapan
+Pastikan Anda sudah menginstal *library* ini. Jika belum, aktifkan `venv` Anda dan jalankan:
+`pip install matplotlib seaborn`
+:::
+
+### 2.1. Matplotlib: Fondasi Segalanya
+
+Matplotlib adalah *library* "tingkat rendah" yang memberikan Anda **kontrol penuh** atas setiap elemen dari sebuah plot. Hampir semua *library* visualisasi lain di Python dibangun di atas Matplotlib.
+
+### 2.2. Seaborn: Statistik yang Indah
+
+Seaborn adalah *library* "tingkat tinggi" yang dirancang untuk membuat plot statistik yang menarik secara visual dengan kode yang jauh lebih sedikit. Seaborn bekerja sangat baik dengan Pandas DataFrame.
+
+### 2.3. Alur Kerja Praktis yang Direkomendasikan
+
+Untuk efisiensi dan hasil terbaik, alur kerjanya adalah:
+1.  Gunakan **Seaborn** untuk membuat plot utama dengan cepat (misalnya, `sns.barplot(...)`). Seaborn akan otomatis menangani banyak detail seperti pewarnaan dan label dasar.
+2.  Gunakan **Matplotlib** (`plt`) untuk melakukan kustomisasi akhir, seperti mengubah judul, menyesuaikan ukuran label, atau menambahkan anotasi teks.
+
+---
+
+## Latihan Utama: "Membangun Mini-Dashboard untuk Manajemen Northwind"
+
+:::{.callout-note icon="true"}
+### Skenario
+CEO Northwind Traders akan mengadakan rapat strategi dan meminta Anda menyiapkan **empat visualisasi kunci** untuk memahami performa bisnis **tahun 1997**. Tugas Anda adalah membuat keempat plot tersebut dan menyajikannya dalam satu gambar ringkas.
+:::
+
+**Tugas-tugas:**
+1.  Siapkan *DataFrame* `df_1997` yang sudah digabungkan dan bersih, berisi data dari `orders`, `order_details`, `products`, `customers`, dan `employees` khusus untuk tahun 1997. Jangan lupa membuat kolom `Revenue`.
+2.  **Visualisasi 1 (Line Chart):** Buat grafik tren **pendapatan bulanan** sepanjang tahun 1997 untuk melihat performa dari bulan ke bulan.
+3.  **Visualisasi 2 (Bar Chart):** Buat grafik batang yang menunjukkan **5 negara dengan total penjualan tertinggi** untuk mengidentifikasi pasar utama.
+4.  **Visualisasi 3 (Bar Chart Lain):** Buat grafik batang horizontal yang menunjukkan **5 karyawan dengan performa penjualan terbaik** untuk apresiasi tim.
+5.  Sajikan keempat plot ini dalam satu *layout* grid 2x2 menggunakan `plt.subplots()` dari Matplotlib. Beri judul keseluruhan untuk *dashboard* tersebut.
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Asumsikan semua file .csv sudah dimuat ke dalam DataFrame yang sesuai
+# (customers, orders, products, order_details, employees, categories)
+
+# --- 1. Persiapan Data ---
+# Ubah orderDate menjadi tipe datetime
+orders['orderDate'] = pd.to_datetime(orders['orderDate'])
+
+# Gabungkan semua tabel
+df_merged = pd.merge(order_details, products, on='productID')
+df_merged = pd.merge(df_merged, orders, on='orderID')
+df_merged = pd.merge(df_merged, customers, on='customerID')
+df_merged = pd.merge(df_merged, employees, on='employeeID')
+
+# Buat kolom Revenue
+df_merged['Revenue'] = df_merged['unitPrice'] * df_merged['quantity'] * (1 - df_merged['discount'])
+
+# Filter hanya untuk tahun 1997
+df_1997 = df_merged[df_merged['orderDate'].dt.year == 1997].copy()
+df_1997['Month'] = df_1997['orderDate'].dt.month
+
+# --- Mulai Membuat Plot dengan Matplotlib dan Seaborn ---
+# Atur gaya plot
+sns.set_style("whitegrid")
+plt.figure(figsize=(14, 10))
+
+# --- 2. Visualisasi 1: Tren Pendapatan Bulanan ---
+plt.subplot(2, 2, 1) # Grid 2x2, plot pertama
+monthly_revenue = df_1997.groupby('Month')['Revenue'].sum()
+sns.lineplot(x=monthly_revenue.index, y=monthly_revenue.values, marker='o', color='b')
+plt.title('Tren Pendapatan Bulanan (1997)')
+plt.xlabel('Bulan')
+plt.ylabel('Total Pendapatan')
+
+# --- 3. Visualisasi 2: Top 5 Negara ---
+plt.subplot(2, 2, 2) # Grid 2x2, plot kedua
+top_5_countries = df_1997.groupby('shipCountry')['Revenue'].sum().nlargest(5)
+sns.barplot(x=top_5_countries.index, y=top_5_countries.values, palette='viridis')
+plt.title('Top 5 Negara Berdasarkan Penjualan')
+plt.xlabel('Negara')
+plt.ylabel('Total Pendapatan')
+
+# --- 4. Visualisasi 3: Top 5 Karyawan ---
+plt.subplot(2, 2, 3) # Grid 2x2, plot ketiga
+df_1997['employeeName'] = df_1997['firstName'] + ' ' + df_1997['lastName']
+top_5_employees = df_1997.groupby('employeeName')['Revenue'].sum().nlargest(5)
+sns.barplot(y=top_5_employees.index, x=top_5_employees.values, palette='plasma', orient='h')
+plt.title('Top 5 Karyawan Berdasarkan Penjualan')
+plt.xlabel('Total Pendapatan')
+plt.ylabel('Nama Karyawan')
+
+# --- 5. Atur Layout Keseluruhan ---
+plt.suptitle('Dashboard Performa Northwind Traders - 1997', fontsize=20)
+plt.tight_layout(rect=[0, 0, 1, 0.96]) # Menyesuaikan layout agar suptitle tidak tumpang tindih
+plt.show()
+
+```
+:::
+
+---
+
+## Penutup
+
+Selamat! Anda telah menyelesaikan seluruh fondasi ilmu data.
+
+Anda telah berevolusi dari seorang pemula menjadi seorang detektif data yang mampu mengambil masalah bisnis, merencanakan investigasi, menggunakan *toolkit* pemrograman untuk membedah data, mengoptimalkan kode, dan akhirnya, menceritakan temuan Anda melalui visualisasi. Perjalanan Anda sebagai seorang analis data baru saja dimulai, tetapi Anda kini memiliki peta dan semua peralatan yang Anda butuhkan.
+
+Anda siap untuk menjelajahi dunia data yang lebih luas.
