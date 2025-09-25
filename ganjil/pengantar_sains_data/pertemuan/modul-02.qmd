@@ -3,7 +3,7 @@ title: "Modul 2: Fondasi Analisis Data di Excel"
 subtitle: "Studi Kasus: Dari Data Mentah Menjadi Wawasan Awal"
 date: "today"
 author: "Tim Asisten Lab Matematika UI"
-image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/coffee_shop_dashboard.png"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1757568633/2024/psd/excel_pivot_viz.png"
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
