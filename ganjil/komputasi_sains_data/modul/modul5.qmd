@@ -1,0 +1,201 @@
+---
+title: "Modul 5: Bekerja dengan Data Skala Besar & Tidak Sempurna"
+subtitle: "Menangani Data Jarang (Sparse) dan Komputasi Paralel dengan Dask"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-27"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/data_scaling_parallel.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Ketika Pandas Mulai Menyerah"
+
+Di modul-modul sebelumnya, kita bekerja dengan data yang "sopan": bersih, terstruktur, dan ukurannya selalu muat di memori laptop kita. Pandas adalah alat yang sempurna untuk skenario ini.
+
+Namun, di dunia nyata, data seringkali "liar"—sangat besar, tidak terstruktur, atau sangat "kosong" (*sparse*). Modul ini adalah tentang bagaimana menaklukkan dua "monster" tersebut:
+1.  **Data Jarang (*Sparse Data*)**: Data yang mayoritas isinya adalah nol, yang sangat boros memori jika disimpan secara naif.
+2.  **Data Besar (*Big Data*)**: Data yang ukurannya melebihi kapasitas RAM laptop Anda.
+
+Kita akan belajar *toolkit* khusus untuk mengatasi kedua masalah ini.
+
+---
+
+## Bagian 1: Menangani Data Jarang (*Sparse Data*) dengan SciPy
+
+Mari kita mulai dengan masalah pertama: data yang boros memori.
+
+### 1.1. Studi Kasus: Analisis Teks Ulasan Film
+
+Bayangkan kita ingin menganalisis teks dari ribuan ulasan film. Komputer tidak mengerti kata, ia hanya mengerti angka. Langkah pertama adalah mengubah setiap ulasan menjadi vektor angka. Salah satu cara paling dasar adalah **"Bag-of-Words"**.
+
+**Konsep:** Kita membuat kamus dari semua kata unik yang ada, lalu untuk setiap ulasan, kita hitung berapa kali setiap kata muncul.
+
+**Masalah:** Misalkan kamus kita punya 10.000 kata unik. Setiap ulasan, yang mungkin hanya berisi 100 kata, akan diubah menjadi sebuah baris data dengan **10.000 kolom**. Dari 10.000 kolom tersebut, 9.900 di antaranya akan berisi angka **nol**. Ini adalah pemborosan memori yang luar biasa!
+
+### 1.2. Solusi: *Sparse Matrix*
+
+**Analogi:** Bayangkan Anda punya rak buku raksasa dengan 10.000 slot, tapi hanya 50 slot yang terisi buku. Daripada membuat daftar `[buku, kosong, kosong, buku, kosong, ...]` sepanjang 10.000, Anda cukup membuat catatan:
+* Slot 1: "Buku A"
+* Slot 4: "Buku B"
+* ...dan seterusnya untuk 50 buku.
+
+Inilah cara kerja *sparse matrix*. Ia hanya menyimpan lokasi dan nilai dari elemen yang **bukan nol**.
+
+### 1.3. Praktik dengan `scikit-learn` dan `scipy.sparse`
+
+Mari kita buktikan. Kita akan menggunakan *library* `scikit-learn` untuk mengubah teks menjadi angka, yang secara otomatis akan menghasilkan *sparse matrix* dari *library* `scipy`.
+
+:::{.callout-tip icon="true"}
+### Persiapan
+Pastikan Anda sudah menginstal `scikit-learn`. Jika belum, aktifkan `venv` Anda dan jalankan:
+`pip install scikit-learn`
+:::
+
+```python
+import sys
+from sklearn.feature_extraction.text import CountVectorizer
+from scipy.sparse import csr_matrix
+
+# Contoh 3 ulasan film
+ulasan = [
+    "Film ini bagus dan seru.",
+    "Ceritanya membosankan, saya tidak suka film ini.",
+    "Aktornya bagus, ceritanya juga bagus."
+]
+
+# 1. Buat vectorizer untuk mengubah teks menjadi angka
+vectorizer = CountVectorizer()
+X_sparse = vectorizer.fit_transform(ulasan)
+
+# 2. Periksa hasilnya
+print("Tipe data hasil transformasi:", type(X_sparse))
+print("Bentuk matriks (ulasan, kata unik):", X_sparse.shape)
+print("\nIsi dari sparse matrix (baris, kolom) -> nilai:\n", X_sparse)
+
+# 3. Bandingkan penggunaan memori
+X_dense = X_sparse.toarray() # Mengubah menjadi matriks padat (biasa)
+
+memori_sparse = sys.getsizeof(X_sparse)
+memori_dense = sys.getsizeof(X_dense)
+
+print("\n--- Perbandingan Memori ---")
+print("Matriks Padat (Biasa):\n", X_dense)
+print(f"Ukuran Memori Sparse Matrix: {memori_sparse} bytes")
+print(f"Ukuran Memori Dense Matrix (biasa): {memori_dense} bytes")
+print(f"Penghematan: {round(100 * (1 - memori_sparse / memori_dense))}%")
+```
+Perhatikan bagaimana *sparse matrix* hanya menyimpan lokasi dari angka yang bukan nol. Untuk dataset besar (seperti IMDb), penghematan memorinya bisa mencapai **99.9%**!
+
+---
+
+## Bagian 2: Menaklukkan Big Data dengan Dask
+
+Sekarang kita beralih ke monster kedua: data yang ukurannya melebihi kapasitas RAM.
+
+### 2.1. Studi Kasus: Analisis Data Taksi NYC
+
+Kita akan menggunakan *dataset* perjalanan taksi NYC. Satu file untuk satu bulan bisa berukuran beberapa Gigabyte. Jika RAM laptop Anda 8 GB, Anda tidak akan bisa membukanya dengan `pd.read_parquet()`.
+
+### 2.2. Solusi: Dask - "Pandas Malas" yang Paralel
+
+Dask adalah *library* untuk komputasi paralel yang meniru API Pandas. Ia bekerja dengan dua konsep kunci:
+
+1.  **Partisi (*Partitioning*)**: Dask tidak memuat seluruh file 10 GB ke memori. Ia membacanya dalam potongan-potongan kecil (*chunks*) yang masing-masing muat di memori.
+2.  **Evaluasi Malas (*Lazy Evaluation*)**: Saat Anda menulis kode Dask, ia tidak langsung dieksekusi. Dask hanya membangun "grafik tugas" atau rencana kerja. Perhitungan baru benar-benar terjadi saat Anda secara eksplisit memintanya dengan perintah `.compute()`.
+
+**Analogi:** Bayangkan Anda adalah seorang manajer proyek. Pandas adalah satu pekerja super pintar yang mencoba mengerjakan semuanya sendiri. Dask adalah Anda yang memecah proyek besar menjadi tugas-tugas kecil, memberikannya ke tim berisi banyak pekerja, lalu menggabungkan hasilnya di akhir.
+
+### 2.3. Praktik dengan Dask DataFrame
+
+Sintaks Dask dibuat sangat mirip dengan Pandas, sehingga transisinya mudah.
+
+:::{.callout-tip icon="true"}
+### Persiapan
+Pastikan Anda sudah menginstal `dask` dan `pyarrow`.
+`pip install "dask[dataframe]" pyarrow`
+Dan sudah mengunduh satu file Parquet dari [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+:::
+
+```python
+import dask.dataframe as dd
+from dask.diagnostics import ProgressBar
+
+# Ganti dengan nama file parquet yang Anda unduh
+nama_file = 'yellow_tripdata_2024-01.parquet'
+
+# 1. Membaca data dengan Dask (ini sangat cepat karena 'lazy')
+ddf = dd.read_parquet(nama_file)
+
+# 2. Melakukan operasi seperti di Pandas (ini juga 'lazy')
+# Menghitung rata-rata total biaya per jumlah penumpang
+avg_fare_per_passenger = ddf.groupby('passenger_count')['total_amount'].mean()
+
+# 3. Memicu perhitungan dengan .compute()
+print("Membangun rencana kerja selesai. Memulai komputasi...")
+with ProgressBar():
+    hasil = avg_fare_per_passenger.compute()
+
+print("\n--- Hasil Akhir ---")
+print(hasil)
+```
+Perhatikan bagaimana `read_parquet` dan `groupby` berjalan instan. Pekerjaan berat baru terjadi saat `.compute()` dipanggil, dan Anda bisa melihat *progress bar* saat Dask memproses setiap partisi data secara paralel.
+
+---
+
+## Latihan Utama: "Laporan Jam Sibuk Taksi NYC"
+
+:::{.callout-note icon="true"}
+### Skenario
+Manajemen Taksi NYC ingin mengetahui jam-jam tersibuk di berbagai zona penjemputan untuk optimasi armada.
+:::
+
+**Tugas:**
+1.  Gunakan **Dask** untuk membaca file Parquet data perjalanan taksi NYC Anda.
+2.  Kolom `tpep_pickup_datetime` adalah object. Ubah menjadi tipe data datetime menggunakan `dd.to_datetime()`.
+3.  Buat kolom baru `hour` yang berisi jam penjemputan dari kolom `tpep_pickup_datetime`. (*Hint*: gunakan `.dt.hour`).
+4.  Lakukan `groupby()` pada kolom `PULocationID` (ID lokasi penjemputan) dan `hour`.
+5.  Hitung jumlah perjalanan (`.size()`) untuk setiap grup.
+6.  Panggil `.compute()` untuk mendapatkan hasil akhirnya dan `.nlargest(10)` untuk melihat 10 kombinasi lokasi-jam tersibuk.
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+
+```python
+import dask.dataframe as dd
+from dask.diagnostics import ProgressBar
+
+# Ganti dengan nama file Anda
+nama_file = 'yellow_tripdata_2024-01.parquet'
+
+# 1. Baca data
+ddf = dd.read_parquet(nama_file)
+
+# 2. Ubah tipe data kolom tanggal
+ddf['tpep_pickup_datetime'] = dd.to_datetime(ddf['tpep_pickup_datetime'])
+
+# 3. Buat kolom 'hour'
+ddf['hour'] = ddf['tpep_pickup_datetime'].dt.hour
+
+# 4. Lakukan groupby pada lokasi dan jam
+# 5. Hitung jumlah perjalanan
+hourly_pickups = ddf.groupby(['PULocationID', 'hour']).size()
+
+# 6. Jalankan komputasi dan ambil 10 terbesar
+print("Memulai komputasi untuk mencari jam tersibuk...")
+with ProgressBar():
+    top_10_hotspots = hourly_pickups.compute().nlargest(10)
+
+print("\n--- 10 Kombinasi Lokasi & Jam Tersibuk ---")
+print(top_10_hotspots)
+```
+:::
+
+---
+
+## Penutup
+
+Anda sekarang memiliki *toolkit* untuk menangani data dalam berbagai bentuk dan ukuran. Anda tahu cara menghemat memori dengan *sparse matrix* dan cara mengolah data yang lebih besar dari RAM dengan Dask. Anda sudah siap menghadapi tantangan data di dunia nyata.
+
+Di **Modul 6**, kita akan beralih dari manipulasi data ke **optimasi**, belajar bagaimana cara menulis kode Pandas yang tidak hanya benar, tetapi juga secepat mungkin.
