@@ -2,7 +2,8 @@
 title: "Modul 3: R - Statistik Deskriptif dan Visualisasi Frekuensi"
 subtitle: "Studi Kasus: Analisis Dataset Bunga Iris"
 author: "Tim Asisten Lab Matematika UI"
-date: "2025-09-11"
+date: "2025-09-30"
+image: "https://aslab-math-ui.github.io/modul-prak/modul/2025/ganjil/pengantar_sains_data/pertemuan/modul-03_files/figure-html/unnamed-chunk-10-1.png"
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
