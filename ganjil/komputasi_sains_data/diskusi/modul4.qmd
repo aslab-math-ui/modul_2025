@@ -1,0 +1,200 @@
+---
+title: "Modul Diskusi 4: Alur Kerja Teknis dengan Hugging Face"
+subtitle: "Dari Menggunakan Model, Melatih Ulang (Fine-tuning), hingga Berkontribusi"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-02"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/huggingface_workflow_diagram.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Bukan Sekadar Menggunakan, Tapi Mengadaptasi"
+
+Di modul-modul sebelumnya, kita telah belajar mengelola data. Sekarang, kita akan belajar "menghidupkan" data tersebut dengan *Machine Learning*. Untungnya, kita tidak perlu memulai dari nol.
+
+Di modul ini, kita tidak hanya akan belajar cara menggunakan model siap pakai dari Hugging Face. Kita akan melangkah lebih jauh: bagaimana cara **"mengajari" model yang sudah pintar agar lebih pintar lagi** untuk tugas spesifik kita (*fine-tuning*)? Dan bagaimana cara membagikan kembali hasil kerja kita ke komunitas? Mari kita bedah "dapur" Hugging Face.
+
+:::{.callout-tip icon="true"}
+### Persiapan Lingkungan
+Pastikan Anda sudah menyiapkan lingkungan Conda yang bersih untuk modul ini dan menginstal *library* utama.
+```bash
+conda create -n hf-lab python=3.9
+conda activate hf-lab
+pip install transformers[torch] datasets huggingface_hub
+```
+:::
+
+---
+
+## Bagian 1: Menggunakan Model Siap Pakai (*Inference*)
+
+Inferensi adalah proses menggunakan model yang sudah dilatih untuk membuat prediksi pada data baru. Ada dua cara utama untuk melakukannya.
+
+### 1.1. Cara Mudah: `pipeline()`
+
+`pipeline()` adalah cara paling abstrak dan cepat untuk menggunakan sebuah model tanpa perlu pusing memikirkan proses di baliknya.
+
+```python
+from transformers import pipeline
+
+# Membuat pipeline untuk analisis sentimen
+sentiment_analyzer = pipeline("sentiment-analysis")
+
+hasil1 = sentiment_analyzer("Film ini sangat luar biasa dan menyentuh hati!")
+hasil2 = sentiment_analyzer("Ceritanya membosankan dan aktingnya kaku.")
+
+print(hasil1)
+print(hasil2)
+# Output: [{'label': 'POSITIVE', 'score': 0.999...}]
+# Output: [{'label': 'NEGATIVE', 'score': 0.999...}]
+```
+
+### 1.2. Cara Manual: `Tokenizer` + `Model` (Lebih Mendalam)
+
+Untuk memahami apa yang sebenarnya terjadi, kita bisa membedah proses `pipeline` menjadi dua langkah manual:
+
+1.  **Tokenizer**: Mengubah teks mentah menjadi angka (token) yang dimengerti model.
+2.  **Model**: Menerima input angka tersebut dan mengeluarkan hasil prediksi (logits).
+
+```python
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+
+# Tentukan model yang ingin digunakan
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+
+# Muat tokenizer dan model yang sesuai
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSequenceClassification.from_pretrained(model_name)
+
+# Teks input
+teks_input = ["This movie was fantastic!", "The plot was boring."]
+
+# 1. Tokenisasi: ubah teks menjadi input yang dimengerti model
+inputs = tokenizer(teks_input, padding=True, truncation=True, return_tensors="pt")
+
+# 2. Inferensi: masukkan input ke model
+with torch.no_grad():
+    logits = model(**inputs).logits
+
+# 3. Konversi hasil (logits) menjadi probabilitas dan prediksi
+prediksi = torch.nn.functional.softmax(logits, dim=-1)
+labels = torch.argmax(prediksi, dim=1)
+
+print("Logits (output mentah model):", logits)
+print("Probabilitas (Positif/Negatif):", prediksi)
+print("Label Prediksi (0=Negatif, 1=Positif):", labels)
+```
+Meskipun lebih panjang, cara ini memberikan Anda kontrol penuh atas setiap langkah proses.
+
+---
+
+## Bagian 2: "Sekolah Lanjutan" untuk Model (*Fine-Tuning*)
+
+Model analisis sentimen di atas hebat, tapi dilatih pada data Bahasa Inggris. Bagaimana jika kita ingin menganalisis sentimen untuk ulasan produk di Tokopedia? Kita perlu melakukan *fine-tuning*.
+
+### 2.1. Konsep *Transfer Learning* & *Fine-Tuning*
+
+**Analogi:** *Fine-tuning* adalah seperti mengambil seorang koki hebat yang sudah menguasai masakan Perancis (model dasar yang dilatih pada jutaan teks umum), lalu memberinya kursus singkat selama seminggu untuk memasak masakan Indonesia (data spesifik kita). Dia tidak belajar dari nol, hanya **mengadaptasi keahliannya**.
+
+### 2.2. Alur Kerja *Fine-Tuning* (Walkthrough Praktis)
+
+**Studi Kasus:** Melatih model analisis sentimen untuk **Bahasa Indonesia** menggunakan dataset `indonlu/smsa`.
+
+1.  **Muat Dataset dari Hub**
+    ```python
+    from datasets import load_dataset
+    
+    # Memuat dataset dan membaginya (ambil porsi kecil untuk demonstrasi)
+    dataset = load_dataset("indonlu/smsa", split='train[:1%]')
+    dataset = dataset.train_test_split(test_size=0.2)
+    ```
+
+2.  **Preprocessing Data dengan Tokenizer**
+    ```python
+    # Menggunakan model dasar untuk Bahasa Indonesia
+    model_checkpoint = "indobenchmark/indobert-base-p1"
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+
+    # Fungsi untuk mentokenisasi seluruh dataset
+    def tokenize_function(examples):
+        return tokenizer(examples["text"], padding="max_length", truncation=True)
+
+    tokenized_datasets = dataset.map(tokenize_function, batched=True)
+    ```
+
+3.  **Latih Model dengan `Trainer` API**
+    `Trainer` adalah *magic tool* dari Hugging Face yang mengurus semua kerumitan *loop* pelatihan.
+
+    ```python
+    from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer
+
+    # Muat model dasar
+    model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=3)
+
+    # Atur argumen/parameter pelatihan
+    training_args = TrainingArguments(output_dir="test_trainer", evaluation_strategy="epoch", num_train_epochs=1)
+
+    # Buat objek Trainer
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=tokenized_datasets["train"],
+        eval_dataset=tokenized_datasets["test"],
+    )
+
+    # Mulai fine-tuning!
+    trainer.train()
+    ```
+Hanya dengan beberapa baris kode ini, Anda sedang melakukan *transfer learning* pada sebuah model Transformer canggih!
+
+---
+
+## Bagian 3: Menjadi Warga Komunitas (Berkontribusi)
+
+Setelah melatih model, Anda bisa membagikannya kembali ke komunitas melalui Hugging Face Hub.
+
+### 3.1. Anatomi *Model Card*
+Setiap model di Hub wajib memiliki *Model Card*. Ini adalah dokumentasi yang menjelaskan: apa kegunaan model, bagaimana cara menggunakannya, keterbatasan, dan potensi biasnya. Model yang terdokumentasi dengan baik jauh lebih berharga.
+
+### 3.2. Mendorong Model ke Hub
+1.  **Login ke Akun Hugging Face Anda:**
+    Buka terminal (bukan di dalam script) dan jalankan:
+    ```bash
+    huggingface-cli login
+    ```
+    (Anda akan diminta menempelkan *token* dari akun Hugging Face Anda).
+
+2.  **Push ke Hub:**
+    Setelah model selesai dilatih, Anda bisa mengunggahnya dengan mudah.
+    ```python
+    # Beri nama untuk repositori model Anda di Hub
+    nama_repo_model = "indobert-sentiment-smsa-finetuned"
+
+    # Unggah model dan tokenizer
+    trainer.push_to_hub(nama_repo_model)
+    tokenizer.push_to_hub(nama_repo_model)
+    ```
+Model Anda sekarang sudah tersedia secara publik dan bisa digunakan oleh siapa saja di seluruh dunia!
+
+---
+
+## Poin Diskusi & Studi Kasus Lanjutan
+
+:::{.callout-note icon="true"}
+### Kasus untuk Diskusi
+Laboratorium Anda ingin membuat alat internal yang bisa secara otomatis **meringkas teks berita panjang** dari situs berita lokal (berbahasa Indonesia) menjadi 3 kalimat. Anda tidak punya waktu atau data untuk melatih model dari nol.
+
+1.  Jelaskan alur kerja teknis yang akan Anda lakukan di Hugging Face, mulai dari mencari model dasar hingga kemungkinan perlunya *fine-tuning*.
+2.  Model *pre-trained* untuk peringkasan teks kebanyakan dilatih pada data Bahasa Inggris. Apa potensi masalah yang akan Anda hadapi saat menggunakannya untuk berita berbahasa Indonesia? Bagaimana *fine-tuning* bisa (atau tidak bisa) mengatasi masalah tersebut?
+:::
+
+---
+
+## Penutup & Jembatan ke Modul Berikutnya
+
+Anda sekarang tidak hanya bisa menggunakan model AI, tetapi juga mengadaptasinya untuk kebutuhan spesifik dan membagikannya kembali. Anda telah membuka pintu ke dunia *Applied Machine Learning*.
+
+Namun, bagaimana cara kita memamerkan model canggih yang sudah kita latih ini kepada orang lain yang tidak mengerti *coding*? Di **Modul Diskusi 5**, kita akan belajar cara membangun "etalase" interaktif untuk model kita dengan **Streamlit**.
