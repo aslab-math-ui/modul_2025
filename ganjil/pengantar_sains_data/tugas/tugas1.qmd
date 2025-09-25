@@ -29,6 +29,35 @@ Submission ini akan meminta Anda bermain peran sebagai data analyst dan menjelas
 :::
 
 ## Ketentuan Tugas
+
+:::{.justify}
+Anda wajib menggunakan templat pengumpulan submisi untuk menggarap proyek submission ini. Templat pengumpulan submisi ini hanya berisi satu berkas README. Silakan gunakan link berikut untuk mendapatkannya.
+:::
+
+[template-pengumpulan.zip](https://google.com)
+
+### Tata Cara Pengerjaan Tugas
+
+Berikut tata cara dalam pengerjaan tugas:
+
+- Unduh proyek yang tertera pada tautan di atas.
+- Ekstrak berkas ZIP tersebut dan pastikan terdapat berkas dan folder yang dikeluarkan, yaitu README.md dan lampiran/.
+- Pada berkas README.md, kami telah menyediakan templat biodata, deskripsi dataset, ide-pertanyaan bisnis yang ditawarkan, dan wawasan yang diperoleh. Namun, pastikan Anda membaca bagian Ketentuan Pengerjaan Tugas sebelum mulai mengerjakan tugas, ya.
+- Ketentuan Pengerjaan Tugas juga dapat Anda lihat pada berkas README.md.
+
+:::{.callout-tip icon="true"}
+Berkas README.md ditulis dengan format markdown. Agar Anda nyaman membaca isi berkasnya, kami sarankan untuk memanfaatkan markdown viewer. VSCode memiliki fitur markdown viewer dengan menekan tombol “Open Preview to the Side” (CTRL+Shift+V) sembari membuka berkas markdown tersebut.
+
+Berikut tampilan markdown viewer di VSCode.
+![gambar-markdown-di-vscode](#)
+:::
+
+### Ketentuan Pengerjaan Tugas
+
+Untuk mempermudah penilaian submission yang dikirim, Anda perlu memahami ketentuan-ketentuan berikut dalam mengerjakan tugas ini.
+
+- Anda wajib menggunakan templat pengumpulan yang telah kami sediakan.
+
 ## Kriteria wajib
 ## Kriteria opsional
 ## Penilaian 
