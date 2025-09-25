@@ -1,0 +1,204 @@
+---
+title: "Modul Diskusi 5: Membangun Aplikasi Data dengan Streamlit"
+subtitle: "Dari Notebook Jupyter ke Aplikasi Web Interaktif"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-03"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/streamlit_dashboard_app.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Masalah 'Satu Meter Terakhir'"
+
+Anda telah menyelesaikan analisis yang luar biasa di Jupyter Notebook. Anda menemukan wawasan penting, melatih model canggih, dan menghasilkan visualisasi yang indah. Sekarang... bagaimana cara Anda menunjukkannya kepada manajer, dosen, atau rekruter?
+
+Mengirim file `.ipynb`? Meminta mereka menginstal `conda` dan semua *library* Anda? Tentu tidak. Inilah "masalah satu meter terakhir" dalam sains data: menjembatani analisis teknis Anda dengan pengguna non-teknis. **Streamlit** adalah jembatan tersebut. Ia adalah *framework* Python yang memungkinkan kita mengubah *script* data menjadi aplikasi web interaktif hanya dalam beberapa jam, bukan minggu.
+
+---
+
+## Bagian 1: Apa itu Streamlit? (Filosofi & Konsep Inti)
+
+### 1.1. Dari *Script* ke Aplikasi
+
+Filosofi Streamlit sangat sederhana: setiap *script* adalah sebuah aplikasi. Anda menulis *script* Python seperti biasa, lalu menambahkan perintah-perintah Streamlit untuk menampilkan teks, data, dan *widget* interaktif.
+
+### 1.2. Analogi "Dokumen Ajaib"
+
+Bayangkan *script* Python Anda adalah sebuah dokumen Word. Streamlit membacanya dari atas ke bawah. Setiap kali pengguna berinteraksi dengan sebuah *widget* (misalnya, menggeser *slider*), Streamlit akan **menjalankan ulang seluruh *script*** dari awal hingga akhir dengan nilai input yang baru. Model eksekusi yang sederhana ini membuatnya sangat intuitif.
+
+### 1.3. *Widget* Interaktif: Blok Bangunan Anda
+
+Streamlit menyediakan serangkaian "blok bangunan" siap pakai yang disebut *widget*. Beberapa yang paling umum adalah:
+* `st.title("Judul Aplikasi")`: Menampilkan judul.
+* `st.write("Teks biasa atau data")`: Perintah serbaguna untuk menampilkan hampir semua hal.
+* `st.dataframe(df)`: Menampilkan DataFrame Pandas sebagai tabel interaktif.
+* `st.slider("Pilih nilai", 0, 100)`: Membuat penggeser angka.
+* `st.button("Klik saya")`: Membuat tombol.
+* `st.selectbox("Pilih opsi", ["A", "B", "C"])`: Membuat menu *dropdown*.
+* `st.text_input("Masukkan nama")`: Membuat kotak input teks.
+
+---
+
+## Bagian 2: Alur Kerja Praktis - Membangun Aplikasi Pertama Anda
+
+Mari kita langsung praktik.
+
+### 2.1. Persiapan
+
+1.  **Instalasi**: Pastikan `venv` atau lingkungan `conda` Anda aktif, lalu jalankan:
+    ```bash
+    pip install streamlit pandas seaborn
+    ```
+2.  **Buat File**: Buat sebuah file baru bernama `app.py`.
+
+### 2.2. "Hello, World!" Versi Streamlit
+
+Isi file `app.py` Anda dengan kode berikut:
+```python
+import streamlit as st
+
+st.title("Aplikasi Streamlit Pertama Saya! 👋")
+st.write("Halo, Dunia! Ini adalah aplikasi web yang dibuat sepenuhnya dengan Python.")
+```
+Untuk menjalankannya, buka terminal, arahkan ke folder tempat `app.py` berada, dan jalankan:
+```bash
+streamlit run app.py
+```
+Sebuah tab browser akan otomatis terbuka, menampilkan aplikasi Anda!
+
+### 2.3. Studi Kasus Mini: *Dashboard* Interaktif Data Pinguin
+
+Mari buat sesuatu yang lebih menarik. Kita akan membuat *dashboard* untuk memvisualisasikan *dataset* pinguin dari *library* Seaborn.
+
+**Ganti isi `app.py` Anda dengan kode ini:**
+```python
+import streamlit as st
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Judul Aplikasi
+st.title("Dashboard Eksplorasi Data Pinguin")
+
+# 1. Memuat Data
+# Kita gunakan cache agar data tidak dimuat ulang setiap kali ada interaksi
+@st.cache_data
+def load_data():
+    df = sns.load_dataset('penguins')
+    return df
+
+df_penguins = load_data()
+
+st.write("Berikut adalah 5 baris pertama dari dataset Pinguin:")
+st.dataframe(df_penguins.head())
+
+# 2. Menambah Filter Interaktif di Sidebar
+st.sidebar.header("Filter Data")
+selected_species = st.sidebar.selectbox(
+    'Pilih Spesies Pinguin',
+    options=df_penguins['species'].unique()
+)
+
+# 3. Filter DataFrame berdasarkan pilihan
+df_filtered = df_penguins[df_penguins['species'] == selected_species]
+
+st.header(f"Menampilkan Data untuk Spesies: {selected_species}")
+st.dataframe(df_filtered)
+
+# 4. Membuat Plot Dinamis
+st.header("Visualisasi Hubungan Panjang & Lebar Paruh")
+fig, ax = plt.subplots()
+sns.scatterplot(
+    data=df_filtered,
+    x='bill_length_mm',
+    y='bill_depth_mm',
+    hue='sex',
+    ax=ax
+)
+st.pyplot(fig)
+```
+Simpan file `app.py`, dan lihat browser Anda. Aplikasi Anda akan otomatis ter-update. Cobalah ganti spesies di *sidebar* dan lihat bagaimana tabel serta plotnya berubah secara dinamis!
+
+---
+
+## Latihan Utama: "Mendemokan Model Analisis Sentimen Anda"
+
+:::{.callout-note icon="true"}
+### Skenario
+Anda telah berhasil me-*fine-tune* model analisis sentimen untuk Bahasa Indonesia di Modul 4. Sekarang, buatlah sebuah aplikasi web sederhana agar orang lain (yang tidak mengerti *coding*) bisa mencoba model Anda.
+:::
+
+**Tugas:**
+1.  Buat sebuah *script* baru, misalnya `sentiment_app.py`.
+2.  Gunakan `st.title()` untuk memberi judul aplikasi Anda, contoh: "Aplikasi Analisis Sentimen Bahasa Indonesia".
+3.  Gunakan `st.text_area()` untuk membuat kotak input teks yang cukup besar bagi pengguna untuk memasukkan kalimat ulasan.
+4.  Gunakan `st.button()` untuk membuat tombol "Analisis".
+5.  **Logika Inti**: Jika tombol ditekan:
+    * Muat `pipeline` analisis sentimen dari Hugging Face (gunakan model publik berbahasa Indonesia seperti `indobenchmark/indobert-base-p1` jika model Anda sendiri belum di-push ke Hub).
+    * Jalankan model pada teks input dari `st.text_area()`.
+    * Tampilkan hasilnya dengan indah. Gunakan `st.success()` jika sentimennya POSITIF dan `st.error()` jika NEGATIF.
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+
+```python
+import streamlit as st
+from transformers import pipeline
+
+# Gunakan cache untuk memuat model hanya sekali
+@st.cache_resource
+def load_sentiment_model():
+    # Ganti dengan nama model Anda di Hub jika sudah diunggah
+    model_name = "w11wo/indonesian-sentiment-analysis-gpt2" 
+    return pipeline("sentiment-analysis", model=model_name)
+
+st.title("🤖 Aplikasi Analisis Sentimen Bahasa Indonesia")
+
+st.write("Masukkan sebuah kalimat ulasan (misalnya, dari review film atau produk) untuk mengetahui sentimennya.")
+
+# Muat model
+sentiment_analyzer = load_sentiment_model()
+
+# Widget input teks
+user_input = st.text_area("Teks Ulasan Anda:", "Filmnya bagus sekali, saya sangat merekomendasikannya!")
+
+# Widget tombol
+if st.button("Analisis Sentimen"):
+    if user_input:
+        # Jalankan inferensi
+        result = sentiment_analyzer(user_input)
+        label = result[0]['label']
+        score = result[0]['score']
+        
+        st.subheader("Hasil Analisis:")
+        
+        if label.lower() == 'positive':
+            st.success(f"Sentimen: POSITIF (Skor: {score:.2f})")
+        elif label.lower() == 'negative':
+            st.error(f"Sentimen: NEGATIF (Skor: {score:.2f})")
+        else:
+            st.info(f"Sentimen: NETRAL (Skor: {score:.2f})")
+    else:
+        st.warning("Mohon masukkan teks terlebih dahulu.")
+
+```
+:::
+
+---
+
+## Bagian 4: *Deployment* (Membuat Aplikasi Anda *Online*)
+
+Setelah aplikasi Anda jadi, membagikannya ke seluruh dunia sangatlah mudah dengan **Streamlit Community Cloud**.
+1.  **Siapkan Repositori GitHub**: Pastikan proyek Anda (file `app.py` dan `requirements.txt`) sudah ada di repositori GitHub.
+2.  **Daftar ke Streamlit Community Cloud**: Kunjungi [share.streamlit.io](https://share.streamlit.io) dan daftar menggunakan akun GitHub Anda.
+3.  **Deploy**: Klik "New app", pilih repositori Anda, dan klik "Deploy!". Dalam beberapa menit, aplikasi Anda akan memiliki URL publik yang bisa dibagikan.
+
+---
+
+## Penutup & Rangkuman Seri Modul Diskusi
+
+Luar biasa! Anda telah menyelesaikan seluruh seri modul diskusi ini. Anda memulai dari memahami **proses** sains data (Modul 1), belajar mengelola **lingkungan** (Modul 2), menguasai **kolaborasi** (Modul 3), berinteraksi dengan **model AI canggih** (Modul 4), dan akhirnya, **membangun aplikasi web** (Modul 5) untuk memamerkan hasil kerja Anda.
+
+Anda kini tidak hanya memiliki pengetahuan teoretis, tetapi juga *skillset* praktis dari hulu ke hilir yang sangat dicari di industri. Perjalanan Anda sebagai praktisi data profesional baru saja dimulai. Selamat bereksperimen!
