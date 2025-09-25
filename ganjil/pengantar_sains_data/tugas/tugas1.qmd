@@ -43,6 +43,7 @@ Berikut tata cara dalam pengerjaan tugas:
 - Unduh proyek yang tertera pada tautan di atas.
 - Ekstrak berkas ZIP tersebut dan pastikan terdapat berkas dan folder yang dikeluarkan, yaitu `README.md` dan `lampiran/`.
 - Pada berkas `README.md`, kami telah menyediakan templat untuk biodata, deskripsi *dataset*, pertanyaan bisnis, proses analisis, dan wawasan yang diperoleh. Pastikan Anda membaca bagian "Ketentuan Pengerjaan Tugas" di bawah ini sebelum mulai mengerjakan.
+- Di `README.md`, sediakan tautan ke video presentasi Anda dan tautan ke *spreadsheet* Anda jika menggunakan layanan berbasis web.
 
 :::{.callout-tip icon="true"}
 Berkas README.md ditulis dengan format markdown. Agar Anda nyaman membaca isi berkasnya, kami sarankan untuk memanfaatkan markdown viewer. VSCode memiliki fitur markdown viewer dengan menekan tombol “Open Preview to the Side” (CTRL+Shift+V) sembari membuka berkas markdown tersebut.
@@ -54,21 +55,14 @@ Berikut tampilan markdown di RStudio
 ![gambar-markdwon-di-RStudio](https://link-ke-gambar)
 :::
 
-### Ketentuan Pengerjaan Tugas
-
-Untuk mempermudah penilaian, Anda perlu memahami ketentuan-ketentuan berikut dalam mengerjakan tugas ini.
-
-- Anda wajib menggunakan templat pengumpulan yang telah kami sediakan.
-- Anda wajib menempatkan file Excel Anda di dalam folder `lampiran/` **kecuali** jika kalian menggunakan layanan berbasis web, seperti google spreadsheet. Maka, lampirkan tautan sharing web spreadsheet kalian di `README.md`. **PASTIKAN TAUTAN BEKERJA** dan **RESTRICTED LINK DIBUKA** selama periode penilaian. Tim Asisten **berhak tidak mengoreksi** jika terkendala restricted dari peserta.
-
 ## Kriteria wajib
 
 :::{.justify}
-Hai, kriteria wajib kita kali ini adalah Anda akan bermain peran data analis di suatu perusahaan PT XYZ. Kalian diharuskan memberikan wawasan dengan tujuan mensejahterakan perusahaan XYZ tersebut dengan salah satu berkasnya ialah excel.
+Hai, kriteria wajib kita kali ini adalah Anda akan bermain peran sebagai analis data di suatu perusahaan fiktif, PT XYZ. Anda diharuskan memberikan wawasan dengan tujuan mensejahterakan perusahaan XYZ tersebut dengan berkas Excel/Spreadsheet dan sebuah presentasi video.
 
-Definisi sejahtera dibebaskan kepada Anda. Entah sejahtera berarti meningkatkan kekayaan, meningkatkan customer, atau apa pun sesuai dengan konteks dan ide anda.
+Definisi "sejahtera" dibebaskan kepada Anda. Entah sejahtera berarti meningkatkan kekayaan, meningkatkan loyalitas pelanggan, atau apa pun sesuai dengan konteks dan ide Anda.
 
-Untuk lebih jelasnya, ada lima kriteria wajib yang harus Anda penuhi.
+Untuk lebih jelasnya, ada **enam kriteria wajib** yang harus Anda penuhi.
 :::
 
 ### Kriteria Wajib 1: Cari dan Temukan Dataset
@@ -81,6 +75,8 @@ Kalian dibebaskan untuk mencari dan menggunakan dataset apapun yang bersesuaian 
 - Dataset setidaknya memiliki 4 column dan 500 baris.
 - *Dataset* setidaknya memiliki 4 kolom dan 500 baris.
 - *Dataset* harus memiliki potensi untuk menghasilkan wawasan yang menarik.
+
+### Kriteria Wajib 2: Transformasi dan Pemodelan Data
 
 Data mentah jarang sekali bisa langsung digunakan. Anda harus mampu memanipulasi, membersihkan, dan memodelkan data Anda agar siap untuk dianalisis.
 
@@ -118,6 +114,15 @@ Ini adalah puncak dari tugas Anda: mengomunikasikan semua temuan Anda dalam satu
 - Wajib membuat **judul *chart* yang dinamis**. Judul harus berubah secara otomatis berdasarkan pilihan pada *Slicer*. (Contoh: "Laporan Penjualan untuk Kota: **Jakarta**").
 - Wajib menyertakan **"KPI Cards"**: Kotak teks besar yang menampilkan angka-angka kunci (seperti Total Pendapatan atau Total Pelanggan) yang juga berubah secara dinamis mengikuti *Slicer*.
 
+### Kriteria Wajib 6: Presentasi Video (Maksimal 20 Menit)
+Anda wajib membuat sebuah presentasi video yang menjelaskan proyek analisis Anda. Format presentasi (menunjukkan *dashboard* langsung, menggunakan slide Canva/PowerPoint, dll.) sepenuhnya bebas, namun **wajib** mencakup lima poin penjelasan berikut:
+
+1.  **Potensi Dataset**: Jelaskan mengapa Anda memilih *dataset* tersebut dan potensi wawasan apa yang Anda harapkan bisa ditemukan di dalamnya.
+2.  **Latar Belakang Pertanyaan Bisnis**: Jelaskan observasi atau asumsi apa dari data yang membuat Anda merumuskan pertanyaan-pertanyaan bisnis spesifik yang ingin Anda jawab.
+3.  **Justifikasi Proses Analisis**: Jelaskan "mengapa" di balik tindakan teknis Anda. Mengapa Anda membuat kolom turunan tertentu? Bagaimana cara membaca *Pivot Table* Anda dan apa artinya? Jelaskan baik secara teknis maupun dalam bahasa yang mudah dimengerti oleh pemangku kepentingan.
+4.  **Alasan Pemilihan Visualisasi**: Justifikasi mengapa Anda memilih jenis *chart* tertentu. Gambar bisa mewakili ribuan deskripsi, jadi jelaskan makna apa yang ingin Anda sampaikan dan mengapa bentuk *chart* tersebut adalah cara bercerita yang paling efektif.
+5.  **Kesimpulan & Refleksi**: Jelaskan *output* atau jawaban akhir dari analisis Anda. Apakah sesuai dengan yang diharapkan? Jika meleset, hikmah atau temuan tak terduga apa yang Anda peroleh dari proses tersebut?
+
 ## Kriteria Opsional
 Untuk mendapatkan nilai lebih dan menunjukkan keahlian tingkat *expert*, Anda bisa menambahkan salah satu atau lebih dari kriteria berikut:
 
@@ -128,12 +133,45 @@ Untuk mendapatkan nilai lebih dan menunjukkan keahlian tingkat *expert*, Anda bi
 ## Penilaian
 Proyek Anda akan dinilai berdasarkan beberapa komponen:
 
-* **Wawasan & *Storytelling* (40%)**: Seberapa baik Anda menjelaskan masalah bisnis, proses analisis, dan wawasan yang didapat di file `README.md`.
-* **Pemenuhan Kriteria Wajib (40%)**: Ketepatan dan keberhasilan Anda dalam mengimplementasikan kelima kriteria wajib secara teknis di file Excel.
+* **Wawasan & *Storytelling* (Total 60%)**:
+    * **Presentasi Video (30%)**: Kemampuan Anda menjelaskan, menjustifikasi, dan menceritakan analisis Anda secara lisan.
+    * **Dokumen `README.md` (30%)**: Kualitas tulisan Anda dalam mendokumentasikan proses dan temuan.
+* **Pemenuhan Kriteria Teknis (Wajib) (30%)**: Ketepatan dan keberhasilan Anda dalam mengimplementasikan Kriteria 1-5 di file Excel/Spreadsheet.
 * **Penerapan Kriteria Opsional (10%)**: Poin bonus untuk setiap kriteria opsional yang berhasil Anda implementasikan.
-* **Kerapian & Profesionalisme (10%)**: Organisasi file Excel Anda (pemberian nama *sheet*, kejelasan tabel) dan kelengkapan file `README.md`.
 
-## Lainnya
-Informasi lainnya akan menyusul.
+## Ketentuan Berkas & Review
+
+### Ketentuan Berkas Submission
+- Berkas submission yang dikirim merupakan folder proyek dalam bentuk `.zip`.
+- Format penamaan: `tugas1-PSD-NPM.zip`. Untuk revisi, gunakan `revisi01-tugas1-PSD-NPM.zip`.
+- Pastikan file Excel/Spreadsheet ada di dalam folder `lampiran/` atau tautannya tercantum di `README.md`.
+- Pastikan tautan video presentasi tercantum di `README.md` dan **aksesnya terbuka** untuk umum selama periode penilaian.
+
+### Ketentuan Proses Review
+- Tim Asisten akan mengulas *submission* Anda dalam waktu selambat-lambatnya **14 hari kerja** (tidak termasuk Sabtu, Minggu, dan libur nasional).
+- Tidak disarankan melakukan *submit* berkali-kali karena akan memperlama proses penilaian.
+- Anda akan mendapatkan notifikasi hasil *review* melalui surel. Jika tidak mendapat balasan dalam 14 hari kerja, mohon hubungi tim asisten lab.
+
+### Ketentuan Submission yang Akan Ditolak
+- Ada kriteria wajib yang tidak terpenuhi.
+- Ketentuan berkas *submission* tidak terpenuhi (format nama salah, file tidak lengkap, tautan video/spreadsheet tidak bisa diakses).
+
+## Perhatian
+
+### 1. Plagiarisme
+Plagiarisme sangat dilarang di lingkungan akademik Universitas Indonesia. Sesuai dengan *terms of use*, *submission* Lab haruslah hasil karya Anda sendiri.
+
+**Kriteria Plagiarisme:**
+- Mengirimkan proyek *submission* milik mahasiswa lain.
+- Menyalin sebagian besar *submission* dari proyek mahasiswa lain.
+- Memiliki kesamaan substansial (>70%) dengan sumber lain tanpa atribusi yang layak.
+
+**Konsekuensi:**
+Kami memiliki hak mutlak untuk mengenakan sanksi kepada peserta plagiat.
+- Tim Asisten berhak melapor ke dosen pengampu mata kuliah.
+- Atas izin dosen, Tim Asisten berhak memberikan matriks penilaian **0 (nol)**, tanpa terkecuali.
+
+### 2. Publikasi Proyek
+Anda **diperbolehkan dan didorong** untuk mempublikasikan proyek ini ke platform publik seperti LinkedIn, GitHub, atau portofolio pribadi Anda. Pihak Lab tidak akan mengambil hak cipta apapun atas karya Anda. Dibebaskan juga jika ingin menautkan pihak Lab maupun perorangan asisten.
 
 :::
