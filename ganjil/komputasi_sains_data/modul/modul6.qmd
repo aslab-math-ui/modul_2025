@@ -1,0 +1,225 @@
+---
+title: "Modul 6: Optimasi Kode Sains Data"
+subtitle: "Menulis Kode Pandas yang Cepat dan Profesional"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-28"
+image: "https://res.cloudinary.com/tahun2025/image/upload/f_auto,q_auto,w_800/v1/2024/psd/code_performance_dashboard.png"
+---
+
+<a href="../ksd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum KSD
+</a>
+
+## Pembukaan: "Ketika 'Benar' Saja Tidak Cukup"
+
+Di modul-modul sebelumnya, kita fokus menulis kode yang memberikan jawaban yang benar. Tapi, bagaimana jika data kita bukan 10.000 baris, melainkan 10 juta baris? Kode yang berjalan 1 menit bisa menjadi 16 jam! Di dunia industri, kode yang lambat berarti biaya komputasi yang mahal dan waktu tunggu yang lama.
+
+Modul ini akan mengajarkan Anda cara mengubah "mobil keluarga" (kode yang benar) menjadi "mobil F1" (kode yang efisien dan profesional). Kita akan belajar mengapa beberapa pola kode di Pandas sangat lambat dan bagaimana cara memperbaikinya.
+
+---
+
+## Bagian 1: Anatomi Kode Lambat di Pandas
+
+Musuh utama performa dalam analisis data menggunakan Python adalah **melakukan iterasi (looping) baris per baris** pada DataFrame.
+
+Pola anti-pola (*anti-pattern*) yang paling umum adalah menggunakan `for index, row in df.iterrows()`:
+```python
+# ANTI-POLA: Jangan lakukan ini pada data besar!
+for index, row in order_details.iterrows():
+    # Melakukan sesuatu dengan row['unitPrice'] dan row['quantity']
+    ...
+```
+**Mengapa ini lambat?** Setiap iterasi `iterrows()` membuat sebuah objek *Series* baru untuk setiap baris. Proses ini memiliki *overhead* (biaya komputasi tambahan) yang sangat besar di Python.
+
+---
+
+## Bagian 2: Solusi Fundamental - *Vectorization*
+
+*Vectorization* adalah kemampuan untuk melakukan operasi pada seluruh kolom (*array*) sekaligus. Ini adalah cara kerja Pandas yang sesungguhnya, dengan memanfaatkan kecepatan NumPy di belakang layar.
+
+### 2.1. Vectorization Aritmatika (Review)
+
+Kita sudah melihat ini sebelumnya. Daripada melakukan *loop*, kita langsung operasikan kolomnya.
+
+**Studi Kasus:** Hitung `LineTotal` dari tabel `order_details`.
+```python
+# Kode Lambat dengan .iterrows()
+# for index, row in order_details.iterrows():
+#     order_details.loc[index, 'LineTotal'] = row['unitPrice'] * row['quantity'] * (1 - row['discount'])
+
+# Kode Cepat dengan Vectorization
+order_details['LineTotal'] = order_details['unitPrice'] * order_details['quantity'] * (1 - order_details['discount'])
+```
+
+### 2.2. Vectorization Operasi Teks (*String*)
+
+*Looping* juga sangat lambat untuk memanipulasi teks. Pandas menyediakan *accessor* `.str` untuk melakukan operasi teks secara *vectorized*.
+
+**Studi Kasus:** Ubah semua nama pelanggan menjadi huruf kecil.
+```python
+# Kode Lambat
+# customers['lowerCompanyName'] = [name.lower() for name in customers['companyName']]
+
+# Kode Cepat dengan .str accessor
+customers['lowerCompanyName'] = customers['companyName'].str.lower()
+```
+
+### 2.3. Vectorization Operasi Tanggal (*Datetime*)
+
+Sama halnya dengan tanggal. Gunakan *accessor* `.dt` untuk mengekstrak informasi tanggal secara efisien.
+
+**Studi Kasus:** Buat kolom baru berisi nama hari dari `orderDate`.
+```python
+# Ubah ke datetime dulu (jika perlu)
+orders['orderDate'] = pd.to_datetime(orders['orderDate'])
+
+# Kode Lambat
+# orders['dayName'] = [date.day_name() for date in orders['orderDate']]
+
+# Kode Cepat dengan .dt accessor
+orders['dayName'] = orders['orderDate'].dt.day_name()
+```
+
+---
+
+## Bagian 3: Mengukur Performa - *Profiling*
+
+"Anda tidak bisa mengoptimalkan apa yang tidak bisa Anda ukur." *Profiling* adalah proses mengukur kecepatan eksekusi kode untuk menemukan bagian yang lambat (*bottleneck*).
+
+Alat termudah di Jupyter/Colab adalah *magic command* `%timeit`. Ia akan menjalankan kode berulang kali untuk mendapatkan pengukuran yang akurat.
+
+```python
+# Mengukur kecepatan Vectorization Aritmatika
+# %timeit order_details['LineTotal'] = order_details['unitPrice'] * order_details['quantity'] * (1 - order_details['discount'])
+
+# Outputnya bisa seperti ini:
+# 250 µs ± 10 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+```
+Jika kita mengukur versi `.iterrows()`, hasilnya bisa dalam orde milidetik atau bahkan detik, membuktikan bahwa *vectorization* ratusan hingga ribuan kali lebih cepat.
+
+---
+
+## Bagian 4: Teknik Lanjutan untuk Kasus Kompleks
+
+Bagaimana jika logikanya tidak sesederhana perkalian?
+
+### 4.1. `df.apply()`: Jalan Tengah yang Menipu
+
+Terkadang, pemula menggunakan `.apply()` untuk logika yang lebih kompleks.
+**Studi Kasus:** Beri label 'Diskon' jika ada diskon, 'Tanpa Diskon' jika tidak.
+```python
+# Cara .apply() - lebih baik dari iterrows, tapi tetap lambat
+# def cek_diskon(row):
+#     if row['discount'] > 0:
+#         return 'Ada Diskon'
+#     else:
+#         return 'Tanpa Diskon'
+#
+# order_details['StatusDiskon'] = order_details.apply(cek_diskon, axis=1)
+```
+`.apply()` pada dasarnya adalah *loop* yang "disamarkan". Ia tetap lambat untuk data besar.
+
+### 4.2. Percabangan Cepat: `np.where()` dan `np.select()`
+
+Solusi *vectorized* untuk logika `if-else` adalah menggunakan fungsi dari NumPy.
+* **`np.where(kondisi, nilai_jika_benar, nilai_jika_salah)`**: Untuk `if-else` sederhana.
+    ```python
+    import numpy as np
+    # Cara vectorized dengan np.where (jauh lebih cepat)
+    order_details['StatusDiskon'] = np.where(order_details['discount'] > 0, 'Ada Diskon', 'Tanpa Diskon')
+    ```
+* **`np.select(daftar_kondisi, daftar_nilai, nilai_default)`**: Untuk `if-elif-else` yang kompleks.
+
+### 4.3. Jalan Keluar Terakhir: Numba
+
+Bagaimana jika logikanya sangat kompleks dan *harus* menggunakan *loop*? **Numba** adalah *library* yang bisa mengkompilasi kode Python (terutama *loop*) menjadi kode mesin yang sangat cepat hanya dengan menambahkan sebuah "dekorator".
+
+:::{.callout-tip icon="true"}
+### Persiapan
+`pip install numba`
+:::
+
+```python
+from numba import njit
+
+# Fungsi Python murni yang lambat
+def some_complex_calculation(data_array):
+    result = 0
+    for i in range(len(data_array)):
+        # Asumsikan ada logika rumit di sini
+        result += data_array[i] * np.log(data_array[i] + 1)
+    return result
+
+# Fungsi yang sama, tapi dengan Numba
+@njit
+def some_complex_calculation_fast(data_array):
+    result = 0
+    for i in range(len(data_array)):
+        result += data_array[i] * np.log(data_array[i] + 1)
+    return result
+
+# Menjalankan versi Numba akan terasa jauh lebih cepat setelah kompilasi pertama.
+```
+Numba adalah "jalan keluar" saat *vectorization* tidak memungkinkan.
+
+---
+
+## Latihan Utama: "Refactoring Kode yang Lambat"
+
+:::{.callout-note icon="true"}
+### Skenario
+Seorang analis junior memberikan Anda sebuah fungsi untuk menghitung kategori pelanggan di Northwind berdasarkan total belanja mereka. Fungsinya benar, tapi sangat lambat. Tugas Anda adalah melakukan *refactoring*.
+:::
+
+**Tugas-tugas:**
+1.  Buat *DataFrame* `customer_spending` yang berisi `customerID` dan total belanja (`Revenue`) mereka dari seluruh transaksi. (Ini memerlukan *merge* `orders` dan `order_details`, lalu `groupby`).
+2.  Disediakan fungsi lambat di bawah ini. Gunakan `%timeit` untuk mengukur performanya pada `customer_spending`.
+3.  *Refactor* (tulis ulang) fungsi tersebut menggunakan teknik *vectorization* (`pd.cut` atau `np.select`).
+4.  Ukur kembali performa fungsi baru Anda dan bandingkan.
+
+**Fungsi Lambat yang Disediakan:**
+```python
+def kategorikan_pelanggan_lambat(df):
+    kategori = []
+    for index, row in df.iterrows():
+        if row['Revenue'] > 10000:
+            kategori.append('VIP')
+        elif row['Revenue'] > 5000:
+            kategori.append('Gold')
+        elif row['Revenue'] > 1000:
+            kategori.append('Silver')
+        else:
+            kategori.append('Bronze')
+    df['Kategori'] = kategori
+    return df
+```
+
+:::{.callout-tip collapse="true"}
+### Kunci Jawaban (Klik untuk Membuka)
+```python
+# # 1. Membuat DataFrame customer_spending
+# order_details['Revenue'] = order_details['unitPrice'] * order_details['quantity'] * (1 - order_details['discount'])
+# customer_spending = orders.merge(order_details, on='orderID').groupby('customerID')['Revenue'].sum().reset_index()
+
+# # 2. Mengukur fungsi lambat
+# %timeit kategorikan_pelanggan_lambat(customer_spending.copy())
+
+# # 3. Refactoring dengan pd.cut (cara yang lebih 'Pandas-native')
+def kategorikan_pelanggan_cepat(df):
+    bins = [0, 1000, 5000, 10000, np.inf]
+    labels = ['Bronze', 'Silver', 'Gold', 'VIP']
+    df['Kategori'] = pd.cut(df['Revenue'], bins=bins, labels=labels, right=False)
+    return df
+
+# # 4. Mengukur fungsi cepat
+# %timeit kategorikan_pelanggan_cepat(customer_spending.copy())
+```
+:::
+
+---
+
+## Penutup
+
+Selamat! Anda sekarang tidak hanya bisa menulis kode yang benar, tetapi juga kode yang efisien. Anda tahu cara mengidentifikasi *bottleneck*, mengganti *loop* dengan *vectorization*, dan bahkan menggunakan alat canggih seperti Numba. Ini adalah salah satu ciri utama seorang praktisi data profesional.
+
+Dengan *toolkit* analisis dan optimasi yang sudah Anda kuasai, langkah terakhir adalah bagaimana cara **mengomunikasikan hasil temuan Anda secara efektif**. Di **Modul 7**, kita akan menyelami dunia **visualisasi data tingkat lanjut**.
