@@ -85,7 +85,6 @@ Kalian dibebaskan untuk mencari dan menggunakan dataset apapun yang bersesuaian 
 - Sumber diperoleh dibebaskan (Kaggle, Maven Analytics, dll.).
 - Boleh menggunakan *dataset* tunggal ataupun lebih dari satu yang perlu digabungkan.
 - *Dataset* memiliki lebih dari satu *sheet* (lembar kerja).
-- Dataset setidaknya memiliki 4 column dan 500 baris.
 - *Dataset* setidaknya memiliki 4 kolom dan 500 baris.
 - *Dataset* harus memiliki potensi untuk menghasilkan wawasan yang menarik.
 
@@ -197,8 +196,15 @@ Anda **diperbolehkan dan didorong** untuk mempublikasikan proyek ini ke platform
 <br>
 
 :::{.justify}
-Kolom Pengumpulan akan ada di halaman ini juga. Kedepannya halaman ini akan terus **diperbaharui** untuk menyediakan tempat pengumpulan. Terima Kasih.
+Pastikan Anda mengirimkan submisi sebelum waktu tersebut. Submisi yang dikumpulkan setelah tenggat waktu yang ditentukan tidak akan diterima.
 :::
+
+<div class="text-center my-4">
+<a href="https://forms.gle/rWbXgvyBSAC2Xp9u5" class="btn btn-primary btn-lg" role="button">
+<i class="fa-solid fa-upload me-2"></i> Kumpulkan Submisi di Sini
+</a>
+</div>
+
 
 :::{.RIGHT}
 Narahubung:
