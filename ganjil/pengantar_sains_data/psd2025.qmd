@@ -21,7 +21,7 @@ listing:
     contents: "tugas/*.qmd"
     type: table
     sort: "title asc"
-    fields: [image, title, subtitle, date]
+    fields: [title, date]
 ---
 
 <a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
