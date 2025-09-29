@@ -40,4 +40,9 @@ format: html
     <br> <i class="fa-solid fa-location-dot" aria-hidden="true"></i> **Lokasi:** Lab Komputer D.311 
     <br> <i class="fa-solid fa-book" aria-hidden="true"></i> **Materi:** [Buka Latihan 1](./latihan1.ipynb)
 
+-   **Latihan 2 : Metode Taylor dan Runge-Kutta**
+    <br> <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+    <br> <i class="fa-solid fa-location-dot" aria-hidden="true"></i> **Lokasi:** Lab Komputer D.311 
+    <br> <i class="fa-solid fa-book" aria-hidden="true"></i> **Materi:** [Buka Latihan 2](./latihan2.ipynb)
+
 :::
