@@ -9,6 +9,14 @@ listing:
        sort:
         - "date asc"
         - "title asc"
+    
+    -  id: tugas
+       contents: "tugas*.ipynb"
+       type: grid
+       fields: [image, title, date]
+       sort:
+        - "date asc"
+        - "title asc"
 ---
 
 <a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
@@ -30,9 +38,7 @@ Selamat datang di praktikum Struktur Data! Sesuai nama mata kuliahnya, kita akan
 
 ## Tugas
 
-::: {.callout-warning}
-### Belum Ada Tugas
-Informasi mengenai tugas, format pengumpulan, dan tenggat waktu akan diumumkan di bagian ini. Harap periksa secara berkala.
+:::{#tugas}
 :::
 
 :::
