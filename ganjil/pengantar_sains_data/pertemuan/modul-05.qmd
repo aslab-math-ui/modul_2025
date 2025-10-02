@@ -1,0 +1,9 @@
+---
+title: "Modul 5: R - Library and Project Management"
+subtitle: "Studi Kasus: Big Project"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-02"
+image: "https://www.interviewbit.com/blog/wp-content/uploads/2022/04/r-projects-2048x1001.png"
+---
+
+aada
