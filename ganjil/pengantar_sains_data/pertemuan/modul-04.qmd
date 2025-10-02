@@ -1,0 +1,31 @@
+---
+title: "Modul 4: R - Library and Project Management"
+subtitle: "Studi Kasus: Big Project"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-02"
+image: "https://www.interviewbit.com/blog/wp-content/uploads/2022/04/r-projects-2048x1001.png"
+---
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
+</a>
+
+## Tujuan Pembelajaran
+
+---
+
+## 1. 
+
+---
+
+## 2. 
+
+---
+
+## 3. 
+
+---
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
+</a>
