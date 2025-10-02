@@ -57,8 +57,7 @@ Di sini berisi materi-materi opsional untuk pendalaman konsep secara mandiri. Mo
 
 ## About
 
-:::
 Ini adalah draft tentang.
-:::
+
 
 :::
