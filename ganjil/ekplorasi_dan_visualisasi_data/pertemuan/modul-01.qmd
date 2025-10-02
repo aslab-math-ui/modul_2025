@@ -1,0 +1,31 @@
+---
+title: "Modul 1: EVDA"
+subtitle: "Studi Kasus: -"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-09-17"
+image: "https://dqlab.id/files/dqlab/cache/e037c90a428a9a3f512b02bdfa4f088b_x_Thumbnail800.jpg"
+---
+
+<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA 2025
+</a>
+
+## Tujuan Pembelajaran
+
+---
+
+## 1. 
+
+---
+
+## 2. 
+
+---
+
+## 3. 
+
+---
+
+<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA
+</a>
