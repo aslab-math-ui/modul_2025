@@ -3,7 +3,7 @@ title: "Modul 4: R - Library and Project Management"
 subtitle: "Studi Kasus: Big Project"
 author: "Tim Asisten Lab Matematika UI"
 date: "2025-10-02"
-image: "https://www.interviewbit.com/blog/wp-content/uploads/2022/04/r-projects-2048x1001.png"
+image: "https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/static/thumbnail-psd-modul-4.webp"
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
@@ -14,38 +14,75 @@ image: "https://www.interviewbit.com/blog/wp-content/uploads/2022/04/r-projects-
 
 Setelah menyelesaikan modul ini, mahasiswa diharapkan mampu:
 
-* **1. Memahami dan Mengelola R Packages**
+<!-- Gw sedikit melakukan penyesuaian urutan modul ya -->
+
+* **1. Mengelola Alur Kerja dengan RStudio Projects**
+    * Memahami pentingnya menggunakan project untuk menjaga keteraturan dan reproduktifitas.
+    * Membuat sebuah project baru di RStudio.
+    * Mengorganisir file skrip dan data dalam direktori project.
+
+* **2. Mengenali Tipe Objek Dasar di R**
+    * Membuat dan memanipulasi objek dasar seperti *atomic vector*.
+    * Memahami struktur objek yang lebih kompleks seperti *list* dan *data frame*.
+    * Memeriksa tipe dan struktur dari sebuah objek R menggunakan `str()`.
+
+* **3. Memahami dan Mengelola R Packages**
     * Memahami fungsi *packages* sebagai ekstensi fungsionalitas R.
     * Menginstal *package* baru dari CRAN.
     * Memuat *package* ke dalam sesi R untuk digunakan.
     * Mengakses dokumentasi dan halaman bantuan untuk fungsi dalam sebuah *package*.
 
-* **2. Mengenali Tipe Objek Dasar di R**
-    * Membuat dan memanipulasi objek dasar seperti *atomic vector*.
-    * Memahami struktur objek yang lebih kompleks seperti *list* dan *data frame*.
-    * Memeriksa tipe dan struktur dari sebuah objek R.
-
-* **3. Mengelola Alur Kerja dengan RStudio Projects**
-    * Memahami pentingnya menggunakan project untuk menjaga keteraturan dan reproduktifitas.
-    * Membuat sebuah project baru di RStudio.
-    * Mengorganisir file skrip dan data dalam direktori project.
-
 
 ---
 
-## 1. Skenario: Proyek Perdana 🧑‍🔬
+## Skenario: Proyek Perdana 🧑‍🔬
 
 Selamat datang di proyek pertama Anda!
 
-Bayangkan Anda baru saja bergabung sebagai analis data di sebuah perusahaan analitik game. Manajer Anda langsung memberikan sebuah tantangan besar yang diberi nama **Big Project**.
+Bayangkan Anda baru saja bergabung sebagai analis data di sebuah perusahaan analitik game. Manajer Anda langsung memberikan sebuah tantangan besar yang diberi nama **"Big Project"**. Tugas Anda adalah membangun sebuah sistem untuk menganalisis probabilitas dalam permainan kartu, menggunakan data mentah dari puluhan ribu permainan.
 
-Tugas Anda adalah membangun sebuah sistem untuk menganalisis probabilitas dalam permainan kartu. Kita memiliki data mentah dari puluhan ribu permainan. Namun, ada dua hal penting yang harus Anda perhatikan sebelum mulai menulis satu baris pun kode analisis.
+Manajer Anda menekankan dua hal:
 
 <!-- Untuk Quarto Markdown saat kita ingin ordered list kita harus beri jarak satu line -->
-1. Proyek ini akan berjalan lama dan melibatkan banyak file: skrip, set data, dan visualisasi. Kesalahan terbesar yang sering dilakukan analis junior adalah bekerja secara berantakan. Maka, tugas pertama Anda adalah membangun fondasi atau 'garasi' kerja yang rapi agar proyek ini terorganisir.
-2. R yang Anda pasang sekarang itu ibarat mobil standar dari pabrik. Kemampuannya bagus, tapi terbatas. Untuk tugas analisis data modern yang kompleks, Anda butuh *power tools*—alat-alat khusus yang lebih canggih untuk memanipulasi dan memvisualisasikan data secara efisien.
+1. **Keteraturan adalah Kunci:** Proyek ini akan berjalan lama dan melibatkan banyak file: skrip, set data, dan visualisasi. Kesalahan terbesar yang sering dilakukan analis junior adalah bekerja secara berantakan. Maka, tugas pertama Anda adalah membangun ***fondasi*** atau **'garasi' kerja** yang rapi agar proyek ini terorganisir.
+2. **Gunakan Alat yang Tepat:** R yang Anda pasang sekarang itu ibarat mobil standar dari pabrik. Kemampuannya bagus, tapi terbatas. Untuk tugas analisis data modern yang kompleks, Anda butuh *power tools*—alat-alat khusus yang lebih canggih untuk memanipulasi dan memvisualisasikan data secara efisien.
 
 Tugas kita dalam modul ini adalah mensimulasikan dan menyelesaikan dua persiapan fundamental tersebut. Kita akan belajar cara memasang *power tools* yang disebut *Packages* untuk meningkatkan kemampuan R kita secara drastis.
+
+## 1. RStudio Projects: Membangun 'Garasi' Kerja
+
+Setiap proyek analisis data yang serius harus dimulai dengan membuat "rumah"-nya sendiri. Di RStudio, rumah ini disebut **Project**. Ini memastikan semua file kita (skrip, data, dan hasil) berada di satu tempat yang aman dan terorganisir.
+
+Sebuah project membuat pekerjaan Anda:
+<!-- Untuk Unordered list juga berikan jarak satu line -->
+
+* Self-contained: Semua yang dibutuhkan ada di dalam satu folder.
+* Portable: Mudah dipindahkan ke komputer lain tanpa merusak path file.
+* Reproducible: Orang lain (atau Anda di masa depan) bisa menjalankan ulang analisis Anda dengan mudah.
+
+### Studi Kasus: Membuat Garasi untuk "Big Project" Kartu
+
+Mari kita ikuti langkah-langkah berikut untuk membuat 'garasi' resmi bagi proyek analisis kartu kita.
+
+1. Buat Project Baru: Di RStudio, `klik File > New Project....` Pilih `New Directory`, lalu `New Project`. Beri nama direktori, misalnya `Proyek_Analisis_Kartu`, dan klik `Create Project`.
+
+2. Masuk ke Garasi Baru: RStudio akan me-restart. Perhatikan bahwa sekarang direktori kerja Anda sudah otomatis mengarah ke folder proyek yang baru saja dibuat.
+
+3. Buat Skrip R Baru: Klik `File > New File > R Script`. Di dalam skrip ini, ketikkan kode yang kita buat di Bagian 2 untuk membuat `data frame` deck.
+
+```{r}
+# Skrip untuk membangun data deck kartu
+face <- c("king", "queen", "jack", "ten")
+suit <- c("spades", "spades", "spades", "spades")
+value <- c(13, 12, 11, 10)
+
+deck <- data.frame(face, suit, value)
+```
+
+4. Simpan Skrip: Tekan `Ctrl + S` (atau `Cmd + S`) dan beri nama file, misalnya `buat_deck.R`. File ini akan otomatis tersimpan di dalam 'garasi' proyek Anda.
+
+Selesai! Sekarang "Big Project" kita memiliki rumahnya sendiri. Semua 'power tools' yang kita pasang dan 'bahan baku' yang kita siapkan akan tersimpan rapi di sini, siap untuk tahap analisis selanjutnya.
+
 
 ### 1.1 Memasang Package
 
@@ -55,7 +92,7 @@ Anda hanya perlu menginstal sebuah `package` satu kali. Kita akan coba menginsta
 
 Terkait agar code tetap berjalan, tapi tidak mengeluarkan output error atau tidak perlu gunakan opsi eksekusi ini ya:
 
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
 #| warning: false
@@ -64,7 +101,7 @@ Terkait agar code tetap berjalan, tapi tidak mengeluarkan output error atau tida
 -->
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 #| output: false
 #| warning: false
@@ -160,50 +197,34 @@ deck
 
 ---
 
-## 3. RStudio Projects: Membangun 'Garasi' Kerja
-
-Sekarang saatnya kita membangun 'garasi' kerja yang rapi dan profesional untuk **Big Project** kita menggunakan RStudio Projects. Ini akan memastikan semua file kita (skrip, data, dan hasil analisis) berada di satu tempat yang aman dan terorganisir.
-
-Sebuah project membuat pekerjaan Anda:
-<!-- Untuk Unordered list juga berikan jarak satu line -->
-
-* Self-contained: Semua yang dibutuhkan ada di dalam satu folder.
-* Portable: Mudah dipindahkan ke komputer lain tanpa merusak path file.
-* Reproducible: Orang lain (atau Anda di masa depan) bisa menjalankan ulang analisis Anda dengan mudah.
-
-### Studi Kasus: Membuat Garasi untuk "Big Project" Kartu
-
-Mari kita ikuti langkah-langkah berikut untuk membuat 'garasi' resmi bagi proyek analisis kartu kita.
-
-1. Buat Project Baru: Di RStudio, `klik File > New Project....` Pilih `New Directory`, lalu `New Project`. Beri nama direktori, misalnya `Proyek_Analisis_Kartu`, dan klik `Create Project`.
-
-2. Masuk ke Garasi Baru: RStudio akan me-restart. Perhatikan bahwa sekarang direktori kerja Anda sudah otomatis mengarah ke folder proyek yang baru saja dibuat.
-
-3. Buat Skrip R Baru: Klik `File > New File > R Script`. Di dalam skrip ini, ketikkan kode yang kita buat di Bagian 2 untuk membuat `data frame` deck.
-
-```{r}
-# Skrip untuk membangun data deck kartu
-face <- c("king", "queen", "jack", "ten")
-suit <- c("spades", "spades", "spades", "spades")
-value <- c(13, 12, 11, 10)
-
-deck <- data.frame(face, suit, value)
-```
-
-4. Simpan Skrip: Tekan `Ctrl + S` (atau `Cmd + S`) dan beri nama file, misalnya `buat_deck.R`. File ini akan otomatis tersimpan di dalam 'garasi' proyek Anda.
-
-Selesai! Sekarang "Big Project" kita memiliki rumahnya sendiri. Semua 'power tools' yang kita pasang dan 'bahan baku' yang kita siapkan akan tersimpan rapi di sini, siap untuk tahap analisis selanjutnya.
-
+<!-- Buat Kesimpulannya dalam list -->
 ### Kesimpulan
 
-Selamat! Anda telah berhasil menyelesaikan tahap persiapan fundamental untuk "Big Project" Anda. Anda kini tidak hanya tahu cara memasang `packages` yang canggih, tetapi juga memahami cara menyusun 'bahan baku' (objek), dan yang terpenting, Anda telah membangun 'garasi' kerja (RStudio Projects) yang profesional. Dengan fondasi ini, Anda siap menghadapi tantangan analisis data yang lebih kompleks di modul-modul berikutnya.
+Luar biasa! Anda telah berhasil menyelesaikan tahap persiapan fundamental untuk "Big Project" Anda dengan alur kerja yang profesional. Anda kini tahu cara:
 
-### Latihan
+1.  **Membangun 'garasi' kerja** yang rapi dengan **RStudio Projects**.
+2.  **Mengambil 'perkakas canggih'** (**Packages**) untuk mengolah bahan tersebut.
+3.  **Menyiapkan dan memahami 'bahan baku'** (objek `vector`, `data.frame`, `list`) di dalamnya.
 
-Untuk memastikan Anda benar-benar menguasai persiapan proyek ini, coba selesaikan beberapa tantangan berikut di RStudio Anda:
+Dengan fondasi ini, Anda siap menghadapi tantangan analisis data yang lebih kompleks di modul-modul berikutnya.
 
-1.  Buatlah sebuah `data frame` bernama pemain yang terdiri dari 3 kolom: `nama` (berisi 3 nama fiktif), `id_pemain` (berisi 3 ID fiktif), dan `level` (berisi level mereka, misal: "Gold", "Silver", "Bronze"). Tampilkan struktur dari data frame tersebut menggunakan fungsi `str()`.
-2.  
+
+## Latihan Mini-Project
+
+Untuk menguji pemahaman Anda, selesaikan tantangan terintegrasi berikut:
+
+1.  **Bangun Garasi Baru:** Buat sebuah **RStudio Project** baru bernama `Latihan_Modul_4`.
+2.  **Siapkan Bahan Baku:** Di dalam project tersebut, buat sebuah R Script baru. Di dalam skrip itu, buat sebuah **list** bernama `proyek_pemain`. List ini harus berisi dua item:
+    * `metadata`: Sebuah `character vector` berisi nama Anda dan tanggal hari ini.
+    * `data_pemain`: Sebuah `data.frame` dengan 3 kolom: `nama` (3 nama fiktif), `id_pemain` (3 ID fiktif), dan `level` (misal: "Gold", "Silver", "Bronze").
+    * Gunakan `str()` untuk menampilkan struktur dari list `proyek_pemain` tersebut.
+3.  **Ambil Perkakas Visualisasi:**
+    * **Instal** *package* `ggplot2` (jika Anda belum punya).
+    * **Muat** *package* `ggplot2` menggunakan `library()`.
+    * Gunakan `?ggplot` untuk membuka halaman bantuan dari fungsi utama *package* tersebut.
+
+Simpan R skrip Anda. Jika Anda berhasil menyelesaikan semua langkah, Anda telah menguasai tiga pilar fundamental alur kerja analisis data di R!
+
 
 ---
 
