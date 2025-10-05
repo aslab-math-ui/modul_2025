@@ -70,7 +70,7 @@ Mari kita ikuti langkah-langkah berikut untuk membuat 'garasi' resmi bagi proyek
 
 3. Buat Skrip R Baru: Klik `File > New File > R Script`. Di dalam skrip ini, ketikkan kode yang kita buat di Bagian 2 untuk membuat `data frame` deck.
 
-```{r}
+```{r filename='R'}
 # Skrip untuk membangun data deck kartu
 face <- c("king", "queen", "jack", "ten")
 suit <- c("spades", "spades", "spades", "spades")
@@ -100,7 +100,7 @@ Terkait agar code tetap berjalan, tapi tidak mengeluarkan output error atau tida
 
 -->
 
-```{r}
+```{r filename='R'}
 #| eval: false
 #| echo: true
 #| output: false
@@ -125,7 +125,7 @@ Begitu juga dengan activate library
 
 -->
 
-```{r}
+```{r filename='R'}
 #| eval: true
 #| echo: true
 #| output: false
@@ -148,7 +148,7 @@ Terkait agar ketika di render tidak menyebabkan error chunk dan terbuka ke websi
 
 -->
 
-```{r}
+```{r filename='R'}
 #| eval: false
 #| echo: true
 #| output: false
@@ -160,40 +160,205 @@ Perhatikan panel Help di RStudio, di sana akan muncul dokumentasi lengkapnya. In
 
 ---
 
-## 2. Memahami Objek di R
+## 2. Objek di R: Menyiapkan 'Bahan Baku'
 
-Baik, kita sudah tahu cara memasang *Packages*. Sekarang, sebelum kita mulai membangun analisis untuk **Big Project** kita, mari kita pahami dulu bahan baku yang akan kita olah. Di R, semua data—dari angka tunggal hingga tabel kompleks—disimpan dalam wadah yang disebut objek. Memahami bahan baku ini adalah kunci.
+<!-- zaki update ya agar lebih berisi -->
 
-### 2.1. Atomic Vector: Bahan baku dasar
+Setelah garasi siap, saatnya kita menyiapkan 'bahan baku' untuk diolah. Di R, semua data—dari angka tunggal hingga tabel kompleks—disimpan dalam wadah yang disebut **objek**. Memahami berbagai jenis 'bahan baku' ini adalah keterampilan fundamental yang membedakan analis data pemula dan profesional.
 
-Ini adalah tipe objek paling dasar, ibarat 'bata' atau 'sekrup' dalam proyek kita. *Atomic vector* adalah kumpulan nilai dengan tipe yang sama.
+### 2.1. Atomic Vector: Bata Fondasi Proyek
 
-```{r}
-# Vector berisi angka (numeric)
+Ini adalah tipe objek paling dasar, ibarat 'bata' atau 'sekrup' dalam proyek kita. *Atomic vector* adalah rangkaian nilai **dengan tipe yang sama**.
+
+```{r filename='R'}
+# Vector berisi angka
 nilai_ujian <- c(85, 92, 78)
 
-# Vector berisi teks (character)
+# Vector berisi teks
 nama_mahasiswa <- c("Budi", "Ani", "Candra")
 ```
+Rangkaian ini harus homogen. Anda tidak bisa mencampur teks dan angka dalam satu *atomic vector* tanpa R mengubah tipenya secara paksa (sebuah proses yang disebut *coercion*).
 
-### 2.2. Data Frame: Blueprint Data Utama
+### 2.2. Enam Tipe Dasar Atomic Vector
 
-Untuk **Big Project** kita, data utama tidak akan disimpan dalam 'bata' tunggal, melainkan dalam sebuah 'cetakan' atau blueprint terstruktur yang disebut *Data Frame*. Anggap saja ini adalah tabel kerja utama kita. Data frame adalah kumpulan vector dengan panjang yang sama, di mana setiap vector menjadi sebuah kolom.
+Semua 'bata' di R memiliki material dasar. Ada enam tipe utama, namun empat di antaranya akan Anda gunakan 99% setiap saat.
 
-Sebagai langkah pertama dalam proyek analisis kartu, mari kita buat `data frame` sederhana yang merepresentasikan beberapa kartu.
+::: {.panel-tabset}
 
-```{r}
+#### `doubles` (Numeric)
+Ini adalah tipe default untuk angka di R. Tipe ini bisa menampung angka desimal.
+
+```{r filename='R'}
+ipk <- c(3.55, 4.0, 2.89)
+ipk
+class(ipk) # class() memberitahu kita tipe objeknya
+```
+
+#### `integers` (Bilangan Bulat)
+Jika Anda yakin hanya akan bekerja dengan bilangan bulat, Anda bisa membuatnya secara eksplisit dengan menambahkan `L` di belakang angka. Ini menghemat memori.
+
+```{r filename='R'}
+jumlah_sks <- c(24L, 21L, 18L)
+jumlah_sks
+class(jumlah_sks)
+```
+
+#### `characters` (Teks/String)
+Untuk menyimpan data teks. Selalu diapit oleh tanda kutip `"` atau `'`.
+
+```{r filename='R'}
+mata_kuliah <- c("Kalkulus", "Aljabar Linear", "Statistika")
+mata_kuliah
+class(mata_kuliah)
+```
+
+#### `logicals` (Boolean)
+Hanya bisa berisi tiga nilai: `TRUE`, `FALSE`, atau `NA` (Not Available/Missing). Sangat penting untuk operasi perbandingan dan filter.
+
+```{r filename='R'}
+lulus_ujian <- c(TRUE, TRUE, FALSE)
+lulus_ujian
+class(lulus_ujian)
+```
+
+:::
+
+<!-- sebelumnya kan hanya sampai 2.2. Itu terlalu sedikit, jadi zaki tambahin lagi sampai 2.7 ya -->
+
+### 2.3. Faktor: Mengelola Data Kategorikal
+
+Dalam statistika, kita sering bekerja dengan variabel kategorikal (data yang nilainya terbatas pada beberapa level). Untuk **"Big Project"** kita, kolom `face` dan `suit` adalah contoh sempurna. Menyimpannya sebagai teks biasa itu kurang efisien. R punya tipe data khusus untuk ini: **Faktor**.
+
+Faktor lebih pintar dari teks biasa karena R secara internal menyimpan "level" atau kategori yang mungkin ada. Ini sangat berguna untuk pemodelan dan visualisasi.
+
+```{r filename='R'}
+# Kita ubah vector 'face' dan 'suit' menjadi faktor
+face_faktor <- factor(c("king", "queen", "jack", "ten"))
+suit_faktor <- factor(c("spades", "spades", "spades", "spades"))
+
+face_faktor
+suit_faktor
+```
+Perhatikan outputnya! R memberitahu kita apa saja `Levels` yang ada di dalam faktor tersebut.
+
+### 2.4. Data Frame: Blueprint Data Utama
+
+Sekarang kita bisa membangun **Data Frame** kita dengan 'bahan baku' yang lebih baik. Data frame adalah objek 2D yang ajaib karena bisa menampung kolom dengan tipe yang berbeda-beda (numeric, character, factor, dll.).
+
+Mari kita rakit `data frame` untuk proyek kartu kita menggunakan `character`, `factor`, dan `numeric`.
+
+```{r filename='R'}
 # Buat tiga vector terpisah sebagai 'bahan baku'
 face <- c("king", "queen", "jack", "ten")
 suit <- c("spades", "spades", "spades", "spades")
 value <- c(13, 12, 11, 10)
 
 # Gabungkan menjadi satu blueprint data frame
-deck <- data.frame(face, suit, value)
+deck <- data.frame(
+  face = factor(face), # Langsung diubah jadi faktor
+  suit = factor(suit),
+  value = value
+)
 
-# Lihat hasilnya
 deck
 ```
+
+### 2.5. List: Kotak Perkakas Serbaguna
+
+**Data frame** mengharuskan semua kolomnya punya panjang yang sama. Tapi bagaimana jika kita ingin menyimpan beberapa jenis objek (seperti data frame, beberapa catatan proyek, dan sebuah vector) dalam satu wadah tanpa aturan tersebut? Kita gunakan **list**.
+
+Sebuah `list` adalah objek paling fleksibel, ibarat kotak perkakas yang bisa diisi apa saja.
+
+```{r filename='R'}
+# Membuat list untuk menyimpan data frame dan info proyek
+proyek_kartu <- list(
+  nama_proyek = "Analisis Kartu Big Project",
+  penanggung_jawab = c("Budi", "Ani"),
+  data_utama = deck,
+  sudah_dimulai = TRUE
+)
+
+proyek_kartu
+```
+
+### 2.6. Mengakses Data di Dalam Objek (Indexing)
+
+Menyimpan data itu satu hal, mengambilnya kembali adalah hal lain. Ini adalah keterampilan krusial. Ada tiga cara utama untuk "mencomot" data dari dalam objek:
+
+::: {.panel-tabset}
+
+#### `$` (Tanda Dolar)
+Cara paling umum dan mudah dibaca untuk mengakses kolom dalam `data.frame` atau elemen dalam `list` yang memiliki nama.
+
+```{r filename='R'}
+# Mengambil kolom 'value' dari data frame 'deck'
+deck$value
+
+# Mengambil 'data_utama' dari list 'proyek_kartu'
+proyek_kartu$data_utama
+```
+
+#### `[[...]]` (Kurung Siku Ganda)
+Sangat berguna untuk mengambil satu elemen dari `list`. Anda bisa menggunakan nama (dengan kutip) atau nomor posisinya.
+
+```{r filename='R'}
+# Mengambil elemen kedua ('penanggung_jawab') dari list
+proyek_kartu[[2]]
+
+# Sama seperti proyek_kartu$nama_proyek
+proyek_kartu[["nama_proyek"]]
+```
+
+#### `[...]` (Kurung Siku Tunggal)
+Ini adalah alat paling serbaguna, digunakan untuk mengambil **satu atau lebih** elemen. Untuk data frame, formatnya adalah `[baris, kolom]`.
+
+```{r filename='R'}
+# Mengambil baris pertama dari data frame 'deck' (semua kolom)
+deck[1, ]
+
+# Mengambil kolom kedua dari data frame 'deck' (semua baris)
+deck[, 2]
+
+# Mengambil nilai pada baris ke-3, kolom ke-1
+deck[3, 1]
+```
+
+:::
+
+### 2.7. Inspeksi Objek Lanjutan
+
+Setelah membuat dan memanipulasi objek, kita perlu cara cepat untuk memeriksanya. Berikut adalah tiga fungsi diagnostik yang akan Anda gunakan setiap hari.
+
+::: {.panel-tabset}
+
+#### `str()`
+`str` (structure) adalah teman terbaik Anda. Fungsi ini memberikan diagnosis cepat tentang struktur internal sebuah objek.
+
+```{r filename='R'}
+str(deck)
+str(proyek_kartu)
+```
+Perhatikan bagaimana `str()` dengan jelas menunjukkan mana kolom yang bertipe `Factor`, `numeric`, dll.
+
+#### `summary()`
+Memberikan ringkasan statistik untuk setiap kolom dalam data frame. Untuk kolom numerik, ia memberikan statistik deskriptif. Untuk kolom faktor, ia memberikan hitungan frekuensi.
+
+```{r filename='R'}
+summary(deck)
+```
+
+#### `head()` & `tail()`
+Digunakan untuk "mengintip" beberapa baris pertama atau terakhir dari objek data Anda. Sangat berguna jika Anda bekerja dengan data yang sangat besar.
+
+```{r filename='R'}
+# Melihat 6 baris pertama
+head(deck)
+
+# Jika data kita besar, kita juga bisa melihat 6 baris terakhir
+# tail(deck)
+```
+
+:::
 
 ---
 
