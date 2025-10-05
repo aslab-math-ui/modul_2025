@@ -35,9 +35,13 @@ Setelah menyelesaikan modul ini, mahasiswa diharapkan mampu:
 
 ## 1. Skenario: Proyek Perdana 🧑‍🔬
 
-Selamat datang di proyek pertama Anda! 🚀 Bayangkan Anda baru saja bergabung sebagai analis data di sebuah perusahaan analitik game. Manajer Anda langsung memberikan sebuah tantangan besar yang diberi nama **Big Project**.
+Selamat datang di proyek pertama Anda!
+
+Bayangkan Anda baru saja bergabung sebagai analis data di sebuah perusahaan analitik game. Manajer Anda langsung memberikan sebuah tantangan besar yang diberi nama **Big Project**.
 
 Tugas Anda adalah membangun sebuah sistem untuk menganalisis probabilitas dalam permainan kartu. Kita memiliki data mentah dari puluhan ribu permainan. Namun, ada dua hal penting yang harus Anda perhatikan sebelum mulai menulis satu baris pun kode analisis.
+
+<!-- Untuk Quarto Markdown saat kita ingin ordered list kita harus beri jarak satu line -->
 1. Proyek ini akan berjalan lama dan melibatkan banyak file: skrip, set data, dan visualisasi. Kesalahan terbesar yang sering dilakukan analis junior adalah bekerja secara berantakan. Maka, tugas pertama Anda adalah membangun fondasi atau 'garasi' kerja yang rapi agar proyek ini terorganisir.
 2. R yang Anda pasang sekarang itu ibarat mobil standar dari pabrik. Kemampuannya bagus, tapi terbatas. Untuk tugas analisis data modern yang kompleks, Anda butuh *power tools*—alat-alat khusus yang lebih canggih untuk memanipulasi dan memvisualisasikan data secara efisien.
 
@@ -47,7 +51,24 @@ Tugas kita dalam modul ini adalah mensimulasikan dan menyelesaikan dua persiapan
 
 Anda hanya perlu menginstal sebuah `package` satu kali. Kita akan coba menginstal `dplyr`, sebuah `package` yang sangat populer untuk manipulasi data. Buka RStudio Anda dan ketik di konsol:
 
+<!-- 
+
+Terkait agar code tetap berjalan, tapi tidak mengeluarkan output error atau tidak perlu gunakan opsi eksekusi ini ya:
+
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+#| error: false
+
+-->
+
 ```{r}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+#| error: false
 install.packages("dplyr")
 ```
 
@@ -55,7 +76,24 @@ install.packages("dplyr")
 
 Setiap kali Anda memulai sesi R baru dan ingin menggunakan fungsi dari `dplyr`, Anda harus memuatnya terlebih dahulu dengan fungsi `library()`.
 
+<!-- 
+
+Begitu juga dengan activate library
+
+#| eval: true
+#| echo: true    # atau false, tergantung apakah ingin menampilkan kodenya
+#| output: false
+#| warning: false
+#| error: false
+
+-->
+
 ```{r}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+#| error: false
 library(dplyr)
 ```
 
@@ -63,7 +101,21 @@ library(dplyr)
 
 Bagaimana cara mengetahui fungsi apa saja yang ada di `dplyr` atau bagaimana cara menggunakannya? Gunakan tanda tanya `?`. Misalnya, kita ingin tahu cara kerja fungsi `mutate()` dari `dplyr`.
 
+<!-- 
+
+Terkait agar ketika di render tidak menyebabkan error chunk dan terbuka ke website kasih opsi eksekusi ini ya:
+
+#| eval: false
+#| echo: true
+#| output: false
+
+-->
+
 ```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
 ?mutate
 ```
 
@@ -71,7 +123,7 @@ Perhatikan panel Help di RStudio, di sana akan muncul dokumentasi lengkapnya. In
 
 ---
 
-## 2. Memahami Objek di R*
+## 2. Memahami Objek di R
 
 Baik, kita sudah tahu cara memasang *Packages*. Sekarang, sebelum kita mulai membangun analisis untuk **Big Project** kita, mari kita pahami dulu bahan baku yang akan kita olah. Di R, semua data—dari angka tunggal hingga tabel kompleks—disimpan dalam wadah yang disebut objek. Memahami bahan baku ini adalah kunci.
 
@@ -113,6 +165,8 @@ deck
 Sekarang saatnya kita membangun 'garasi' kerja yang rapi dan profesional untuk **Big Project** kita menggunakan RStudio Projects. Ini akan memastikan semua file kita (skrip, data, dan hasil analisis) berada di satu tempat yang aman dan terorganisir.
 
 Sebuah project membuat pekerjaan Anda:
+<!-- Untuk Unordered list juga berikan jarak satu line -->
+
 * Self-contained: Semua yang dibutuhkan ada di dalam satu folder.
 * Portable: Mudah dipindahkan ke komputer lain tanpa merusak path file.
 * Reproducible: Orang lain (atau Anda di masa depan) bisa menjalankan ulang analisis Anda dengan mudah.
@@ -147,11 +201,12 @@ Selamat! Anda telah berhasil menyelesaikan tahap persiapan fundamental untuk "Bi
 ### Latihan
 
 Untuk memastikan Anda benar-benar menguasai persiapan proyek ini, coba selesaikan beberapa tantangan berikut di RStudio Anda:
+
 1.  Buatlah sebuah `data frame` bernama pemain yang terdiri dari 3 kolom: `nama` (berisi 3 nama fiktif), `id_pemain` (berisi 3 ID fiktif), dan `level` (berisi level mereka, misal: "Gold", "Silver", "Bronze"). Tampilkan struktur dari data frame tersebut menggunakan fungsi `str()`.
 2.  
 
 ---
 
 <a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
-<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
 </a>
