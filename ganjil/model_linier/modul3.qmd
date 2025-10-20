@@ -3,7 +3,7 @@ title: "Multiple linear model"
 subtitle: "Multiple linear model"
 image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/model_linier/static/bg_modul1.jpg
 description: "Offline di Departemen Matematika"
-date: 10/28/2024
+date: 10/22/2025
 page-navigation: true
 format: html
 editor: 
