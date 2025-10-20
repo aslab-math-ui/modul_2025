@@ -1,9 +1,335 @@
 ---
-title: "Modul 5: R - Library and Project Management"
-subtitle: "Studi Kasus: Big Project"
+title: "R - Library and Project Management"
+subtitle: "Studi Kasus: Simulasi Kontrol Kualitas (Quality Control)"
 author: "Tim Asisten Lab Matematika UI"
 date: "2025-10-02"
 image: "https://www.interviewbit.com/blog/wp-content/uploads/2022/04/r-projects-2048x1001.png"
 ---
 
-aada
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
+</a>
+
+## Tujuan Pembelajaran
+
+Setelah menyelesaikan modul ini, mahasiswa diharapkan mampu:
+
+* **1. Merancang dan Menulis Program Fungsional**
+    * Memahami anatomi dan kegunaan `function` untuk membuat kode yang reusable.
+    * Mengimplementasikan logika kondisional (`if`, `else if`, `else`) untuk mengontrol alur program.
+
+* **2. Mengimplementasikan Alur Kontrol Berulang**
+    * Menggunakan `for` loop untuk menjalankan simulasi berulang kali dengan jumlah iterasi yang pasti.
+    * Memahami kasus penggunaan `while` loop untuk iterasi yang bergantung pada kondisi.
+
+* **3. Memahami Konsep Kode yang Efisien**
+    * Memahami perbedaan fundamental antara loop dan vektorisasi di R.
+    * Mengenali `system.time()` sebagai alat untuk mengukur kecepatan eksekusi kode.
+
+* **4. Memahami Konsep Sistem Objek S3**
+    * Memahami bahwa S3 adalah sistem R untuk *Object-Oriented Programming* (OOP).
+    * Mengenali konsep `class` (label objek) dan `method` (fungsi spesifik untuk `class` tersebut).
+
+
+---
+
+## Skenario: Proyek Simulasi QC 🏭
+
+Selamat datang di proyek kedua Anda! Setelah sukses membangun 'garasi' kerja yang rapi dengan RStudio Projects di Modul 4,  manajer Anda kini memberikan tantangan yang lebih mendalam di bidang probabilitas dan simulasi.
+
+🚀 Anda ditugaskan untuk membuat prototipe sistem Kontrol Kualitas (QC) virtual. Pabrik kita memproduksi komponen elektronik, dan setiap komponen diperiksa dalam batch (kelompok) berisi 5 item. Tentu saja, ada kemungkinan kecil beberapa item cacat (*defect*).
+
+Tujuan Anda adalah menganalisis dan menjawab pertanyaan bisnis penting: "Berdasarkan tingkat kecacatan (defect rate) kita saat ini, seberapa sering satu batch penuh harus ditolak?"
+
+Kita tidak bisa menguji ribuan batch secara manual. Kita harus mengajarkan R cara "mensimulasikan" proses inspeksi ini secara otomatis. Proyek ini akan memandu Anda membangun logika QC dari nol, menjalankannya ribuan kali, dan memahami konsep untuk membuatnya lebih cepat dan rapi.
+
+## 1. Blok Bangunan Program: Fungsi & Kontrol Alur
+
+Di R, jika Anda ingin melakukan tugas yang sama lebih dari satu kali, Anda sebaiknya "membungkus" kode tersebut ke dalam sebuah **fungsi**. Ini membuat kode Anda rapi, mudah dibaca, dan reusable.
+
+### 1.1 Fungsi Pertama Kita: `inspect_batch()`
+Langkah pertama adalah membuat fungsi yang mensimulasikan inspeksi satu batch berisi 5 item. Kita asumsikan (berdasarkan data historis) bahwa ada 90% kemungkinan item "Pass" dan 10% kemungkinan "Fail".
+
+```{r}
+# Definisikan fungsi untuk menginspeksi 1 batch (isi 5 item)
+inspect_batch <- function() {
+  
+  # 1. Definisikan kemungkinan hasil
+  outcomes <- c("Pass", "Fail")
+  
+  # 2. Ambil sampel 5 item
+  # Kita set probabilitasnya: 90% Pass, 10% Fail.
+  batch_result <- sample(outcomes, 
+                         size = 5, 
+                         replace = TRUE, 
+                         prob = c(0.9, 0.1))
+  
+  # 3. Kembalikan (return) hasilnya
+  return(batch_result)
+}
+```
+
+* `insinspect_batch <- function() { ... }`: Ini adalah sintaks untuk membuat fungsi baru.
+
+* `return(batch_result)`: Baris ini (atau baris terakhir di fungsi) menentukan output apa yang akan diberikan oleh fungsi tersebut.
+
+Coba jalankan fungsi Anda di konsol beberapa kali:
+
+```{r}
+inspect_batch()
+#> [1] "Pass" "Pass" "Pass" "Pass" "Pass"
+inspect_batch()
+#> [1] "Pass" "Fail" "Pass" "Pass" "Pass"
+```
+
+Fungsi kita bekerja dengan baik, menghasilkan batch acak setiap saat.
+
+### 1.2 Fungsi Kedua dengan Logika Kondisional: `evaluate_batch()`
+
+Sekarang kita punya hasil inspeksi batch, bagaimana cara menilainya? Kita perlu membuat fungsi evaluate_batch() yang menerima hasil inspeksi sebagai argumen (input) dan mengembalikan status batch tersebut.
+
+Untuk melakukan ini, kita perlu kontrol alur menggunakan if, else if, dan else.
+
+::: {.panel-tabset}
+
+#### Aturan QC
+Aturan status batch kita adalah:
+
+* Jika 0 item "Fail": status "Gold".
+
+* Jika 1 item "Fail": status "Silver" (masih bisa diterima).
+
+* Jika 2 atau lebih item "Fail": status "Reject" (batch harus ditarik).
+
+`if`, `else if`, `else`
+* `if (kondisi) { ... }`: R akan menjalankan kode di dalam `{}` **HANYA JIKA** kondisi bernilai `TRUE`.
+
+* `else if (kondisi_lain) { ... }`: Jika `if` pertama `FALSE`, R akan mengecek `kondisi_lain` ini.
+
+* `else { ... }`: Jika tidak ada kondisi di atas yang `TRUE`, R akan menjalankan blok `else` ini.
+
+#### Implementasi
+``` {r}
+evaluate_batch <- function(batch_items) {
+  
+  # Hitung berapa banyak item "Fail" dalam vector 'batch_items'
+  num_fails <- sum(batch_items == "Fail")
+  
+  # Kondisi 1: Sempurna
+  if (num_fails == 0) {
+    return("Gold")
+  } 
+  
+  # Kondisi 2: 1 Cacat
+  else if (num_fails == 1) {
+    return("Silver")
+  } 
+  
+  # Kondisi 3: 2 atau lebih cacat
+  else {
+    return("Reject")
+  }
+}
+```
+
+:::
+
+Mari kita uji kedua fungsi kita secara bersamaan:
+``` {r}
+# Langkah 1: Jalankan inspeksi
+batch_baru <- inspect_batch()
+
+# Langkah 2: Evaluasi hasilnya
+evaluate_batch(batch_baru)
+```
+
+---
+
+## 2. Simulasi Berulang: Loops
+
+Kita sudah bisa mensimulasikan satu batch. Tapi tujuan kita adalah menganalisis ribuan batch. Melakukannya satu per satu tidak mungkin. Di sinilah Loops (Perulangan) berperan.
+
+### 2.1 `for` loop: Saat Tujuannya Pasti
+Kita menggunakan `for` loop saat kita tahu pasti berapa kali kita ingin mengulang sesuatu (misal: "jalankan simulasi 1000 kali").
+
+Kita akan membuat for loop yang berjalan 1000 kali. Alurnya:
+
+1. Buat "wadah" kosong untuk menampung 1000 hasil.
+
+2. Ulangi dari i = 1 sampai 1000:
+    * Inspeksi batch baru (inspect_batch()).
+    * Evaluasi batch tersebut (evaluate_batch()).
+    * Simpan hasilnya di wadah posisi ke-i.
+
+``` {r}
+# 1. Buat 'wadah' kosong (vector karakter)
+n_sims <- 1000
+hasil_status <- rep(NA, n_sims)
+
+# 2. Buat loop dari 1 sampai 1000
+for (i in 1:n_sims) {
+  
+  # Jalankan 1 simulasi penuh
+  batch_saat_ini <- inspect_batch()
+  status_saat_ini <- evaluate_batch(batch_saat_ini)
+  
+  # 3. Simpan hasilnya di posisi ke-i
+  hasil_status[i] <- status_saat_ini
+}
+
+# 4. Analisis hasilnya!
+table(hasil_status)
+prop.table(table(hasil_status))
+```
+
+Output `prop.table()` akan memberi kita persentase "Gold", "Silver", dan "Reject" dari 1000 simulasi. Pertanyaan manajer terjawab!
+
+## 2.2 while loop: Saat Tujuannya Kondisional
+
+Berbeda dengan `for`, kita gunakan `while` loop saat kita tidak tahu kapan harus berhenti. Loop ini akan terus berjalan selama (while) sebuah kondisi bernilai `TRUE`.
+
+**Studi Kasus Mini**: Manajer bertanya, "Kira-kira butuh inspeksi berapa batch sampai kita menemukan 10 batch yang 'Reject'?"
+
+``` {r}
+# Kita tidak tahu butuh berapa iterasi (i), jadi 'while' adalah pilihan tepat.
+n_rejects_ditemukan <- 0
+n_batch_diinspeksi <- 0
+
+while (n_rejects_ditemukan < 10) {
+  
+  # Inspeksi 1 batch lagi
+  n_batch_diinspeksi <- n_batch_diinspeksi + 1
+  
+  batch_saat_ini <- inspect_batch()
+  status_saat_ini <- evaluate_batch(batch_saat_ini)
+  
+  # Cek apakah batch ini "Reject"
+  if (status_saat_ini == "Reject") {
+    n_rejects_ditemukan <- n_rejects_ditemukan + 1
+  }
+}
+
+# Cetak hasilnya
+print(paste("Butuh", n_batch_diinspeksi, "inspeksi untuk menemukan 10 batch 'Reject'."))
+```
+
+## 2.3 Konsep Lain: repeat loop
+
+Ada satu lagi jenis loop, yaitu repeat { ... }. Ini adalah loop "infinite" yang akan berjalan selamanya. Anda wajib menyertakan kondisi break di dalamnya untuk menghentikannya. Ini jarang digunakan, tetapi baik untuk diketahui.
+
+---
+
+## 3. Konsep Efisiensi: Kecepatan
+
+Simulasi 1000 batch mungkin cepat. Tapi bagaimana jika manajer meminta 10 juta batch? for loop kita akan menjadi sangat lambat. Di R, loop seringkali tidak efisien.
+
+### 3.1 Konsep: Vektorisasi
+R dirancang untuk bekerja sangat cepat pada vector (seperti yang kita pelajari di Modul 4).  Idenya adalah menghindari iterasi satu per satu dan langsung menerapkan operasi pada seluruh kumpulan data.
+
+* **Cara Loop (Lambat)**: "Ambil item 1, proses. Ambil item 2, proses. Ambil item 3, proses..."
+
+* **Cara Vektorisasi (Cepat)**: "Ambil SEMUA item sekaligus, proses SEMUA sekaligus."
+
+Fungsi seperti `apply()`, `replicate()`, atau bahkan `sample()` itu sendiri (jika kita memintanya 5000 sampel sekaligus) adalah bentuk vektorisasi yang jauh lebih cepat daripada `for` loop.
+
+## 3.2 Konsep: Mengukur Waktu dengan system.time()
+Bagaimana kita tahu kode kita lambat? Kita ukur! Fungsi `system.time()` adalah alat diagnostik bawaan R untuk melakukan ini.
+
+Anda cukup membungkus kode Anda di dalamnya:
+
+``` {r}
+# Contoh konseptual (tidak perlu dijalankan)
+
+# Mengukur 'for' loop
+system.time({
+  # ... kode 'for' loop 10 juta simulasi ada di sini ...
+})
+
+# Mengukur 'vektorisasi'
+system.time({
+  # ... kode 'apply()' atau 'replicate()' 10 juta simulasi ada di sini ...
+})
+```
+
+`system.time()` akan melaporkan `user`, `system`, dan `elapsed` time. `elapsed` adalah waktu jam dinding yang paling sering kita pedulikan.
+
+---
+
+## 4. Konsep Kerapian: Sistem Objek S3
+Saat ini, hasil simulasi kita adalah `vector` berisi 1000 kata. Jika kita jalankan `print(hasil_status)`, outputnya memenuhi layar dan tidak informatif.
+
+### 4.1 Konsep: Apa itu S3?
+S3 adalah sistem Object-Oriented Programming (OOP) bawaan R. Tujuannya adalah agar fungsi generik seperti `print()` atau `summary()` bisa bertingkah laku **berbeda** tergantung `class` (tipe) objek yang Anda berikan.
+
+* `print(data_frame)` tampil beda dari `print(list)`. 
+
+* `summary(data_frame)` tampil beda dari `summary(vector_angka)`. 
+
+Itu semua karena S3!
+
+### 4.2 Konsep: `class` dan `method`
+Kita bisa membuat "cetakan" laporan QC kita sendiri.
+
+**Langkah 1**: Beri `class` (label) pada hasil kita. Kita bisa buat fungsi yang menjalankan simulasi dan mengembalikan `list` hasil yang sudah kita beri label khusus, misal `class = "qc_sim"`. 
+
+**Langkah 2**: Buat `method` (perilaku khusus) untuk `print`. Kita bisa ajari R: "Hei R, jika ada yang menyuruhmu print() objek dengan class == 'qc_sim', JANGAN cetak semua datanya. Alih-alih, jalankan fungsi khusus `print.qc_sim` ini."
+
+``` {r}
+# Contoh konseptual (tidak perlu dijalankan)
+
+# Misal 'hasil' adalah list simulasi kita dgn class "qc_sim"
+# hasil <- run_simulation(1000) 
+# class(hasil) #> [1] "qc_sim"
+
+# Kita buat method 'print' khusus untuk class itu
+print.qc_sim <- function(x) {
+  # 'x' adalah list hasil simulasi kita
+  
+  # Ambil data ringkasannya
+  n <- length(x$raw_data)
+  prop_reject <- mean(x$raw_data == "Reject") * 100
+  
+  # Cetak dengan format rapi!
+  cat("--- Hasil Simulasi QC ---\n")
+  cat(paste("Total Batch:", n, "\n"))
+  cat(paste("Proporsi Reject:", round(prop_reject, 2), "%\n"))
+}
+
+# Sekarang, jika kita panggil 'print(hasil)', 
+# R akan otomatis menjalankan fungsi rapi di atas!
+# print(hasil) 
+# > --- Hasil Simulasi QC ---
+# > Total Batch: 1000
+# > Proporsi Reject: 8.5 %
+```
+
+Inilah kekuatan S3: membuat output yang kompleks menjadi rapi, informatif, dan profesional.
+
+---
+
+### Kesimpulan
+
+Luar biasa! Anda telah beralih dari pengguna R menjadi programmer R. Dalam modul ini, Anda telah berhasil:
+
+1. Membangun program fungsional yang rapi menggunakan `function` dan `if`/`else`.
+2. Mensimulasikan program tersebut ribuan kali menggunakan `for` dan `while` loop.
+3. Memahami konsep efisiensi (`system.time()`, Vektorisasi) untuk membuat program Anda lebih cepat.
+4. Memahami konsep kerapian (Sistem S3) untuk membuat output program Anda lebih profesional.
+
+Anda kini memiliki semua alat fundamental untuk memecahkan masalah kompleks dengan R.
+
+
+## Latihan Mini-Project
+
+Untuk menguji pemahaman Anda, selesaikan tantangan berikut dalam R Script di dalam RStudio Project Anda: 
+
+1. Modifikasi Aturan Evaluasi: Salin fungsi `evaluate_batch()` Anda. Manajer ingin kategori baru: "Review". Aturannya: 0 "Fail" = "Gold", 1 "Fail" = "Silver", 2 "Fail" = "Review", dan 3 atau lebih "Fail" = "Reject". Modifikasi fungsi Anda untuk mencerminkan aturan baru ini.
+2. Simulasi `for` loop: Gunakan fungsi `evaluate_batch()` baru Anda. Jalankan simulasi `for` loop sebanyak 5000 kali. Gunakan `prop.table(table(...))` untuk melaporkan persentase dari keempat kategori status ("Gold", "Silver", "Review", "Reject").
+3. Tantangan `while` loop: Menggunakan fungsi baru Anda, tulis `while` loop untuk mencari tahu: "Dibutuhkan berapa total batch yang harus diinspeksi sampai kita menemukan 100 batch yang statusnya bukan 'Gold'?" Cetak hasilnya ke konsol.
+
+
+---
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
+</a>
