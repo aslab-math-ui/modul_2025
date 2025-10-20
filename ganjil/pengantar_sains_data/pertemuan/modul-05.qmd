@@ -1,8 +1,8 @@
 ---
-title: "R - Library and Project Management"
+title: "Modul 5: R - Alur Kontrol, Fungsi, dan Simulasi"
 subtitle: "Studi Kasus: Simulasi Kontrol Kualitas (Quality Control)"
 author: "Tim Asisten Lab Matematika UI"
-date: "2025-10-02"
+date: "2025-10-20"
 image: "https://www.interviewbit.com/blog/wp-content/uploads/2022/04/r-projects-2048x1001.png"
 ---
 
