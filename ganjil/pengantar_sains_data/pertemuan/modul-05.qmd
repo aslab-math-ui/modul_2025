@@ -77,9 +77,8 @@ Coba jalankan fungsi Anda di konsol beberapa kali:
 
 ```{r}
 inspect_batch()
-#> [1] "Pass" "Pass" "Pass" "Pass" "Pass"
+
 inspect_batch()
-#> [1] "Pass" "Fail" "Pass" "Pass" "Pass"
 ```
 
 Fungsi kita bekerja dengan baik, menghasilkan batch acak setiap saat.
@@ -275,32 +274,80 @@ Kita bisa membuat "cetakan" laporan QC kita sendiri.
 **Langkah 2**: Buat `method` (perilaku khusus) untuk `print`. Kita bisa ajari R: "Hei R, jika ada yang menyuruhmu print() objek dengan class == 'qc_sim', JANGAN cetak semua datanya. Alih-alih, jalankan fungsi khusus `print.qc_sim` ini."
 
 ``` {r}
-# Contoh konseptual (tidak perlu dijalankan)
+# Langkah 1: Definisikan fungsi-fungsi dasar dari modul
 
-# Misal 'hasil' adalah list simulasi kita dgn class "qc_sim"
-# hasil <- run_simulation(1000) 
-# class(hasil) #> [1] "qc_sim"
+inspect_batch <- function() {
+  outcomes <- c("Pass", "Fail")
+  sample(outcomes, 
+         size = 5, 
+         replace = TRUE, 
+         prob = c(0.9, 0.1))
+}
 
-# Kita buat method 'print' khusus untuk class itu
+evaluate_batch <- function(batch_items) {
+  num_fails <- sum(batch_items == "Fail")
+  
+  if (num_fails == 0) {
+    return("Gold")
+  } else if (num_fails == 1) {
+    return("Silver")
+  } else {
+    return("Reject")
+  }
+}
+
+# Langkah 2: Buat fungsi simulasi yang memberi 'class'
+
+run_simulation <- function(n_sims) {
+  
+  # Jalankan loop simulasi seperti biasa
+  hasil_status <- rep(NA, n_sims)
+  for (i in 1:n_sims) {
+    hasil_status[i] <- evaluate_batch(inspect_batch())
+  }
+  
+  # Buat 'list' untuk output
+  output <- list(
+    total_sims = n_sims,
+    raw_data = hasil_status
+  )
+  
+  # Beri 'label' atau 'class' khusus pada list ini
+  class(output) <- "qc_sim"
+  
+  return(output)
+}
+
+# Langkah 3: Buat 'method print' khusus untuk class "qc_sim"
+# R akan otomatis memanggil fungsi ini jika kita print objek "qc_sim"
+# Nama fungsinya harus: print.[nama_class]
+
 print.qc_sim <- function(x) {
-  # 'x' adalah list hasil simulasi kita
+  
+  # 'x' adalah list 'output' dari fungsi run_simulation
   
   # Ambil data ringkasannya
-  n <- length(x$raw_data)
+  n <- x$total_sims
   prop_reject <- mean(x$raw_data == "Reject") * 100
+  prop_gold <- mean(x$raw_data == "Gold") * 100
   
   # Cetak dengan format rapi!
   cat("--- Hasil Simulasi QC ---\n")
   cat(paste("Total Batch:", n, "\n"))
+  cat(paste("Proporsi Gold:", round(prop_gold, 2), "%\n"))
   cat(paste("Proporsi Reject:", round(prop_reject, 2), "%\n"))
+  cat("---------------------------\n")
 }
 
-# Sekarang, jika kita panggil 'print(hasil)', 
-# R akan otomatis menjalankan fungsi rapi di atas!
-# print(hasil) 
-# > --- Hasil Simulasi QC ---
-# > Total Batch: 1000
-# > Proporsi Reject: 8.5 %
+# Langkah 4: Jalankan dan Lihat Hasilnya!
+
+# Jalankan simulasi 1000 kali
+hasil_simulasi <- run_simulation(1000)
+
+# Sekarang, panggil 'hasil_simulasi'
+# R akan otomatis menggunakan method print.qc_sim kita yang rapi,
+# bukan mencetak list mentahnya.
+hasil_simulasi
 ```
 
 Inilah kekuatan S3: membuat output yang kompleks menjadi rapi, informatif, dan profesional.
