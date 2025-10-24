@@ -8,6 +8,10 @@ page-navigation: true
 jupyter: python3
 format: html
 ---
+ 
+ <a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA 2025
+</a>
 
 Kembali ke [EDA](./eda2025ganjil.qmd)
 
