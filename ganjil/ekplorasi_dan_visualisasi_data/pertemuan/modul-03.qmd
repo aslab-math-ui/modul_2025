@@ -13,7 +13,6 @@ format: html
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA 2025
 </a>
 
-Kembali ke [EDA](./eda2025ganjil.qmd)
 
 # Matplotlib (Pyplot)
 
