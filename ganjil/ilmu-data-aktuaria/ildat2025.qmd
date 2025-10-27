@@ -1,0 +1,52 @@
+---
+title: "Ilmu Data Aktuaria"
+subtitle: "Semester Ganjil 2025"
+author: "Tim Asisten Laboratorium Praktikum"
+date: 2025-10-24
+toc: false
+listing:
+  - id: diskusi
+    contents: "diskusi/*.qmd"
+    type: grid
+    sort: "title asc"
+    fields: [image, title, subtitle, date]
+    
+  - id: materi
+    contents: "materi/*.qmd"
+    type: grid
+    sort: "title asc"
+    fields: [image, title, subtitle, date]
+---
+
+<a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum
+</a>
+
+:::{.justify}
+Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria.
+:::
+
+<br>
+
+::: {.panel-tabset}
+
+## Tentang
+
+## Pertemuan
+
+Ini adalah struktur diskusi setiap pertemuan. Dengan Prinsip Pareto 80/20 diharapkan 20% effort disini bisa menghasilkan 80% output kompetensi.
+
+:::{#diskusi}
+:::
+
+## Materi
+
+Di sini berisi modul materi-materi sesuai dengan CP kurikulum. Diharapkan modul materi ini dapat membantu secara asinkronus.
+
+:::{#modul-tambahan}
+:::
+
+## Proyek
+
+
+:::
