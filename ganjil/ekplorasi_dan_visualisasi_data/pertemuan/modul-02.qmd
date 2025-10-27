@@ -1,12 +1,14 @@
 ---
-title: "Modul 2: EVDA"
+title: "Pertemuan 2 : Data Cleaning with Pandas"
 image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/eksplorasi_dan_visualisasi_data/static/images/pandas.jpg
 description: "Handling Dirty Data using Pandas"
-author: "Tim Asisten Lab Matematika UI"
-date: "2025-10-22"
+date: 04/15/2024
+page-navigation: true
+jupyter: python3
+format: html
 ---
 
-<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
+ <a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA 2025
 </a>
 
@@ -277,6 +279,3 @@ df.fillna(value='<value>', inplace=True)
 df.drop_duplicates(inplace=True)
 ```
 </div>
-<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
-<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA
-</a>
