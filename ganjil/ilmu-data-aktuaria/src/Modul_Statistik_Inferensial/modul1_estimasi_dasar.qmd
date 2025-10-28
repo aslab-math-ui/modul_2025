@@ -1,0 +1,190 @@
+---
+title: "Modul 1 — Estimasi dan Populasi"
+subtitle: "Membedakan Parameter, Statistik, dan Ketidakpastian"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+---
+
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+---
+
+## 1. Konsep Intuitif: Mengapa Kita Butuh Estimasi
+
+Bayangkan Anda seorang analis yang ingin mengetahui **rata-rata harga rumah di Jakarta**.  
+Masalahnya: jumlah rumah di Jakarta terlalu banyak untuk dihitung satu per satu.  
+Maka, Anda melakukan langkah rasional — **mengambil sebagian rumah (sampel)** dan menghitung rata-rata dari sampel itu.  
+
+Nilai rata-rata dari sampel disebut **statistik**.  
+Sementara nilai rata-rata “sebenarnya” dari seluruh populasi (yang tidak diketahui) disebut **parameter**.
+
+Secara intuitif:
+
+> Statistik adalah perkiraan (estimate) dari parameter yang tidak diketahui.
+
+Karena kita hanya mengambil sebagian data, maka estimasi ini **tidak pasti** — ia bisa berubah tergantung sampel mana yang terambil.
+
+---
+
+## 2. Penjelasan Formal: Parameter dan Estimator
+
+Misalkan kita memiliki populasi dengan nilai acak $X_1, X_2, \dots, X_N$.  
+Rata-rata populasi didefinisikan sebagai:
+
+$$
+\mu = \frac{1}{N} \sum_{i=1}^{N} X_i
+$$
+
+Kita tidak mengetahui seluruh populasi, sehingga kita ambil sampel acak $X_1, X_2, \dots, X_n$ (dengan $n < N$).
+
+Estimator untuk rata-rata populasi adalah:
+
+$$
+\hat{\mu} = \frac{1}{n} \sum_{i=1}^{n} X_i
+$$
+
+Dalam statistik, kita menulis:
+
+- $\mu$ → parameter populasi (tetap, tidak diketahui)
+- $\hat{\mu}$ → estimator (fungsi dari data sampel, acak)
+
+Jika $E[\hat{\mu}] = \mu$, maka estimator tersebut **tak bias (unbiased)**.  
+Artinya, secara rata-rata jangka panjang, estimasi kita akan “tepat” di nilai sebenarnya.
+
+---
+
+## 3. Eksperimen Komputasional: Estimasi Mean dari Sampel
+
+Kita akan melakukan simulasi sederhana:  
+
+- Populasi berisi 10.000 data harga rumah (dalam juta rupiah).  
+- Kita ambil beberapa sampel acak untuk mengestimasi rata-rata populasi.
+
+```{.python filename="estimasi_rata_rata.py"}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Membuat populasi sintetis: harga rumah (dalam juta rupiah)
+np.random.seed(42)
+populasi = np.random.normal(loc=750, scale=100, size=10000)  # rata-rata 750 juta, deviasi 100 juta
+
+# Parameter sebenarnya (tidak diketahui dalam dunia nyata)
+mu_true = np.mean(populasi)
+print("Parameter populasi (μ sebenarnya):", round(mu_true, 2))
+
+# Ambil beberapa sampel dan estimasi rata-rata
+ukuran_sampel = [30, 100, 500]
+estimasi = []
+
+for n in ukuran_sampel:
+    sampel = np.random.choice(populasi, size=n, replace=False)
+    mu_hat = np.mean(sampel)
+    estimasi.append(mu_hat)
+    print(f"Estimasi dari n={n} sampel: {round(mu_hat, 2)}")
+
+# Visualisasi sebaran estimasi
+plt.figure(figsize=(8,4))
+plt.hist(populasi, bins=50, alpha=0.4, label='Populasi')
+for n, mu_hat in zip(ukuran_sampel, estimasi):
+    plt.axvline(mu_hat, linestyle='--', label=f'Estimasi (n={n})')
+plt.axvline(mu_true, color='black', linewidth=2, label='μ sebenarnya')
+plt.legend()
+plt.title('Perbandingan Estimasi vs Parameter Populasi')
+plt.xlabel('Harga Rumah (juta rupiah)')
+plt.ylabel('Frekuensi')
+plt.show()
+```
+
+**Diskusi hasil:**
+
+- Semakin besar ukuran sampel, estimasi $\hat{\mu}$ makin dekat ke $\mu$.  
+- Variabilitas antar estimasi berkurang seiring meningkatnya jumlah data.
+
+Inilah mengapa **ukuran sampel (n)** berpengaruh besar terhadap akurasi estimasi.
+
+---
+
+## 4. Konsep Variabilitas dan Distribusi Sampling
+
+Karena setiap sampel berbeda, nilai $\hat{\mu}$ juga berbeda-beda.  
+Kumpulan semua kemungkinan nilai $\hat{\mu}$ dari berbagai sampel disebut **distribusi sampling**.
+
+Distribusi sampling memiliki dua sifat penting:
+
+1. Rata-ratanya sama dengan $\mu$ (jika estimator tak bias).  
+2. Standar deviasinya disebut **standard error (SE)**:
+   $$
+   SE(\hat{\mu}) = \frac{\sigma}{\sqrt{n}}
+   $$
+
+Standard error menjelaskan seberapa jauh estimasi kita dapat menyimpang dari nilai sebenarnya.
+
+---
+
+## 5. Eksperimen Variabilitas Estimasi
+
+Kita lihat efek ukuran sampel terhadap kestabilan estimasi.
+
+```{.python filename="simulasi_sampling.py"}
+# Simulasi distribusi sampling
+def simulasi_sampling(populasi, n, k=1000):
+    hasil = []
+    for _ in range(k):
+        sampel = np.random.choice(populasi, size=n, replace=False)
+        hasil.append(np.mean(sampel))
+    return np.array(hasil)
+
+ukuran = [30, 100, 500]
+plt.figure(figsize=(8,4))
+
+for n in ukuran:
+    hasil = simulasi_sampling(populasi, n)
+    plt.hist(hasil, bins=40, alpha=0.5, label=f"n={n}")
+
+plt.axvline(mu_true, color='black', linewidth=2, label='μ sebenarnya')
+plt.legend()
+plt.title('Distribusi Sampling dari Estimator Rata-rata')
+plt.xlabel('Nilai Estimasi (μ̂)')
+plt.ylabel('Frekuensi')
+plt.show()
+```
+
+**Interpretasi:**
+
+- Distribusi semakin sempit (lebih stabil) seiring meningkatnya ukuran sampel.  
+- Artinya, estimasi dari data besar lebih konsisten — memiliki *standard error* kecil.
+
+---
+
+## 6. Refleksi Konseptual
+
+Beberapa pertanyaan reflektif untuk Anda renungkan:
+
+1. Mengapa kita tidak bisa menghitung parameter populasi secara langsung?
+2. Apakah semakin besar data selalu lebih baik untuk estimasi?
+3. Apa yang dimaksud dengan estimator tak bias? Apakah itu berarti hasilnya selalu tepat?
+4. Bagaimana konsep “distribusi sampling” menjelaskan kenapa hasil eksperimen statistik tidak selalu sama?
+
+---
+
+## 7. Ringkasan
+
+| Konsep | Simbol | Makna |
+|:--|:--|:--|
+| Parameter populasi | $\mu$ | Nilai sebenarnya (tetap, tidak diketahui) |
+| Estimator | $\hat{\mu}$ | Fungsi statistik dari sampel |
+| Estimasi | Nilai dari $\hat{\mu}$ | Perkiraan aktual dari data |
+| Standard error | $SE = \frac{\sigma}{\sqrt{n}}$ | Ukuran ketidakpastian estimasi |
+| Distribusi sampling | – | Sebaran nilai estimasi dari berbagai sampel |
+
+::: {.d-flex .justify-content-between .mb-4}
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+<a href="modul2_distribusi_sampling.qmd" class="btn btn-primary">
+Modul Berikutnya <i class="fa-solid fa-arrow-right"></i>
+</a>
+:::
