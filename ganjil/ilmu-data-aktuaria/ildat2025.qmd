@@ -1,7 +1,7 @@
 ---
 title: "Ilmu Data Aktuaria"
-subtitle: "Semester Ganjil 2025"
-author: "Tim Asisten Laboratorium Praktikum"
+subtitle: "Semester Ganjil 2025 <br> Tim Asisten Laboratorium Praktikum Matematika Universitas Indonesia"
+author: "Muhammad Zaki Zulhamlizar"
 bibliography: referensi.bib
 csl: apa.csl
 nocite: '@*'
@@ -31,11 +31,7 @@ listing:
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum
 </a>
 
-:::{.justify}
-Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria. 
-:::
-
-<br>
+Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria.
 
 ::: {.panel-tabset}
 
