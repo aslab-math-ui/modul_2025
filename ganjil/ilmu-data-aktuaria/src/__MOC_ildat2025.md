@@ -24,7 +24,7 @@ Tidak berhenti di sana. Di masing-masing ***Daun*** memiliki banyak ***stomata**
 ```{.markdown}
 Pohon Kompetensi
 └── Batang: Ilmu Data
-    ├── 🌳 1. Jalur Kompetensi Umum Data Science (Lifecycle CRISP-ML(Q))
+    ├── 🌳 1. Jalur Lifecycle CRISP-ML(Q) (Kompetensi Umum Data Science)
     │   ├── Data Literacy
     │   ├── Data Wrangling & Data Cleaning
     │   ├── Data Visualization
