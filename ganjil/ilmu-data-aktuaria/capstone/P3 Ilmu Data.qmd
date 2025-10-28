@@ -3,7 +3,6 @@ title: "P3 Ilmu Data"
 subtitle: "Random Forest"
 author: "Tim Asisten Lab Matematika UI"
 date: "2025-10-28"
-image: "https://plus.unsplash.com/premium_photo-1681487767138-ddf2d67b35c1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGF0YSUyMHZpc3VhbGl6YXRpb258ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000"
 ---
 
 <a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
