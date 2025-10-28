@@ -16,7 +16,7 @@ image: "https://wallpapers.com/images/hd/magnifying-glass-detective-anime-girl-7
 Selamat datang di **Modul Praktikum Ilmu Data**   
 Pada bagian ini, kita akan memahami **proses berpikir dan alur kerja (lifecycle)** seorang *Data Scientist* — dari mengumpulkan data hingga memastikan modelnya tetap relevan di dunia nyata.  
 
-## Analogi Awal: Berpikir Seperti Detektif Data
+## Cara berpikir Data Scientist
 
 Bayangkan kamu adalah seorang **detektif**.  
 Kamu menerima kasus misterius: *mengapa klaim asuransi meningkat tajam bulan ini?*  
