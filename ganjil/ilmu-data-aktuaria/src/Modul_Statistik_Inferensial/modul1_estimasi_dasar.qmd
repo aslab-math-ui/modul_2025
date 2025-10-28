@@ -9,8 +9,6 @@ date: "2025-10-28"
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
 </a>
 
----
-
 ## 1. Konsep Intuitif: Mengapa Kita Butuh Estimasi
 
 Bayangkan Anda seorang analis yang ingin mengetahui **rata-rata harga rumah di Jakarta**.  
