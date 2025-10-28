@@ -1,0 +1,26 @@
+---
+title: "P1 Ilmu Data"
+subtitle: "Prediksi Churn Telekom"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-28"
+image: "https://plus.unsplash.com/premium_photo-1681487767138-ddf2d67b35c1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGF0YSUyMHZpc3VhbGl6YXRpb258ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000"
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
+
+---
+
+<!-- Isi modul -->
+
+**BELUM SIAP LOL**
+
+<div class="tenor-gif-embed" data-postid="5211926416949197849" data-share-method="host" data-aspect-ratio="1.02469" data-width="50%"><a href="https://tenor.com/view/dr-stone-senkuu-tongue-gif-5211926416949197849">Dr Stone GIF</a>from <a href="https://tenor.com/search/dr-gifs">Dr GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
