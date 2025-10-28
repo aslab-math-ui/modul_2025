@@ -16,6 +16,12 @@ listing:
     type: grid
     sort: "title asc"
     fields: [image, title, subtitle, date]
+
+  - id: capstone
+    contents: "capstone/"
+    type: table
+    sort: "title asc"
+    fields: [title, date]
 ---
 
 <a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
@@ -32,6 +38,84 @@ Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria.
 
 ## Tentang
 
+Selamat datang! Halaman ini adalah pusat sumber daya belajar dan dokumentasi untuk praktikum kita.
+
+### Modul Belajar Ilmu Data Aktuaria
+
+:::{.justify}
+Selamat datang di perpustakaan digital dan *workshop* utama Anda. Penting untuk dipahami bahwa modul di website ini **sangat berbeda** dari modul praktikum pada umumnya yang dibagikan per-pertemuan.
+
+Alih-alih materi diberikan sepotong demi sepotong setiap minggu, kami **menyediakan seluruh koleksi materi secara lengkap secara langsung**. Semua materi yang Anda perlukan untuk satu semester telah "ditumpahkan" dan tersedia di sini. **Secara bertahap akan kami lengkapi keseluruhan secara langsung**
+:::
+
+**Apa implikasinya bagi Anda?**
+
+Model ini dirancang untuk melatih keterampilan paling penting di dunia industri: **inisiatif dan kemandirian**. Anda dituntut untuk secara proaktif dan mandiri mempelajari keseluruhan materi terlebih dahulu. Alur belajar kita adalah:
+
+1.  **Studi Mandiri (Wajib):** Anda menjelajahi dan "melahap" materi di website ini.
+2.  **Identifikasi Masalah:** Anda mencatat bagian mana yang menantang, membingungkan, atau ingin Anda dalami.
+3.  **Diskusi Terfokus:** Anda membawa catatan tersebut ke sesi konsultasi *on-demand* untuk didiskusikan bersama tim dan asisten.
+
+### Peta Konten: Apa yang Akan Anda Temukan
+
+Materi yang disediakan di sini sudah mencakup keseluruhan jalur pembelajaran. Kami telah menyusunnya untuk membangun pemahaman Anda dari dasar hingga penerapan.
+
+:::{.callout-note title="Contoh Struktur Modul"}
+Sebagai gambaran, Anda akan menemukan beberapa bagian utama, di antaranya:
+
+* **Bagian 1: Pengenalan Sains Data Aktuaria**
+    * Mengenal Apa Itu Sains Data
+    * Mengapa Sains Data Penting untuk Aktuaria?
+    * Alur Kerja Proyek Sains Data
+    * ...dan masih banyak lagi.
+
+* **Bagian 2: Matrikulasi & Review Fondasi**
+    * Kilas Balik Matematika & Statistika Kunci
+    * Prinsip Dasar Pengolahan Data
+    * Dasar-Dasar Analisis Data
+    * ...dan masih banyak lagi.
+:::
+
+Seluruh modul ini membentuk sebuah **peta jalan pembelajaran** yang komprehensif.
+
+Untuk memahami alur, cakupan penuh, dan bagaimana semua bagian terhubung, Anda **sangat diharapkan** untuk memulai perjalanan Anda dengan membaca modul pertama: **"Pengantar Sains Data Aktuaria"** yang ada di tab `Materi`.
+
+### Model Pembelajaran Adaptif
+
+Berbeda dari praktikum tradisional, kami tidak menggunakan jadwal mingguan yang kaku. Kami mengadopsi model **belajar-berbasis-kebutuhan** (*on-demand*) yang fleksibel dan didorong oleh inisiatif Anda. Alur belajarnya sederhana dan berulang:
+
+1.  **MANDIRI:** Anda mempelajari materi dari website ini secara mandiri.
+2.  **KOLABORASI:** Anda berdiskusi dengan tim Anda (yang dibentuk di `Plotting Kelompok`) untuk menemukan kesulitan atau pertanyaan.
+3.  **PROAKTIF:** Tim Anda secara proaktif meminta sesi konsultasi dengan asisten untuk membahas temuan tersebut.
+
+### Modul Web & Spreadsheet
+
+Modul ini berbeda dari pada umumnya. Modul Praktikum Ilmu Data akan menggunakan website baca dan navigasi Mastersheet.
+Untuk akses mastersheet, silahkan klik pada tautan berikut: [Mastersheet](https://docs.google.com/spreadsheets/d/1lU5bhGa5emGxgz8HO7OQjRvRAI1XJ2B_ATSncomBEWY/edit?usp=drive_link)
+
+### Peran Website Ini vs. Mastersheet
+
+Sangat penting untuk memahami fungsi dari dua *tools* utama kita:
+
+:::{.callout-note icon="false"}
+## Platform Kita
+
+**1. Mastersheet (Google Sheets):**
+Anggap ini sebagai **Dashboard** atau *Mission Control* Anda. Isinya adalah semua informasi operasional dan administratif:
+
+* Pembagian kelompok (`Plotting Kelompok`)
+* Prosedur resmi (`Teknis Praktikum`)
+* Peta materi level tinggi (`Navigasi Materi`)
+* Kumpulan tautan form (`Sheet Form`)
+
+**2. Website (Quarto) Ini:**
+Anggap ini sebagai **Perpustakaan Digital** atau *Workshop* Anda. Di sinilah semua konten pembelajaran mendalam berada:
+
+* Modul materi yang mendalam (di tab `Materi`)
+* Rekapitulasi dan temuan dari sesi diskusi kita (di tab `Pertemuan`)
+* Dokumentasi proyek (di tab `Proyek`)
+:::
+
 ## Pertemuan
 
 Ini adalah struktur diskusi setiap pertemuan. Dengan Prinsip Pareto 80/20 diharapkan 20% effort disini bisa menghasilkan 80% output kompetensi.
@@ -43,10 +127,14 @@ Ini adalah struktur diskusi setiap pertemuan. Dengan Prinsip Pareto 80/20 dihara
 
 Di sini berisi modul materi-materi sesuai dengan CP kurikulum. Diharapkan modul materi ini dapat membantu secara asinkronus.
 
-:::{#modul-tambahan}
+:::{#materi}
 :::
 
 ## Proyek
 
+Bagian ini akan mendokumentasikan proyek *capstone* atau studi kasus komprehensif yang dikerjakan mahasiswa sebagai puncak dari proses belajar praktikum.
+
+:::{#capstone}
+:::
 
 :::

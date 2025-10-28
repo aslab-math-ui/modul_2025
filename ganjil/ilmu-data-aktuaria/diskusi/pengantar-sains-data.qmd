@@ -1,0 +1,25 @@
+---
+title: "0 Pengenalan Proses Sains Data"
+subtitle: "Berpikir Seperti Seorang Detektif Data"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-28"
+image: "https://wallpapers.com/images/hd/magnifying-glass-detective-anime-girl-79so2z2ucn7dxtdx.jpg"
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
+
+---
+
+<!-- Isi modul -->
+
+**BELUM SIAP LOL**
+
+<div class="tenor-gif-embed" data-postid="5211926416949197849" data-share-method="host" data-aspect-ratio="1.02469" data-width="50%"><a href="https://tenor.com/view/dr-stone-senkuu-tongue-gif-5211926416949197849">Dr Stone GIF</a>from <a href="https://tenor.com/search/dr-gifs">Dr GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
