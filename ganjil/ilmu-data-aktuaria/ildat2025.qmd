@@ -32,7 +32,7 @@ listing:
 </a>
 
 :::{.justify}
-Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria.
+Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria. 
 :::
 
 <br>

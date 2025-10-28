@@ -37,22 +37,21 @@ Pohon Kompetensi
     │   ├── Terminal Git Bash
     │   ├── Conda Jupyter
     │   ├── Python VENV & file lock (requirements.txt, pip-tools, poetry, dan uv)
-    │   ├── Python Docker (Coming Soon)
     │   └── R VENV, File Lock, & Project Management
     │
     ├── 🌳 3. Jalur Kompetensi Statistik & Inferensi
-    │   ├── estimasi_dasar.qmd
-    │   ├── distribusi_sampling.qmd
-    │   ├── confidence_interval.qmd
-    │   ├── inferensi_hipotesis.qmd
-    │   ├── regresi_linier.qmd (Fondasi untuk ML)
-    │   └── prediksi_validasi.qmd
+    │   ├── estimasi dasar
+    │   ├── distribusi sampling
+    │   ├── confidence interval
+    │   ├── inferensi hipotesis
+    │   ├── regresi linier (Fondasi untuk ML)
+    │   └── prediksi validasi
     │
-    ├── 🌳 4. Jalur Peta Model & Algoritma ML (Ensiklopedia "Bahan")
+    ├── 🌳 4. Jalur Peta Model & Algoritma ML
     │   ├── Pengantar: Supervised vs. Unsupervised Learning
     │   │
     │   ├── Sub-Cabang: Algoritma Supervised
-    │   │   ├── Linear Regression (Hyperlink ke Jalur #3)
+    │   │   ├── Linear Regression
     │   │   ├── Logistic Regression
     │   │   ├── K-Nearest Neighbors (KNN)
     │   │   ├── Support Vector Machine (SVM)
@@ -60,30 +59,30 @@ Pohon Kompetensi
     │   │   └── Decision Trees
     │   │
     │   ├── Sub-Cabang: Algoritma Ensemble
-    │   │   ├── Ensemble Algorithms (Konsep Umum)
+    │   │   ├── Ensemble Algorithms
     │   │   ├── Bagging & Random Forests
     │   │   └── Boosting & Strong Learners
     │   │
     │   └── Sub-Cabang: Algoritma Unsupervised
-    │       ├── Clustering (Konsep Umum) & K-Means
-    │       ├── Dimensionality Reduction (Konsep Umum)
+    │       ├── Clustering & K-Means
+    │       ├── Dimensionality Reduction
     │       └── Principal Component Analysis (PCA)
     │
-    ├── 🌳 5. Jalur Pembelajaran Mesin Pemula (Workflow Proyek)
+    ├── 🌳 5. Jalur Pembelajaran Mesin Pemula
     │   ├── How Models Work
     │   ├── Basic Data Exploration
-    │   ├── First Machine Learning Model (Menerapkan 'Bahan' dari Jalur #4)
+    │   ├── First Machine Learning Model
     │   ├── Model Validation
     │   ├── Underfitting and Overfitting
-    │   └── Random Forest (Penerapan praktis, hyperlink ke Jalur #4)
+    │   └── Random Forest
     │
-    ├── 🌳 6. Jalur Pembelajaran Mesin Intermediate (Workflow Lanjutan)
+    ├── 🌳 6. Jalur Pembelajaran Mesin Intermediate
     │   ├── Reasoning to Upgrade Your Model
     │   ├── Missing Value
     │   ├── Categorical Variables
     │   ├── Pipelines
     │   ├── Cross-Validation
-    │   ├── XGBoost (Penerapan praktis 'Boosting' dari Jalur #4)
+    │   ├── XGBoost
     │   └── Data Leakage
     │
     ├── 🌳 7. Jalur Machine Learning Explainability (XAI)
@@ -126,6 +125,7 @@ Pohon Kompetensi
         ├── SQL
         ├── Computer Vision
         ├── Python dan R untuk Time Series
+        ├── Python Docker (Coming Soon)
         ├── Geospatial Analysis
         ├── AI Ethics
         ├── Game AI and Reinforcement Learning
