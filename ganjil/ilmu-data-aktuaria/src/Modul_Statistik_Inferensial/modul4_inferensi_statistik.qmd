@@ -1,0 +1,185 @@
+---
+title: "Modul 4 — Inferensi Hipotesis dan Pengambilan Keputusan Statistik"
+subtitle: "Dari Keyakinan ke Keputusan Ilmiah"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+---
+
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+## 1. Intuisi: Statistik sebagai Alat Menguji Klaim
+
+Bayangkan seorang aktuaris berkata:
+
+> “Rata-rata klaim kendaraan di tahun ini **lebih besar dari Rp 10 juta**.”
+
+Bagaimana kita bisa tahu apakah klaim ini *benar secara statistik* — atau hanya kebetulan dari sampel kecil?
+
+Kita tidak bisa sekadar melihat rata-rata sampel lalu percaya begitu saja.  
+Kita perlu *mekanisme formal* untuk menilai apakah **perbedaan yang diamati cukup besar** untuk disimpulkan sebagai bukti nyata.
+
+Inilah fungsi **Inferensi Hipotesis**:
+
+> Menentukan apakah data yang kita amati cukup kuat untuk menolak klaim awal tentang parameter populasi.
+
+## 2. Struktur Formal Uji Hipotesis
+
+Inferensi hipotesis selalu dimulai dari **dua pernyataan yang saling berlawanan**:
+
+| Simbol | Pernyataan | Makna |
+|:--|:--|:--|
+| $H_0$ | Hipotesis nol | Klaim awal atau status quo (“tidak ada efek / tidak ada perbedaan”) |
+| $H_1$ | Hipotesis alternatif | Klaim yang ingin dibuktikan (“ada efek / ada perbedaan”) |
+
+Contoh:  
+$$
+H_0: \mu = 10.000.000 \\
+H_1: \mu > 10.000.000
+$$
+
+## 3. Langkah Umum Pengujian Hipotesis
+
+| Langkah | Deskripsi |
+|:--|:--|
+| 1 | Nyatakan hipotesis $H_0$ dan $H_1$ |
+| 2 | Tentukan tingkat signifikansi $\alpha$ (biasanya 0.05) |
+| 3 | Pilih uji yang sesuai (z-test, t-test, dll.) |
+| 4 | Hitung statistik uji dari data |
+| 5 | Tentukan p-value |
+| 6 | Bandingkan p-value dengan α untuk mengambil keputusan |
+| 7 | Tarik kesimpulan substantif |
+
+## 4. Statistik Uji dan p-Value
+
+Untuk uji satu rata-rata (mean test):
+
+- Jika **σ diketahui** → gunakan *z-test*  
+  $$
+  z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
+  $$
+
+- Jika **σ tidak diketahui** → gunakan *t-test*  
+  $$
+  t = \frac{\bar{X} - \mu_0}{s / \sqrt{n}}
+  $$
+
+**p-value** adalah probabilitas untuk memperoleh nilai statistik uji *lebih ekstrem* dari data yang diamati, jika $H_0$ benar.
+
+## 5. Keputusan Berdasarkan p-Value
+
+| Kriteria | Keputusan | Interpretasi |
+|:--|:--|:--|
+| $p \leq \alpha$ | Tolak $H_0$ | Bukti cukup kuat untuk menolak klaim awal |
+| $p > \alpha$ | Gagal tolak $H_0$ | Bukti tidak cukup untuk menolak klaim awal |
+
+## 6. Eksperimen Komputasional: Uji Hipotesis Rata-rata
+
+Kita akan menguji klaim:
+
+> Rata-rata pengeluaran pelanggan lebih besar dari 500.000.
+
+```{.python filename="uji_hipotesis_mean.py"}
+import numpy as np
+from scipy.stats import t
+
+np.random.seed(42)
+
+# Data simulasi
+n = 40
+mu0 = 500_000
+sampel = np.random.normal(520_000, 50_000, size=n)
+
+# Langkah perhitungan
+xbar = np.mean(sampel)
+s = np.std(sampel, ddof=1)
+t_stat = (xbar - mu0) / (s / np.sqrt(n))
+p_value = 1 - t.cdf(t_stat, df=n-1)
+
+print(f"Rata-rata sampel: {xbar:,.0f}")
+print(f"t-statistik: {t_stat:.3f}")
+print(f"p-value: {p_value:.4f}")
+```
+
+**Interpretasi:**
+
+- Jika p-value < 0.05 → kita menolak $H_0$  
+  dan menyimpulkan bahwa **pengeluaran pelanggan memang lebih tinggi** dari Rp 500.000.
+- Jika p-value > 0.05 → data belum cukup kuat untuk menyimpulkan demikian.
+
+## 7. Visualisasi Logika Keputusan
+
+```{.python filename="visualisasi_keputusan.py"}
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import t
+
+x = np.linspace(-4, 4, 300)
+y = t.pdf(x, df=39)
+
+t_stat = 2.1  # misal hasil uji
+alpha = 0.05
+t_crit = t.ppf(1 - alpha, df=39)
+
+plt.figure(figsize=(8,5))
+plt.plot(x, y, color='steelblue')
+plt.fill_between(x, y, 0, where=(x > t_crit), color='red', alpha=0.3, label='Daerah tolak H0')
+plt.axvline(t_stat, color='black', linestyle='--', label=f't-stat = {t_stat:.2f}')
+plt.legend()
+plt.title("Visualisasi Daerah Penolakan Hipotesis")
+plt.xlabel("Nilai t")
+plt.ylabel("Kepadatan")
+plt.show()
+```
+
+Garis vertikal hitam menunjukkan posisi statistik uji dari data kita.  
+Jika ia jatuh di area merah (daerah tolak), kita menolak $H_0$.
+
+## 8. Dua Jenis Kesalahan Inferensi
+
+| Jenis | Deskripsi | Dampak |
+|:--|:--|:--|
+| Kesalahan Tipe I (α) | Menolak $H_0$ padahal benar | False Positive |
+| Kesalahan Tipe II (β) | Gagal menolak $H_0$ padahal salah | False Negative |
+
+Tujuan ilmuwan data adalah **menjaga keseimbangan** antara keduanya.  
+Menurunkan α terlalu rendah memang mengurangi false positive, tapi meningkatkan risiko false negative.
+
+## 9. Aplikasi Kontekstual: Ilmu Aktuaria
+
+| Skenario | H₀ | H₁ | Tujuan Uji |
+|:--|:--|:--|:--|
+| Menguji klaim premi | Premi aktual = premi model | Premi aktual ≠ premi model | Validasi pricing |
+| Klaim fraud | Tidak ada indikasi fraud | Ada indikasi fraud | Deteksi outlier |
+| Uji mortalitas | Tabel mortalitas lama masih valid | Tabel sudah tidak cocok | Validasi asumsi risiko |
+| Reserving | Rata-rata klaim stabil | Klaim meningkat | Manajemen risiko klaim |
+
+## 10. Refleksi Konseptual
+
+1. Apa arti sebenarnya dari “menolak H₀”?  
+2. Mengapa *tidak cukup hanya melihat rata-rata sampel* untuk menyimpulkan?  
+3. Dalam kasus bisnis atau asuransi, mana yang lebih berisiko: Kesalahan tipe I atau tipe II?  
+4. Bagaimana kita menyeimbangkan tingkat keyakinan (α) dengan konsekuensi keputusan?
+
+
+## 11. Ringkasan
+
+| Konsep | Rumus / Deskripsi | Makna |
+|:--|:--|:--|
+| Hipotesis Nol $H_0$ | Klaim dasar yang diuji | Asumsi awal |
+| Hipotesis Alternatif $H_1$ | Klaim yang ingin dibuktikan | Arah perubahan |
+| Statistik Uji | $t = \frac{\bar{X} - \mu_0}{s/\sqrt{n}}$ | Ukuran penyimpangan dari klaim |
+| p-value | Probabilitas hasil ekstrem jika $H_0$ benar | Tolak jika kecil |
+| Kesalahan Tipe I & II | α dan β | Risiko pengambilan keputusan |
+| Hubungan dengan CI | Jika μ₀ di luar CI → Tolak H₀ | Dua pendekatan yang setara |
+
+::: {.d-flex .justify-content-between .mb-4}
+<a href="modul3_CI_Inferensi.qmd" class="btn btn-primary">
+<i class="fa-solid fa-arrow-left"></i> Modul Sebelumnya
+</a>
+
+<a href="modul3_CI_Inferensi.qmd" class="btn btn-primary">
+Modul Berikutnya <i class="fa-solid fa-arrow-right"></i>
+</a>
+:::
