@@ -1,0 +1,175 @@
+---
+title: "Modul 3 — Confidence Interval dan Inferensi Statistik"
+subtitle: "Menilai Keyakinan terhadap Estimasi"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+---
+
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+## 1. Intuisi: Mengapa Kita Butuh “Keyakinan”?
+
+Bayangkan kamu memperkirakan **rata-rata pengeluaran pelanggan** berdasarkan sampel 100 orang, dan hasilnya adalah Rp 520.000.  
+Apakah berarti **rata-rata populasi** pasti Rp 520.000?
+
+Tidak. Karena ada *ketidakpastian* dalam proses sampling.
+
+Kita tidak bisa mengatakan:
+
+> “Rata-rata populasi = 520.000”
+
+tapi kita bisa mengatakan:
+
+> “Kita **yakin 95%** bahwa rata-rata populasi berada antara **Rp 500.000 dan Rp 540.000**.”
+
+Inilah konsep **Confidence Interval (CI)** — bukan angka tunggal, tetapi **rentang estimasi yang memiliki tingkat keyakinan tertentu**.
+
+## 2. Formulasi Matematis Confidence Interval
+
+Jika kita punya estimator rata-rata sampel:
+
+$$
+\bar{X} \sim N\left( \mu, \frac{\sigma^2}{n} \right)
+$$
+
+Maka interval keyakinan $(1 - \alpha)100\%$ untuk rata-rata populasi adalah:
+
+$$
+\bar{X} \pm z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}
+$$
+
+Namun, dalam praktik kita sering **tidak tahu σ (standar deviasi populasi)**,  
+sehingga digunakan estimator dari sampel $s$ dan distribusi t-Student:
+
+$$
+\bar{X} \pm t_{\alpha/2, n-1} \cdot \frac{s}{\sqrt{n}}
+$$
+
+### Interpretasi
+
+| Simbol | Arti |
+|:--|:--|
+| $\bar{X}$ | rata-rata sampel |
+| $s$ | standar deviasi sampel |
+| $n$ | ukuran sampel |
+| $z_{\alpha/2}$, $t_{\alpha/2, n-1}$ | nilai kritis (cutoff) dari distribusi normal/t |
+| $(1 - \alpha)$ | tingkat keyakinan (confidence level), misal 0.95 |
+
+
+## 3. Eksperimen Komputasional: CI dari Sampel Acak
+
+Kita akan melakukan simulasi untuk menunjukkan **bahwa sekitar 95% dari semua interval yang dibentuk benar-benar mengandung nilai μ sebenarnya**.
+
+```{.python filename="confidence_interval_simulasi.py"}
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import t
+
+np.random.seed(42)
+
+mu = 50     # rata-rata populasi
+sigma = 10  # standar deviasi populasi
+n = 30      # ukuran sampel
+alpha = 0.05
+t_crit = t.ppf(1 - alpha/2, df=n-1)
+
+def hitung_ci(sampel):
+    xbar = np.mean(sampel)
+    s = np.std(sampel, ddof=1)
+    margin = t_crit * s / np.sqrt(n)
+    return xbar - margin, xbar + margin
+
+# simulasi 200 kali
+ci_list = []
+berisi_mu = 0
+
+for i in range(200):
+    sampel = np.random.normal(mu, sigma, size=n)
+    low, high = hitung_ci(sampel)
+    ci_list.append((low, high))
+    if low <= mu <= high:
+        berisi_mu += 1
+
+# visualisasi hasil
+plt.figure(figsize=(10, 6))
+for i, (low, high) in enumerate(ci_list):
+    color = "green" if low <= mu <= high else "red"
+    plt.plot([low, high], [i, i], color=color, linewidth=2)
+plt.axvline(mu, color="black", linestyle="--")
+plt.title(f"Confidence Interval (95%) — {berisi_mu}/200 mengandung μ sebenarnya")
+plt.xlabel("Nilai")
+plt.ylabel("Percobaan ke-")
+plt.show()
+```
+
+**Interpretasi visual:**
+
+- Garis hitam = nilai sebenarnya (μ)
+- Garis hijau = interval yang mengandung μ
+- Garis merah = interval yang *tidak* mengandung μ  
+  (sekitar 5% kasus, sesuai tingkat signifikansi 0.05)
+
+## 4. Aksi Praktikal: CI pada Data Riil
+
+Misalkan kamu menganalisis klaim asuransi dengan rata-rata Rp 12 juta dan simpangan baku Rp 3 juta dari 64 sampel klaim.
+
+Hitung interval keyakinan 95% untuk rata-rata klaim populasi.
+
+$$
+\bar{x} = 12.000.000, \quad s = 3.000.000, \quad n = 64
+$$
+
+Maka:
+
+$$
+t_{0.025, 63} ≈ 2.00, \quad SE = \frac{s}{\sqrt{n}} = \frac{3.000.000}{8} = 375.000
+$$
+
+Confidence Interval:
+$$
+12.000.000 \pm 2.00 \times 375.000 = (11.250.000, 12.750.000)
+$$
+
+Interpretasi:
+
+> Dengan keyakinan 95%, rata-rata klaim asuransi populasi berada di antara Rp 11.25 juta dan Rp 12.75 juta.
+
+## 5. Hubungan Confidence Interval dan Inferensi
+
+Confidence Interval dan Uji Hipotesis adalah **dua sisi dari mata uang yang sama**.
+
+| Aspek | Confidence Interval | Uji Hipotesis |
+|:--|:--|:--|
+| Tujuan | Menentukan rentang nilai parameter | Menguji klaim terhadap parameter |
+| Output | Rentang estimasi | Keputusan “tolak / gagal tolak H₀” |
+| Contoh | μ ∈ (11.2, 12.7) | H₀: μ = 12 vs H₁: μ ≠ 12 |
+| Hubungan | Jika μ₀ tidak berada dalam CI → tolak H₀ | CI = visualisasi uji hipotesis dua arah |
+
+## 6. Refleksi Konseptual
+
+1. Mengapa Confidence Interval bukan berarti “probabilitas parameter berada dalam rentang itu”?  
+2. Bagaimana ukuran sampel memengaruhi panjang CI?  
+3. Apa implikasinya jika tingkat keyakinan dinaikkan dari 95% ke 99%?  
+4. Dalam konteks aktuaria, bagaimana CI bisa membantu memperkirakan cadangan klaim atau premi?
+
+## 7. Ringkasan
+
+| Konsep | Rumus / Deskripsi | Makna |
+|:--|:--|:--|
+| Confidence Interval | $\bar{X} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}$ | Rentang estimasi parameter dengan tingkat keyakinan |
+| Standard Error | $s / \sqrt{n}$ | Ukuran ketidakpastian rata-rata |
+| Confidence Level | $1 - \alpha$ | Tingkat keyakinan kita terhadap estimasi |
+| Interpretasi | 95% dari semua CI akan mencakup μ sebenarnya | Tidak berarti 95% probabilitas untuk satu interval tertentu |
+| Keterkaitan | Dasar inferensi dan validasi model statistik | Menjadi fondasi pengujian hipotesis |
+
+::: {.d-flex .justify-content-between .mb-4}
+<a href="modul2_distribusi_sampling" class="btn btn-primary">
+<i class="fa-solid fa-arrow-left"></i> Modul Sebelumnya
+</a>
+
+<a href="modul4_inferensi_statistik.qmd" class="btn btn-primary">
+Modul Berikutnya <i class="fa-solid fa-arrow-right"></i>
+</a>
+:::
