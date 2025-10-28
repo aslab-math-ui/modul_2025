@@ -1,24 +1,68 @@
 ---
 title: "Modul 03 Ilmu Data"
-subtitle: "Fondasi Statistik Estimasi dan Prediksi"
+subtitle: "Landasan Analisis Estimasi, Inferensi, dan Prediksi"
 author: "Muhammad Zaki Zulhamlizar"
 date: "2025-10-28"
-image: "https://i.pinimg.com/originals/ce/5d/f7/ce5df72c35ebbe0be9388d6cc610f498.gif"
+image: "https://cdn-images-1.medium.com/max/616/1*ZJ-se-X3nYulpTmEo2T9HA.png"
+listing:
+  - id: stat
+    contents: "../src/Modul_Statistik_Inferensial/*.qmd"
+    type: table
+    sort: "title asc"
+    fields: [title, subtitle, reading-time]
 ---
 
 <a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
 </a>
 
----
+Selamat datang di **Modul Statistik Inferensial**.  
+Seri pembelajaran ini dirancang untuk membentuk pola pikir ilmiah mahasiswa Data Science dan Aktuaria dalam membedakan **Estimasi**, **Inferensi**, dan **Prediksi** — fondasi dari seluruh model statistik dan machine learning.
 
-<!-- Isi modul -->
+## Tujuan Pembelajaran
+- Memahami hubungan antara parameter populasi, statistik sampel, dan proses estimasi.  
+- Menguasai dasar inferensi: uji hipotesis dan interval keyakinan.  
+- Mengimplementasikan model prediktif sederhana dan menafsirkan hasilnya.  
+- Mengintegrasikan konsep inferensi ke dalam *real-world model* seperti regresi dan aktuaria.
 
-**BELUM SIAP LOL**
+## Struktur Modul
 
-<div class="tenor-gif-embed" data-postid="5211926416949197849" data-share-method="host" data-aspect-ratio="1.02469" data-width="50%"><a href="https://tenor.com/view/dr-stone-senkuu-tongue-gif-5211926416949197849">Dr Stone GIF</a>from <a href="https://tenor.com/search/dr-gifs">Dr GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+| Modul | Topik | Fokus |
+|:--|:--|:--|
+| 1 | Estimasi dan Populasi | Parameter dan statistik |
+| 2 | Distribusi Sampling | Variabilitas estimator |
+| 3 | Confidence Interval | Ketidakpastian hasil estimasi |
+| 4 | Inferensi & Hipotesis | Menilai hubungan signifikan |
+| 5 | Regresi Linier | Memahami hubungan antar variabel |
+| 6 | Prediksi & Validasi | Memprediksi dan mengevaluasi model |
+| 7 | Mini Project | Integrasi seluruh konsep |
 
----
+## Filosofi Pembelajaran
+
+> Statistik bukan sekadar menghitung angka, tetapi memahami *mengapa* angka itu berubah.
+
+Setiap modul berisi:
+
+- penjelasan konseptual,  
+- formulasi matematis dalam LaTeX,  
+- implementasi Python, dan  
+- refleksi hasil atau diskusi.
+
+## Panduan Praktikum
+
+Gunakan environment Python (misalnya Jupyter atau Colab) dengan pustaka berikut:
+```python
+numpy, pandas, matplotlib, seaborn, scipy, statsmodels
+```
+
+Mulailah perjalanan Anda dari  
+[**Modul 1 – Estimasi dan Populasi**](../src/Modul_Statistik_Inferensial/modul1_estimasi_dasar.qmd)
+
+**Namun, sesuaikan kebutuhan kalian dari daftar Modul Statistik Inferensial di bawah ini**
+
+## Daftar Modul Statistik Inferensial
+:::{#stat}
+:::
 
 <a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
