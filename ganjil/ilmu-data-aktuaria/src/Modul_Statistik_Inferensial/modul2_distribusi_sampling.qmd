@@ -1,0 +1,165 @@
+---
+title: "Modul 2 — Distribusi Sampling dan Central Limit Theorem"
+subtitle: "Mengapa Estimasi Kita Menjadi Stabil Saat Ukuran Sampel Meningkat"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+---
+
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+## 1. Intuisi: Ketika Data Acak Mulai Menjadi Terprediksi
+
+Bayangkan Anda melempar koin 10 kali, lalu menghitung proporsi sisi “gambar”.  
+Mungkin hasilnya 0.4, 0.5, atau 0.6.  
+Sekarang ulangi eksperimen ini 100 kali, masing-masing 10 lemparan, dan catat hasil proporsinya.  
+Akan terlihat bahwa nilai-nilai proporsi tersebut **mengelompok di sekitar 0.5**.
+
+Ketika jumlah lemparan per eksperimen (ukuran sampel) meningkat menjadi 100, lalu 1000,  
+maka hasil proporsi makin “stabil” — semakin mendekati 0.5.
+
+Fenomena ini bukan kebetulan.  
+Ia dijelaskan oleh teori yang sangat mendasar dalam statistik:  
+
+**Central Limit Theorem (CLT)** — yang menyatakan bahwa *rata-rata dari banyak hal acak akan mengikuti distribusi normal.*
+
+## 2. Formulasi Matematis CLT
+
+Misalkan $X_1, X_2, \dots, X_n$ adalah sampel acak independen dengan:
+
+- Rata-rata $E[X_i] = \mu$
+- Variansi $Var(X_i) = \sigma^2 < \infty$
+
+Definisikan rata-rata sampel:
+$$
+\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i
+$$
+
+Maka Central Limit Theorem menyatakan:
+
+$$
+\frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0, 1)
+$$
+
+Artinya, ketika $n \to \infty$, distribusi dari rata-rata sampel akan mendekati distribusi normal standar — **tidak peduli bentuk distribusi asalnya**, selama varian terbatas.
+
+## 3. Eksperimen Komputasional: Bukti Simulasi CLT
+
+Mari kita lihat secara komputasional bagaimana CLT “muncul” dari data acak.
+
+Kita akan gunakan tiga jenis distribusi populasi:
+
+1. Uniform (seragam)
+2. Eksponensial (sangat miring)
+3. Binomial (diskret)
+
+dan lihat bagaimana rata-rata dari banyak sampel dari masing-masing distribusi itu berperilaku.
+
+```{.python filename="simulasi_clt.py"}
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+
+def simulasi_clt(distribusi, n, k=1000):
+    hasil = []
+    for _ in range(k):
+        sampel = distribusi(size=n)
+        hasil.append(np.mean(sampel))
+    return np.array(hasil)
+
+# Definisi distribusi populasi
+distribusi_list = {
+    "Uniform(0,1)": lambda size: np.random.uniform(0, 1, size=size),
+    "Eksponensial(λ=1)": lambda size: np.random.exponential(1, size=size),
+    "Binomial(n=10,p=0.5)": lambda size: np.random.binomial(10, 0.5, size=size)
+}
+
+ukuran_sampel = [5, 30, 100]
+
+plt.figure(figsize=(12, 8))
+
+for i, (nama, fungsi) in enumerate(distribusi_list.items()):
+    for j, n in enumerate(ukuran_sampel):
+        hasil = simulasi_clt(fungsi, n)
+        plt.subplot(3, 3, i*3 + j + 1)
+        plt.hist(hasil, bins=40, color="skyblue", alpha=0.7)
+        plt.title(f"{nama} — n={n}")
+        plt.xlabel("Rata-rata sampel")
+        plt.ylabel("Frekuensi")
+plt.tight_layout()
+plt.show()
+```
+
+**Interpretasi visual:**
+
+- Untuk distribusi yang awalnya miring seperti eksponensial,  
+  bentuk histogram rata-rata sampelnya menjadi **lebih simetris dan normal** seiring meningkatnya ukuran sampel.
+- Ini menunjukkan bahwa rata-rata banyak hal acak → mendekati distribusi normal.
+
+## 4. Analisis Variabilitas Rata-Rata
+
+Menurut CLT, simpangan baku dari rata-rata sampel adalah:
+
+$$
+\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}}
+$$
+
+Mari kita buktikan dengan simulasi empiris bahwa hal ini benar.
+
+```{.python filename="standar_error_clt.py"}
+np.random.seed(42)
+populasi = np.random.exponential(1, size=100000)
+sigma_true = np.std(populasi)
+
+def se_empiris(n, k=1000):
+    hasil = []
+    for _ in range(k):
+        sampel = np.random.choice(populasi, size=n, replace=False)
+        hasil.append(np.mean(sampel))
+    return np.std(hasil)
+
+ukuran_sampel = np.array([10, 30, 100, 300, 1000])
+se_aktual = np.array([se_empiris(n) for n in ukuran_sampel])
+se_teori = sigma_true / np.sqrt(ukuran_sampel)
+
+import pandas as pd
+tabel = pd.DataFrame({
+    "n": ukuran_sampel,
+    "SE empiris": np.round(se_aktual, 4),
+    "SE teoritis": np.round(se_teori, 4)
+})
+print(tabel)
+```
+
+**Diskusi hasil:**
+
+- Nilai SE empiris dan teoritis hampir identik.
+- Ini memperlihatkan bahwa CLT tidak hanya berbicara soal bentuk distribusi, tapi juga memberikan *skala ketidakpastian estimasi*.
+
+## 5. Refleksi Konseptual
+
+1. Mengapa bentuk distribusi populasi tidak terlalu penting dalam CLT?  
+2. Apa hubungan antara *ukuran sampel* dan *stabilitas rata-rata*?  
+3. Jika CLT berlaku, mengapa kita masih perlu melakukan inferensi dan uji hipotesis?  
+4. Dalam konteks data finansial atau aktuaria, kapan asumsi CLT **tidak berlaku**?
+
+## 6. Ringkasan
+
+| Konsep | Rumus / Deskripsi | Makna |
+|:--|:--|:--|
+| Central Limit Theorem | $\frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \to N(0,1)$ | Rata-rata dari banyak hal acak akan normal |
+| Standard Error | $\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}}$ | Ukuran variabilitas rata-rata |
+| Distribusi Sampling | Sebaran semua kemungkinan rata-rata dari banyak sampel | Dasar inferensi statistik |
+| Implikasi Praktis | Ukuran sampel besar → estimasi makin stabil | Semakin banyak data → semakin “normal” |
+
+::: {.d-flex .justify-content-between .mb-4}
+<a href="modul1_estimasi_dasar.qmd" class="btn btn-primary">
+<i class="fa-solid fa-arrow-left"></i> Modul Sebelumnya
+</a>
+
+<a href="modul3_CI_Inferensi.qmd" class="btn btn-primary">
+Modul Berikutnya <i class="fa-solid fa-arrow-right"></i>
+</a>
+:::
