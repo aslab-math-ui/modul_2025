@@ -24,7 +24,7 @@ listing:
     contents: "capstone/"
     type: table
     sort: "title asc"
-    fields: [title, date]
+    fields: [title, subtitle, date]
 ---
 
 <a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
