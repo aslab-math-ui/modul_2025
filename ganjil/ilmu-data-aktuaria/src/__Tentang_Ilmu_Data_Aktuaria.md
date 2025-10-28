@@ -55,7 +55,7 @@ Untuk membantu navigasi, kami telah menyusun materi ini seperti **"Pohon Kompete
 :::{.callout-note title="Peta Jalan: Pohon Kompetensi Ilmu Data Aktuaria"}
 Berikut adalah gambaran cabang-cabang utama yang akan Anda pelajari. Setiap cabang berisi ranting-ranting materi yang lebih spesifik.
 
-#### 🌳 1. Jalur Kompetensi Umum (Lifecycle Ilmu Data CRISP-ML(Q))
+#### 🌳 1. Jalur Lifecycle CRISP-ML(Q) (Kompetensi Umum Data Science)
 *Mendasari seluruh proses kerja dari hulu ke hilir.*
 
 * Data Literacy
@@ -73,49 +73,48 @@ Berikut adalah gambaran cabang-cabang utama yang akan Anda pelajari. Setiap caba
 * Conda Jupyter
 * Python VENV & file lock (requirements.txt, pip-tools, poetry, dan uv)
 * R VENV, File Lock, & Project Management
-* Python Docker (Coming Soon)
 
 #### 🌳 3. Jalur Kompetensi Statistik & Inferensi
 *Menghubungkan kembali ke fondasi statistik untuk estimasi dan prediksi.*
 
-* estimasi_dasar.qmd
-* distribusi_sampling.qmd
-* confidence_interval.qmd
-* inferensi_hipotesis.qmd
-* regresi_linier.qmd (Fondasi untuk ML)
-* prediksi_validasi.qmd
+* estimasi dasar
+* distribusi sampling
+* confidence interval
+* inferensi hipotesis
+* regresi_linier (Fondasi untuk ML)
+* prediksi validasi
 
-#### 🌳 4. Jalur Peta Model & Algoritma ML (Ensiklopedia "Bahan")
+#### 🌳 4. Jalur Peta Model & Algoritma ML
 *Katalog terstruktur dari algoritma-algoritma inti machine learning.*
 
 * **Pengantar:** Supervised vs. Unsupervised Learning
 * **Sub-Cabang: Algoritma Supervised**
-    * Linear Regression (dari Jalur #3)
+    * Linear Regression
     * Logistic Regression
     * K-Nearest Neighbors (KNN)
     * Support Vector Machine (SVM)
     * Naive Bayes Classifier
     * Decision Trees
 * **Sub-Cabang: Algoritma Ensemble**
-    * Ensemble Algorithms (Konsep Umum)
+    * Ensemble Algorithms
     * Bagging & Random Forests
     * Boosting & Strong Learners
 * **Sub-Cabang: Algoritma Unsupervised**
-    * Clustering (Konsep Umum) & K-Means
-    * Dimensionality Reduction (Konsep Umum)
+    * Clustering & K-Means
+    * Dimensionality Reduction
     * Principal Component Analysis (PCA)
 
-#### 🌳 5. Jalur Pembelajaran Mesin Pemula (Workflow Proyek)
-*Buku resep untuk menerapkan algoritma dari Jalur #4 dalam sebuah proyek.*
+#### 🌳 5. Jalur Pembelajaran Mesin Pemula
+*Panduan untuk menerapkan algoritma dari Jalur #4 dalam sebuah proyek.*
 
 * How Models Work
 * Basic Data Exploration
 * First Machine Learning Model
 * Model Validation
 * Underfitting and Overfitting
-* Random Forest (Penerapan praktis)
+* Random Forest
 
-#### 🌳 6. Jalur Pembelajaran Mesin Intermediate (Workflow Lanjutan)
+#### 🌳 6. Jalur Pembelajaran Mesin Intermediate
 *Teknik profesional untuk meningkatkan kualitas model Anda.*
 
 * Reasoning to Upgrade Your Model
@@ -123,7 +122,7 @@ Berikut adalah gambaran cabang-cabang utama yang akan Anda pelajari. Setiap caba
 * Categorical Variables
 * Pipelines
 * Cross-Validation
-* XGBoost (Penerapan praktis 'Boosting')
+* XGBoost
 * Data Leakage
 
 #### 🌳 7. Jalur Machine Learning Explainability (XAI)
@@ -170,6 +169,7 @@ Berikut adalah gambaran cabang-cabang utama yang akan Anda pelajari. Setiap caba
 * SQL
 * Computer Vision
 * Python dan R untuk Time Series
+* Python Docker
 * Geospatial Analysis
 * AI Ethics
 * Game AI and Reinforcement Learning
@@ -178,7 +178,7 @@ Berikut adalah gambaran cabang-cabang utama yang akan Anda pelajari. Setiap caba
 
 Seluruh modul ini membentuk sebuah **peta jalan pembelajaran** yang komprehensif.
 
-Untuk memahami alur, cakupan penuh, dan bagaimana semua bagian terhubung, Anda **sangat diharapkan** untuk memulai perjalanan Anda dengan membaca modul pertama: **"Pengantar Sains Data Aktuaria"** yang ada di tab `Materi`.
+Untuk memahami alur, cakupan penuh, dan bagaimana semua bagian terhubung, Anda **sangat diharapkan** untuk memulai perjalanan Anda dengan membaca modul pertama: **"Pengenalan Proses Sains Data"** yang ada di tab `Materi`.
 
 ### Model Pembelajaran Adaptif
 
