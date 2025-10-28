@@ -4,9 +4,12 @@ Selamat datang di **MOC (Map of Competencies)** Ilmu Data.
 Bagian ini memperlihatkan peta besar yang akan kalian lalui selama belajar ilmu data ini.
 
 Materi Ilmu Data sangat banyak dan berkembang dengan cepat. Jadi, agar memahaminya kami atur seperti pohon. Batang Utama kita Ilmu Data.
+
 *Di Praktikum Pembelajaran Mesin Batang Utama kita Pembelajaran Mesin*. 
 
-Dengan Analogi **Batang** ia mempunya beberapa ***cabang***. 
+Dengan Analogi **Batang**,
+
+**Batang** mempunyai beberapa ***cabang***. 
 
 Cabang ini juga mempunyai ***Ranting***. 
 
@@ -14,7 +17,7 @@ Masing-masing Ranting juga mempunyai ***Daun***.
 
 Tidak berhenti di sana. Di masing-masing ***Daun*** memiliki banyak ***stomata***. 
 
-**Stomata-Stomata inilah yang menjadi Playground kalian untuk memahami lebih dalam terkait ilmu data**.
+**Stomata-Stomata** inilah yang menjadi **Playground** kalian untuk memahami lebih dalam terkait ilmu data.
 
 **Di Bawah ini adalah Cabang dan Ranting** dari Batang Ilmu Data.
 
