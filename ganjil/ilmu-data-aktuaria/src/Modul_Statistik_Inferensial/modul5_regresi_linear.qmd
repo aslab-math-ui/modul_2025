@@ -1,0 +1,148 @@
+---
+title: "Modul 5 — Regresi Linier dan Hubungan Antar Variabel"
+subtitle: "Menemukan Pola dan Hubungan Kuantitatif dalam Data"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+---
+
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+# Tujuan Pembelajaran
+
+Pada modul ini, kamu akan:
+
+- Memahami konsep **hubungan antar variabel** (dependensi dan independensi).
+- Mempelajari dasar **regresi linier sederhana dan berganda**.
+- Mengerti bagaimana melakukan estimasi parameter dan interpretasi hasil regresi.
+- Mengenali perbedaan antara **estimasi**, **prediksi**, dan **inferensi** dalam konteks model linier.
+- Melakukan eksperimen kecil untuk memahami *fit*, *error*, dan *overfitting*.
+
+# 1. Intuisi Dasar: Hubungan Antar Variabel
+
+Sebelum mempelajari regresi, kita harus memahami bahwa tidak semua hubungan antar variabel bersifat sebab-akibat. Ada tiga jenis hubungan penting:
+
+1. **Korelasi Spurious**  
+   Dua variabel tampak berkorelasi hanya karena dipengaruhi oleh faktor lain.  
+   Contoh: jumlah es krim terjual dan jumlah orang tenggelam — keduanya meningkat di musim panas.
+
+2. **Korelasi Murni (Asosiasi Statistik)**  
+   Variabel-variabel memiliki hubungan kuat tanpa asumsi sebab-akibat.  
+   Contoh: tinggi badan dan berat badan.
+
+3. **Hubungan Kausal (Causality)**  
+   Perubahan satu variabel menyebabkan perubahan pada variabel lain.  
+   Contoh: dosis obat dan efek penyembuhan pasien.
+
+**Analogi:**  
+Bayangkan dua orang menari waltz — mereka tampak bergerak bersama. Pertanyaannya, siapa yang memimpin?  
+Korelasi melihat *gerak bersama*, sedangkan regresi mencoba *menentukan siapa yang memimpin*.
+
+# 2. Konsep Regresi Linier
+
+Regresi linier digunakan untuk menjelaskan bagaimana **variabel target** $y$ bergantung pada satu atau lebih **variabel penjelas** $x_1, x_2, \dots, x_p$.
+
+Secara umum, model regresi linier dapat ditulis:
+
+$$
+y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \epsilon_i
+$$
+
+di mana:
+
+- $\beta_0$ = intersep (nilai rata-rata $y$ saat semua $x=0$)
+- $\beta_j$ = koefisien regresi (seberapa besar pengaruh $x_j$ terhadap $y$)
+- $\epsilon_i$ = error acak yang tidak bisa dijelaskan model
+
+# 3. Contoh Kasus: Prediksi Harga Rumah
+
+Misalkan kita ingin memprediksi **harga rumah ($y$)** berdasarkan **luas tanah ($x$)**.
+
+**Langkah Konseptual:**
+
+1. Mengumpulkan data harga dan luas rumah.
+2. Memvisualisasikan hubungan antara $x$ dan $y$.
+3. Mengestimasi garis terbaik (*best fit line*).
+4. Mengukur seberapa baik garis tersebut menjelaskan data.
+
+**Secara intuitif**, regresi berusaha mencari *garis yang paling mendekati semua titik data* dengan meminimalkan kesalahan kuadrat (least squares).
+
+```{.python filename="regresi_sederhana.py"}
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Data dummy
+luas = np.array([50, 70, 100, 120, 150]).reshape(-1, 1)
+harga = np.array([500, 650, 900, 1100, 1400])
+
+# Model regresi
+model = LinearRegression()
+model.fit(luas, harga)
+
+# Prediksi
+pred = model.predict(luas)
+
+# Visualisasi
+plt.scatter(luas, harga, color='blue', label='Data aktual')
+plt.plot(luas, pred, color='red', label='Garis regresi')
+plt.xlabel("Luas Rumah (m²)")
+plt.ylabel("Harga Rumah (juta rupiah)")
+plt.legend()
+plt.show()
+```
+
+# 4. Estimasi, Prediksi, dan Inferensi
+
+| Aspek | Tujuan | Contoh pada Regresi |
+|-------|---------|--------------------|
+| **Estimasi** | Menentukan nilai parameter model ($\beta_0, \beta_1, \dots$) dari data yang ada | Mengestimasi seberapa besar kenaikan harga per m² |
+| **Prediksi** | Menggunakan model untuk memprediksi $y$ baru | Memperkirakan harga rumah dengan luas 130 m² |
+| **Inferensi** | Menilai apakah hubungan $x \to y$ signifikan secara statistik | Menguji hipotesis apakah luas rumah *benar-benar* memengaruhi harga |
+
+**Analogi sederhana:**
+
+- Estimasi: mencari *berapa besar pengaruhnya*  
+- Prediksi: mencoba *menebak nilai berikutnya*  
+- Inferensi: memastikan *hubungan itu benar-benar ada*
+
+# 5. Evaluasi Model Linier
+
+Beberapa ukuran penting untuk menilai performa model:
+
+| Metrik | Makna |
+|--------|--------|
+| **R² (Koefisien Determinasi)** | Persentase variasi $y$ yang dijelaskan oleh model |
+| **MSE (Mean Squared Error)** | Rata-rata kesalahan kuadrat antara prediksi dan data aktual |
+| **p-value** | Probabilitas hubungan terjadi karena kebetulan semata |
+
+Dalam praktik, R² yang tinggi belum tentu menunjukkan model yang benar secara kausal. Kadang model “terlihat bagus” hanya karena overfitting terhadap data sampel.
+
+# 6. Eksperimen Mini
+
+Cobalah tambahkan satu variabel baru seperti **jarak ke pusat kota (km)**, lalu bandingkan hasil R² antara:
+
+- Regresi sederhana (1 variabel: luas)
+- Regresi berganda (2 variabel: luas + jarak)
+
+Apakah prediksi harga menjadi lebih baik atau justru memburuk?
+
+# 7. Refleksi Modul
+
+Setelah menyelesaikan modul ini, pastikan kamu dapat menjawab pertanyaan berikut:
+
+1. Apa perbedaan antara korelasi dan kausalitas?
+2. Apa makna koefisien $\beta$ dalam regresi linier?
+3. Kapan kita sebaiknya menggunakan regresi berganda?
+4. Mengapa R² tinggi tidak selalu berarti model baik?
+
+::: {.d-flex .justify-content-between .mb-4}
+<a href="modul4_inferensi_statistik.qmd" class="btn btn-primary">
+<i class="fa-solid fa-arrow-left"></i> Modul Sebelumnya
+</a>
+
+<a href="modul6_prediksi_validasi.qmd" class="btn btn-primary">
+Modul Berikutnya <i class="fa-solid fa-arrow-right"></i>
+</a>
+:::
