@@ -1,0 +1,163 @@
+---
+title: "Modul 6 — Prediksi dan Validasi Model"
+subtitle: "Menilai Kemampuan Model untuk Melihat Masa Depan"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+---
+
+<a href="../../materi/Modul 3 Ilmu Data.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Modul 3 Ilmu Data
+</a>
+
+# Tujuan Pembelajaran
+
+Pada modul ini, kamu akan:
+
+- Memahami pentingnya proses **prediksi dan validasi model** dalam alur kerja data science.
+- Mengenali perbedaan antara **evaluasi model** pada data latih dan data uji.
+- Menerapkan teknik **split data**, **cross-validation**, dan **regularisasi**.
+- Menilai apakah model kamu benar-benar *generalizable* (tidak hanya menghafal data).
+
+# 1. Mengapa Validasi Itu Penting?
+
+Setiap model yang kamu latih bisa tampak hebat — **pada data yang sudah ia lihat**.  
+Namun, pertanyaan utamanya adalah:
+
+> Apakah modelmu masih bekerja dengan baik pada data baru yang belum pernah ia lihat?
+
+**Analogi:**
+Bayangkan kamu berlatih soal ujian dari buku contoh.  
+Kamu bisa menjawab semuanya dengan sempurna karena sudah hafal. Tapi ketika soal ujian sebenarnya muncul, hasilnya bisa turun drastis.  
+Itulah *overfitting* — model terlalu hafal data lama dan gagal beradaptasi dengan data baru.
+
+# 2. Pembagian Data: Train–Test Split
+
+Untuk mengukur kemampuan model dengan jujur, dataset biasanya dibagi menjadi dua bagian:
+
+| Jenis Data | Tujuan | Proporsi Umum |
+|-------------|---------|----------------|
+| **Training set** | Melatih model agar mengenal pola | 70–80% |
+| **Testing set** | Menguji performa model pada data baru | 20–30% |
+
+```{.python filename="split_data.py"}
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Misal data sederhana
+import numpy as np
+X = np.random.rand(100, 1) * 10
+y = 2 * X.squeeze() + np.random.randn(100) * 2
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model regresi
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Evaluasi
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+print(f"MSE pada data uji: {mse:.3f}")
+```
+
+# 3. Cross-Validation: Validasi yang Lebih Adil
+
+Jika dataset kecil, pembagian train–test bisa menyebabkan hasil tidak stabil.  
+**Cross-validation (CV)** mengatasi ini dengan membagi data menjadi beberapa lipatan (folds).  
+Model dilatih beberapa kali, setiap kali menggunakan lipatan yang berbeda sebagai test set.
+
+**Kelebihan CV:**
+
+- Lebih efisien memanfaatkan seluruh data.
+- Memberikan estimasi performa yang lebih stabil.
+
+```{.python filename="cross_validation.py"}
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+scores = cross_val_score(model, X, y, cv=5, scoring='neg_mean_squared_error')
+print("Rata-rata MSE (5-fold CV):", -scores.mean())
+```
+
+# 4. Bias–Variance Tradeoff
+
+Salah satu konsep inti dalam evaluasi model adalah **tradeoff antara bias dan variansi**:
+
+| Model | Bias | Variansi | Contoh |
+|--------|------|-----------|--------|
+| Terlalu sederhana | Tinggi | Rendah | Garis lurus pada data non-linear |
+| Tepat | Moderat | Moderat | Model cukup kompleks tapi tidak berlebihan |
+| Terlalu kompleks | Rendah | Tinggi | Model menghafal setiap titik data |
+
+**Kesimpulan:**  
+Model yang baik bukan yang paling akurat pada data latih, tapi yang paling stabil dan konsisten pada data baru.
+
+# 5. Teknik Validasi Tambahan
+
+Selain split dan cross-validation, beberapa teknik lanjutan termasuk:
+
+- **K-Fold Stratified** — menjaga proporsi kelas tetap seimbang pada setiap fold (penting untuk klasifikasi).
+- **Leave-One-Out CV (LOOCV)** — ekstrem dari CV, di mana setiap titik data diuji satu per satu.
+- **Time-Series Split** — digunakan untuk data berurutan (tidak boleh acak, harus menjaga urutan waktu).
+
+# 6. Regularisasi: Menghindari Overfitting
+
+Model yang terlalu kompleks dapat dikendalikan dengan menambahkan penalti pada koefisiennya.
+
+| Jenis | Ciri | Contoh |
+|-------|------|--------|
+| **Ridge Regression** | Penalti kuadrat ($L_2$) — mengecilkan koefisien besar | Cocok untuk multikolinearitas |
+| **Lasso Regression** | Penalti absolut ($L_1$) — dapat menghapus fitur yang tidak penting | Cocok untuk seleksi fitur |
+
+```{.python filename="ridge_lasso.py"}
+from sklearn.linear_model import Ridge, Lasso
+
+ridge = Ridge(alpha=1.0)
+lasso = Lasso(alpha=0.1)
+
+ridge.fit(X_train, y_train)
+lasso.fit(X_train, y_train)
+
+print("Koefisien Ridge:", ridge.coef_)
+print("Koefisien Lasso:", lasso.coef_)
+```
+
+# 7. Evaluasi Akhir Model
+
+Gunakan metrik yang sesuai dengan jenis masalah:
+
+| Jenis Masalah | Metrik Umum | Penjelasan |
+|----------------|--------------|-------------|
+| **Regresi** | MSE, RMSE, MAE, R² | Mengukur seberapa jauh prediksi dari nilai sebenarnya |
+| **Klasifikasi** | Akurasi, Precision, Recall, F1-score, ROC-AUC | Mengukur seberapa baik model membedakan kelas |
+
+**Catatan penting:**  
+Tidak ada satu metrik terbaik untuk semua kasus — kamu harus memahami konteks aplikasinya.
+
+# 8. Refleksi Modul
+
+Setelah menyelesaikan modul ini, pastikan kamu memahami:
+
+1. Mengapa model perlu diuji dengan data yang belum pernah dilihat.
+2. Apa bedanya hasil bagus pada data latih dan data uji.
+3. Bagaimana cara memilih strategi validasi yang tepat.
+4. Apa makna dari bias–variance tradeoff dalam performa model.
+
+# 9. Tugas Mini
+
+1. Lakukan *train-test split* pada dataset harga rumah dari modul sebelumnya.  
+2. Lakukan *5-fold cross-validation* dan bandingkan hasil MSE-nya.  
+3. Coba tambahkan **regularisasi Ridge dan Lasso** untuk melihat pengaruhnya terhadap koefisien model.
+
+::: {.d-flex .justify-content-between .mb-4}
+<a href="modul5_regresi_linear.qmd" class="btn btn-primary">
+<i class="fa-solid fa-arrow-left"></i> Modul Sebelumnya
+</a>
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-right"></i> Kembali ke Praktikum Ilmu Data
+</a> 
+:::
