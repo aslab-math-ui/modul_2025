@@ -179,7 +179,7 @@ Menurunkan α terlalu rendah memang mengurangi false positive, tapi meningkatkan
 <i class="fa-solid fa-arrow-left"></i> Modul Sebelumnya
 </a>
 
-<a href="modul3_CI_Inferensi.qmd" class="btn btn-primary">
+<a href="modul5_regresi_linear.qmd" class="btn btn-primary">
 Modul Berikutnya <i class="fa-solid fa-arrow-right"></i>
 </a>
 :::
