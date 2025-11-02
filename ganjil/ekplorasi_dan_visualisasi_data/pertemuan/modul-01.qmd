@@ -1,9 +1,12 @@
 ---
-title: "Modul 1: EVDA"
-subtitle: "Studi Kasus: -"
-author: "Tim Asisten Lab Matematika UI"
-date: "2025-09-17"
-image: "https://dqlab.id/files/dqlab/cache/e037c90a428a9a3f512b02bdfa4f088b_x_Thumbnail800.jpg"
+title: "Pertemuan 1 : Python for Data Analysis"
+subtitle: "Intro to Pandas"
+image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/eksplorasi_dan_visualisasi_data/static/images/eda_py_img.png
+description: "Offline di Departemen Matematika: sesi 1 di lab komputer D.311, sesi 2 di lab statistika D.406"
+date: 02/27/2024
+page-navigation: true
+jupyter: python3
+format: html
 ---
 
 <a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
@@ -569,7 +572,3 @@ sales_df[condition]
 ```
 </div>
 ___
-
-<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
-<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA
-</a>
