@@ -1,0 +1,25 @@
+---
+title: "Modul 08 Ilmu Data"
+subtitle: "Kenal Sekilas Deep Learning"
+author: "Muhammad Zaki Zulhamlizar"
+date: "2025-10-28"
+image: "https://i.pinimg.com/originals/ce/5d/f7/ce5df72c35ebbe0be9388d6cc610f498.gif"
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
+
+---
+
+<!-- Isi modul -->
+
+**BELUM SIAP LOL**
+
+<div class="tenor-gif-embed" data-postid="5211926416949197849" data-share-method="host" data-aspect-ratio="1.02469" data-width="50%"><a href="https://tenor.com/view/dr-stone-senkuu-tongue-gif-5211926416949197849">Dr Stone GIF</a>from <a href="https://tenor.com/search/dr-gifs">Dr GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>

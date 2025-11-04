@@ -1,0 +1,68 @@
+---
+title: "Ilmu Data Aktuaria"
+subtitle: "Semester Ganjil 2025 <br> Tim Asisten Laboratorium Praktikum Matematika Universitas Indonesia"
+author: "Muhammad Zaki Zulhamlizar"
+bibliography: referensi.bib
+csl: apa.csl
+nocite: '@*'
+date: 2025-10-24
+toc: false
+listing:
+  - id: diskusi
+    contents: "diskusi/*.qmd"
+    type: grid
+    sort: "title asc"
+    fields: [image, title, subtitle, date]
+    
+  - id: materi
+    contents: "materi/*.qmd"
+    type: grid
+    sort: "title asc"
+    fields: [image, title, subtitle, date]
+
+  - id: capstone
+    contents: "capstone/"
+    type: table
+    sort: "title asc"
+    fields: [title, subtitle, date]
+---
+
+<a href="../../../../semuahalaman/praktikum.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum
+</a>
+
+Selamat datang di halaman utama untuk Praktikum Ilmu Data Aktuaria.
+
+::: {.panel-tabset}
+
+{{< include src/__Tentang_Ilmu_Data_Aktuaria.md >}}
+
+## Pertemuan
+
+Ini adalah struktur diskusi setiap pertemuan. Dengan Prinsip Pareto 80/20 diharapkan 20% effort disini bisa menghasilkan 80% output kompetensi.
+
+:::{#diskusi}
+:::
+
+## Materi
+
+Di sini berisi modul materi-materi sesuai dengan CP kurikulum. Diharapkan modul materi ini dapat membantu secara asinkronus.
+
+:::{#materi}
+:::
+
+## Proyek
+
+Bagian ini akan mendokumentasikan proyek *capstone* atau studi kasus komprehensif yang dikerjakan mahasiswa sebagai puncak dari proses belajar praktikum.
+
+:::{#capstone}
+:::
+
+## Rujukan
+
+:::{.callout-note icon="false"}
+## Referensi
+<div id="refs"></div>
+:::
+
+:::

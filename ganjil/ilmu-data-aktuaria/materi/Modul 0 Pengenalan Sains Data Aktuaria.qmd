@@ -1,0 +1,110 @@
+---
+title: "Modul 0 Pengenalan Proses Sains Data"
+subtitle: "Berpikir Seperti Seorang Detektif Data"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-10-28"
+image: "https://plus.unsplash.com/premium_photo-1681487767138-ddf2d67b35c1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGF0YSUyMHZpc3VhbGl6YXRpb258ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000"
+---
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
+
+:::{.panel-tabset}
+# MODUL
+
+Selamat datang di **Modul Praktikum Ilmu Data**   
+Pada bagian ini, kita akan memahami **proses berpikir dan alur kerja (lifecycle)** seorang *Data Scientist* — dari mengumpulkan data hingga memastikan modelnya tetap relevan di dunia nyata.  
+
+## Cara berpikir Data Scientist
+
+Bayangkan kamu adalah seorang **detektif**.  
+Kamu menerima kasus misterius: *mengapa klaim asuransi meningkat tajam bulan ini?*  
+Seperti detektif, kamu tidak bisa langsung menuduh. Kamu harus:
+
+1. Memahami dulu konteks kasusnya (apa yang sebenarnya sedang terjadi).  
+2. Mengumpulkan bukti (data).  
+3. Menyusun hipotesis (model).  
+4. Menguji hipotesis (evaluasi).  
+5. Melaporkan hasilnya (deployment).  
+6. Dan terus memantau apakah pola kriminal berubah (monitoring).
+
+Itulah cara berpikir seorang **Data Scientist**.  
+Prosesnya tidak linear, tapi **siklikal** — karena setiap model bisa usang dan perlu diperbarui.
+
+## Apa itu CRISP-ML(Q)?
+
+**CRISP-DM** (*Cross Industry Standard Process for Data Mining*) lahir pada tahun 1996 — saat istilah machine learning pipeline, cloud deployment, atau data drift bahkan belum dikenal luas.
+
+Model ini linier dan manual, cocok untuk data mining project satu kali jalan (one-shot project).
+Padahal data science modern bersifat continuous system:
+model terus diperbarui, data terus berubah, dan hasilnya memengaruhi perilaku pengguna yang kembali mengubah data.
+
+Jadi masalah utama CRISP-DM klasik adalah:
+
+> ❌ Tidak menangkap feedback loop dan automation lifecycle dari sistem modern berbasis machine learning.
+
+**Cross-Industry Standard Process for Machine Learning with Quality assurance** [CRISP-ML(Q)] adalah versi modern dari **CRISP-DM**,  
+dengan dua “upgrade besar”:
+
+- Integrasi **MLOps (Machine Learning Operations)** — untuk otomatisasi, versioning, dan deployment terkontrol.  
+- Adanya **Quality Layer (Q)** — yang menjamin model dapat diaudit, aman, dan transparan (terutama di domain sensitif seperti keuangan dan asuransi).
+
+## 8 Fase dalam CRISP-ML(Q)
+
+| Fase | Deskripsi Singkat | Tujuan |
+|------|--------------------|--------|
+| 1. Business & Data Understanding | Memahami konteks masalah dan tujuan ML | Menentukan *problem statement* dan KPI |
+| 2. Data Acquisition & Understanding | Mengumpulkan dan memeriksa data | Memastikan kualitas dan keabsahan data |
+| 3. Data Preparation | Membersihkan dan memformat data | Siapkan dataset siap model |
+| 4. Model Building | Melatih model prediktif / deskriptif | Menghasilkan model yang akurat & reproducible |
+| 5. Model Evaluation | Menilai performa model | Bandingkan dengan KPI dan fairness |
+| 6. Deployment | Menempatkan model ke sistem produksi | Model siap digunakan |
+| 7. Monitoring & Maintenance | Memantau performa model di dunia nyata | Deteksi drift dan update otomatis |
+| 8. Governance & Compliance (Q) | Menjamin kualitas dan auditabilitas | Transparansi dan dokumentasi penuh |
+
+## Implementasi di Domain Ilmu Aktuaria
+
+Dalam konteks **Aktuaria**, fase-fase ini tetap sama, tapi maknanya lebih “beraroma risiko”.
+
+| Fase | Fokus dalam Domain Aktuaria |
+|------|------------------------------|
+| Business Understanding | Menentukan risiko finansial: underwriting, reserving, pricing, fraud |
+| Data Understanding | Menganalisis data polis, klaim, exposure, reinsurance |
+| Data Preparation | Membentuk *rating variables* dan agregasi data per policy-year |
+| Modeling | GLM, Tweedie, Survival, Gradient Boosted Tree untuk risiko klaim |
+| Evaluation | Mengukur deviance, Gini, Lift, dan uji stabilitas model |
+| Deployment | Integrasi ke pricing engine atau sistem reserving |
+| Monitoring | Pantau *claim severity drift*, *policy lapse rate*, dll |
+| Governance | Audit regulasi OJK & IFRS 17, dokumentasi model card |
+
+## Praktikum: Mengenal Lifecycle Data Scientist
+
+**Tujuan praktikum hari ini:**
+
+1. Mahasiswa memahami *alur kerja* seorang Data Scientist profesional.  
+2. Mahasiswa mampu menjelaskan tahapan CRISP-ML(Q).  
+3. Mahasiswa mengenali perbedaan penerapan umum vs domain aktuaria.
+
+### Diskusi
+
+Hal-hal yang perlu direnungkan:
+
+- Apa keputusan yang kamu ambil di fase **Business Understanding**?  
+- Apakah data yang kamu miliki cukup representatif?  
+- Jika kamu menemukan bias (misal dominasi usia tertentu), bagaimana kamu akan menanganinya?
+
+
+## Insight Dosen
+> "Menjadi Data Scientist bukan tentang algoritma semata,  
+> tapi tentang **memahami konteks, menjaga kualitas, dan membangun sistem berpikir yang bisa diaudit**.  
+> Itulah esensi CRISP-ML(Q) — bukan sekadar pipeline, tapi *siklus pembelajaran berbasis kualitas*."
+
+{{< include ../src/__MOC_ildat2025.md >}}
+
+:::
+
+
+<a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
+</a>
