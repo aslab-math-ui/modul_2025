@@ -1,0 +1,1401 @@
+---
+title: "Modul 8: Review - R untuk Sains Data"
+subtitle: "Rangkuman Materi R"
+author: "Tim Asisten Lab Matematika UI"
+date: "2025-11-10"
+image: "https://raw.githubusercontent.com/aslab-math-ui/asset/main/pengantar_sains_data/static/thumbnail-psd-modul-4.webp"
+---
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
+</a>
+
+## Tujuan Pembelajaran
+
+Setelah menyelesaikan modul ini, mahasiswa diharapkan mampu:
+
+* **1. Menguasai Operasi Dasar dan Manajemen Data di R**
+    * Melakukan operasi aritmatika dan manipulasi variabel di R
+    * Membuat dan memanipulasi vector serta melakukan sampling
+    * Mengimport data dari berbagai format (.csv, .xlsx)
+    * Menghitung statistik deskriptif (mean, median, modus, variansi, standar deviasi)
+
+* **2. Memvisualisasikan Data dengan Efektif**
+    * Membuat visualisasi frekuensi (bar chart, pie chart, histogram)
+    * Membuat visualisasi dua variabel (scatter plot, boxplot, line chart)
+    * Menggunakan package ggplot2 untuk visualisasi yang lebih fleksibel
+    * Memvisualisasikan data time series
+
+* **3. Bekerja dengan Distribusi Probabilitas**
+    * Menghitung PMF/PDF, CDF, quantile, dan generate random numbers
+    * Menggunakan distribusi diskrit (Bernoulli, Binomial, Poisson, Uniform diskrit)
+    * Menggunakan distribusi kontinu (Normal, Uniform kontinu)
+    * Memahami package distr dan distrEx untuk manipulasi distribusi
+
+* **4. Melakukan Analisis Statistika Inferensia**
+    * Membuat dan menggunakan loop (for loop dan replicate) untuk simulasi
+    * Memahami dan menerapkan distribusi sampling (sample mean, distribusi-t)
+    * Melakukan taksiran titik dan taksiran interval (confidence intervals)
+    * Melakukan pengujian hipotesis (uji-z, uji-t, ANOVA, uji Chi-squared)
+
+* **5. Menganalisis Hubungan Antar Variabel**
+    * Menghitung korelasi antar variabel (Pearson, Spearman, Kendall)
+    * Memvisualisasikan korelasi dengan heatmap
+    * Melakukan regresi linear sederhana
+    * Menginterpretasi hasil analisis regresi
+
+---
+
+## Skenario: Menjadi Data Analyst Profesional 📊
+
+Selamat! Anda telah menyelesaikan hampir seluruh perjalanan pembelajaran di Pengantar Sains Data. Kini saatnya untuk mengkonsolidasikan semua ilmu yang telah Anda pelajari.
+
+Bayangkan Anda adalah seorang **Data Analyst** di perusahaan konsultan yang diminta untuk melakukan analisis komprehensif terhadap berbagai dataset klien. Untuk itu, Anda perlu menguasai:
+
+1. **Fundamental Skills**: Kemampuan dasar R untuk manipulasi data dan perhitungan statistik
+2. **Visualization Skills**: Kemampuan membuat visualisasi yang informatif dan menarik
+3. **Statistical Knowledge**: Pemahaman distribusi probabilitas dan aplikasinya
+4. **Inferential Skills**: Kemampuan membuat kesimpulan dari sampel ke populasi
+5. **Analytical Skills**: Kemampuan menganalisis hubungan antar variabel
+
+Modul ini dirancang sebagai **review komprehensif** yang akan membantu Anda mengingat kembali dan mengintegrasikan semua keterampilan tersebut.
+
+---
+
+## 1. Dasar-Dasar R dan Manajemen Data
+
+### 1.1 Operasi Dasar dan Variabel
+
+R adalah bahasa pemrograman yang powerful untuk analisis data. Mari kita mulai dengan operasi dasar:
+
+::: {.panel-tabset}
+
+#### Operasi Aritmatika
+
+```{r filename='R'}
+# Operasi dasar
+2 + 3      # Penjumlahan
+7 - 5      # Pengurangan
+3 * 5      # Perkalian
+3 / 4      # Pembagian
+2^3        # Pangkat
+2:4        # Sequence
+```
+
+#### Variabel
+
+```{r filename='R'}
+# Menggunakan <- (lebih umum) atau =
+apel <- 4
+jeruk = 7
+
+# Memanggil variabel
+print(apel)
+
+# Operasi dengan variabel
+apel * jeruk
+banyak_buah <- apel + jeruk
+```
+
+#### Manajemen
+
+```{r filename='R'}
+#| eval: false
+
+# Melihat semua variabel
+ls()
+
+# Menghapus variabel
+rm(banyak_buah)
+
+# Menghapus semua variabel
+rm(list = ls())
+```
+
+:::
+
+### 1.2 Vector dan Sampling
+
+**Vector** adalah kumpulan data dengan tipe yang sama, merupakan struktur data fundamental di R.
+
+```{r filename='R'}
+# Membuat vector numerik
+nilai_ujian <- c(85, 92, 78, 88, 95)
+nilai_ujian
+
+# Membuat vector karakter
+nama_buah <- c("apel", "jeruk", "pisang")
+nama_buah
+
+# Mengakses elemen vector
+nama_buah[1]        # Elemen pertama
+nilai_ujian[2:4]    # Elemen ke-2 sampai ke-4
+```
+
+**Enam Tipe Dasar Vector**
+
+Ada enam tipe utama, namun empat di antaranya akan Anda gunakan 99% setiap saat.
+
+::: {.panel-tabset}
+
+#### `doubles` (Numeric)
+Ini adalah tipe default untuk angka di R. Tipe ini bisa menampung angka desimal.
+
+```{r filename='R'}
+ipk <- c(3.55, 4.0, 2.89)
+ipk
+class(ipk) # class() memberitahu kita tipe objeknya
+```
+
+#### `integers` (Bilangan Bulat)
+Jika Anda yakin hanya akan bekerja dengan bilangan bulat, Anda bisa membuatnya secara eksplisit dengan menambahkan `L` di belakang angka. Ini menghemat memori.
+
+```{r filename='R'}
+jumlah_sks <- c(24L, 21L, 18L)
+jumlah_sks
+class(jumlah_sks)
+```
+
+#### `characters` (Teks/String)
+Untuk menyimpan data teks. Selalu diapit oleh tanda kutip `"` atau `'`.
+
+```{r filename='R'}
+mata_kuliah <- c("Kalkulus", "Aljabar Linear", "Statistika")
+mata_kuliah
+class(mata_kuliah)
+```
+
+#### `logicals` (Boolean)
+Hanya bisa berisi tiga nilai: `TRUE`, `FALSE`, atau `NA` (Not Available/Missing). Sangat penting untuk operasi perbandingan dan filter.
+
+```{r filename='R'}
+lulus_ujian <- c(TRUE, TRUE, FALSE)
+lulus_ujian
+class(lulus_ujian)
+```
+
+:::
+
+**Sampling** sangat penting untuk analisis statistik:
+
+```{r filename='R'}
+# Sampling tanpa pengembalian (without replacement)
+sample(nama_buah, 2)
+
+# Sampling dengan pengembalian (with replacement)
+sample(nama_buah, 5, replace = TRUE)
+```
+
+### 1.3 Import Data dan Package
+
+Package memperluas fungsionalitas R. Untuk import data, kita memerlukan package khusus.
+
+```{r filename='R'}
+#| eval: false
+#| echo: true
+
+# Instal package (hanya sekali)
+install.packages("readr")
+install.packages("readxl")
+```
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+#| error: false
+
+# Aktifkan package (setiap sesi)
+library(readr)
+library(readxl)
+```
+
+**Import Data dari Berbagai Format:**
+
+```{r filename='R'}
+#| eval: false
+
+# Import CSV
+df1 <- read.csv("./data.csv")
+
+# Import Excel
+df2 <- read_excel("./data.xlsx")
+
+# Melihat data
+View(df1)
+head(df1)  # 6 baris pertama
+tail(df1)  # 6 baris terakhir
+```
+
+### 1.4 Eksplorasi Data dan Statistik Deskriptif
+
+Mari kita gunakan dataset **iris** yang sudah tersedia di R:
+
+```{r filename='R'}
+# Mengaktifkan dataset built-in
+data("iris")
+
+# Melihat 6 baris pertama
+head(iris)
+```
+
+**Informasi Struktur Data:**
+
+```{r filename='R'}
+# Melihat dimensi (baris x kolom)
+dim(iris)
+
+# Melihat nama kolom
+names(iris)
+
+# Struktur data
+str(iris)
+```
+
+**Ringkasan Statistik:**
+
+```{r filename='R'}
+# Ringkasan lengkap
+summary(iris)
+```
+
+**Statistik Deskriptif Spesifik:**
+
+::: {.panel-tabset}
+
+#### Ukuran Pemusatan
+
+```{r filename='R'}
+# Mean (rata-rata)
+mean(iris$Sepal.Length)
+
+# Median (nilai tengah)
+median(iris$Sepal.Length)
+
+# Modus
+library(DescTools)
+Mode(iris$Sepal.Length)
+```
+
+#### Ukuran Persebaran
+
+```{r filename='R'}
+# Variansi
+var(iris$Sepal.Length)
+
+# Standar deviasi
+sd(iris$Sepal.Length)
+
+# Range (rentang)
+range(iris$Sepal.Length)
+```
+
+#### Lainnya
+
+```{r filename='R'}
+# Minimum
+min(iris$Sepal.Length)
+
+# Maksimum
+max(iris$Sepal.Length)
+
+# Banyak data
+length(iris$Sepal.Length)
+
+# Total/jumlah
+sum(iris$Sepal.Length)
+
+# Standard error
+se <- sd(iris$Sepal.Length) / sqrt(length(iris$Sepal.Length))
+se
+```
+
+:::
+
+**Subsetting/Filter Data:**
+
+```{r filename='R'}
+# Menggunakan subset
+iris_setosa <- subset(iris, Species == "setosa")
+iris_longsepal <- subset(iris, Sepal.Length >= 5.5)
+
+# Menggunakan dplyr
+library(dplyr)
+iris_setosa <- filter(iris, Species == "setosa")
+```
+
+---
+
+## 2. Visualisasi Data
+
+### 2.1 Visualisasi Frekuensi (Base R)
+
+Visualisasi membantu kita memahami distribusi dan pola dalam data.
+
+**Membuat Tabel Frekuensi:**
+
+```{r filename='R'}
+# Tabel frekuensi untuk Species
+freq_species <- data.frame(table(iris$Species, dnn = "Species"))
+freq_species
+```
+
+::: {.panel-tabset}
+
+#### Bar Chart
+
+```{r filename='R'}
+barplot(freq_species$Freq, 
+        names.arg = freq_species$Species,
+        main = "Persebaran Spesies Iris",
+        xlab = "Spesies", 
+        ylab = "Frekuensi",
+        col = c("red", "green", "blue"),
+        border = "black")
+```
+
+#### Pie Chart
+
+```{r filename='R'}
+pie(freq_species$Freq,
+    labels = freq_species$Species,
+    main = "Persebaran Spesies Iris",
+    col = c("red", "green", "blue"))
+```
+
+#### Histogram
+
+```{r filename='R'}
+hist(iris$Sepal.Length,
+     main = "Histogram Sepal Length",
+     xlab = "Sepal Length",
+     ylab = "Frekuensi",
+     col = "lightblue",
+     border = "black",
+     breaks = 15)
+```
+
+:::
+
+### 2.2 Visualisasi Dua Variabel (Base R)
+
+::: {.panel-tabset}
+
+#### Boxplot
+
+```{r filename='R'}
+# Boxplot berdasarkan grup
+boxplot(Sepal.Length ~ Species, data = iris,
+        main = "Sepal Length by Species",
+        xlab = "Species",
+        ylab = "Sepal Length",
+        col = c("red", "green", "blue"))
+```
+
+#### Scatter Plot
+
+```{r filename='R'}
+plot(iris$Sepal.Length, iris$Sepal.Width,
+     main = "Sepal Length vs Width",
+     xlab = "Sepal Length",
+     ylab = "Sepal Width",
+     col = iris$Species,
+     pch = 19)
+legend("topright", legend = levels(iris$Species),
+       col = 1:3, pch = 19)
+```
+
+#### Line Chart
+
+```{r filename='R'}
+# Menggunakan time series data
+data("nhtemp")
+plot(nhtemp, 
+     main = "Average Yearly Temperature in New Haven",
+     ylab = "Temperature (F)",
+     xlab = "Year",
+     col = "blue",
+     lwd = 2)
+```
+
+:::
+
+### 2.3 Visualisasi dengan ggplot2
+
+**ggplot2** adalah package yang sangat powerful untuk visualisasi di R.
+
+```{r filename='R'}
+#| eval: false
+install.packages("ggplot2")
+```
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+library(ggplot2)
+```
+
+::: {.panel-tabset}
+
+#### Scatter Plot
+
+```{r filename='R'}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 3) +
+  labs(title = "Sepal Length vs Width by Species",
+       x = "Sepal Length (cm)",
+       y = "Sepal Width (cm)") +
+  theme_minimal()
+```
+
+#### Bar Chart
+
+```{r filename='R'}
+# Menggunakan dataset mtcars
+data(mtcars)
+ggplot(mtcars, aes(x = factor(cyl))) +
+  geom_bar(fill = "steelblue", width = 0.7) +
+  labs(title = "Distribution of Cylinders",
+       x = "Number of Cylinders",
+       y = "Count") +
+  theme_minimal()
+```
+
+#### Histogram
+
+```{r filename='R'}
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(binwidth = 0.3, fill = "lightblue", color = "black") +
+  labs(title = "Histogram of Sepal Length",
+       x = "Sepal Length (cm)",
+       y = "Frequency") +
+  theme_minimal()
+```
+
+#### Boxplot
+
+```{r filename='R'}
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  labs(title = "Sepal Length by Species",
+       x = "Species",
+       y = "Sepal Length (cm)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+#### Line Chart
+
+```{r filename='R'}
+# Menggunakan dataset economics
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line(color = "blue", linewidth = 1) +
+  labs(title = "Unemployment Over Time",
+       x = "Date",
+       y = "Number of Unemployed (thousands)") +
+  theme_minimal()
+```
+
+:::
+
+---
+
+## 3. Distribusi Probabilitas
+
+### 3.1 Konsep Dasar Distribusi
+
+Untuk setiap distribusi di R, tersedia **4 fungsi utama**:
+
+* `d...()`: **Density function** (PMF untuk diskrit, PDF untuk kontinu)
+* `p...()`: **Probability function** (CDF - Cumulative Distribution Function)
+* `q...()`: **Quantile function** (inverse CDF)
+* `r...()`: **Random number generator** (RNG)
+
+### 3.2 Distribusi Diskrit
+
+::: {.panel-tabset}
+
+#### Bernoulli
+
+```{r filename='R'}
+#| eval: false
+install.packages("Rlab")
+```
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+#| error: false
+library(Rlab)
+```
+
+```{r filename='R'}
+# X ~ Bernoulli(p=0.7)
+p <- 0.7
+
+# PMF: P(X = x)
+dbern(0, prob = p)  # P(X=0)
+dbern(1, prob = p)  # P(X=1)
+
+# CDF: P(X ≤ x)
+pbern(0, prob = p)
+pbern(1, prob = p)
+
+# Quantile
+qbern(0.3, prob = p)
+
+# Random generation
+rbern(10, prob = p)
+
+# Visualisasi PMF
+support <- c(0, 1)
+plot(support, dbern(support, prob = p),
+     type = "h", lwd = 5, col = "blue",
+     ylim = c(0, 1),
+     main = "PMF Bernoulli(p=0.7)",
+     xlab = "x", ylab = "P(X = x)")
+points(support, dbern(support, prob = p), pch = 19, cex = 2, col = "blue")
+```
+
+#### Binomial
+
+```{r filename='R'}
+# X ~ Binomial(n=10, p=0.7)
+n <- 10
+p <- 0.7
+
+# PMF: P(X = x)
+dbinom(2, size = n, prob = p)
+
+# CDF: P(X ≤ x)
+pbinom(2, size = n, prob = p)
+
+# Quantile
+qbinom(0.05, size = n, prob = p)
+
+# Random generation
+random_binom <- rbinom(100, size = n, prob = p)
+
+# Visualisasi PMF
+x <- 0:n
+plot(x, dbinom(x, size = n, prob = p),
+     type = "h", lwd = 5, col = "darkgreen",
+     main = "PMF Binomial(10, 0.7)",
+     xlab = "x", ylab = "P(X = x)")
+points(x, dbinom(x, size = n, prob = p), pch = 19, cex = 2, col = "darkgreen")
+
+# Histogram dari random generation
+hist(random_binom,
+     breaks = 10,
+     main = "Histogram 100 sampel dari Binom(10, 0.7)",
+     xlab = "Nilai X",
+     ylab = "Frekuensi",
+     col = "lightgreen")
+```
+
+#### Poisson
+
+```{r filename='R'}
+# X ~ Poisson(λ=3)
+lambda <- 3
+
+# PMF: P(X = x)
+dpois(2, lambda = lambda)
+
+# CDF: P(X ≤ x)
+ppois(2, lambda = lambda)
+
+# Quantile
+qpois(0.5, lambda = lambda)
+
+# Random generation
+rpois(100, lambda = lambda)
+
+# Visualisasi PMF
+x <- 0:15
+plot(x, dpois(x, lambda = lambda),
+     type = "h", lwd = 5, col = "purple",
+     main = "PMF Poisson(λ=3)",
+     xlab = "x", ylab = "P(X = x)")
+points(x, dpois(x, lambda = lambda), pch = 19, cex = 2, col = "purple")
+```
+
+#### Uniform Diskrit
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+library(distr)
+```
+
+```{r filename='R'}
+# Membuat distribusi uniform diskrit pada {1,2,3,4,5,6} (dadu)
+support <- c(1, 2, 3, 4, 5, 6)
+k <- length(support)
+prob <- rep(1/k, k)
+dist_dadu <- DiscreteDistribution(support, prob)
+
+# Plot
+plot(dist_dadu, main = "Distribusi Uniform Diskrit (Dadu)")
+
+# PMF
+d(dist_dadu)(4)
+
+# CDF
+p(dist_dadu)(4)
+
+# Quantile
+q(dist_dadu)(0.5)
+
+# Random generation
+r(dist_dadu)(10)
+
+# Ekspektasi dan variansi
+E(dist_dadu)
+var(dist_dadu)
+```
+
+:::
+
+### 3.3 Distribusi Kontinu
+
+::: {.panel-tabset}
+
+#### Normal
+
+```{r filename='R'}
+# X ~ N(μ=50, σ²=100)
+mu <- 50
+sigma <- 10
+
+# Contoh: P(45 < X < 62)
+prob <- pnorm(62, mean = mu, sd = sigma) - pnorm(45, mean = mu, sd = sigma)
+cat(sprintf("P(45 < X < 62) = %.4f\n", prob))
+
+# Menggunakan Z-score
+z1 <- (62 - mu) / sigma
+z2 <- (45 - mu) / sigma
+prob_z <- pnorm(z1) - pnorm(z2)
+cat(sprintf("Dengan Z-score: %.4f\n", prob_z))
+
+# Visualisasi
+x <- seq(20, 80, length = 200)
+plot(x, dnorm(x, mean = mu, sd = sigma),
+     type = "l", lwd = 2, col = "darkred",
+     main = "PDF Normal N(50, 100)",
+     xlab = "x", ylab = "f(x)")
+
+# Area P(45 < X < 62)
+x_shade <- seq(45, 62, length = 100)
+y_shade <- dnorm(x_shade, mean = mu, sd = sigma)
+polygon(c(45, x_shade, 62), c(0, y_shade, 0), col = rgb(1, 0, 0, 0.3), border = NA)
+abline(v = mu, col = "blue", lty = 2)
+```
+
+#### Normal Standar
+
+```{r filename='R'}
+# X ~ N(μ=0, σ²=1) - Distribusi Normal Standar
+
+# PDF: f(x)
+dnorm(0, mean = 0, sd = 1)
+
+# CDF: P(X ≤ x)
+pnorm(1.96, mean = 0, sd = 1)  # ≈ 0.975
+
+# Quantile: P(X ≤ q) = p
+qnorm(0.975, mean = 0, sd = 1)  # ≈ 1.96
+
+# Random generation
+rnorm(100, mean = 0, sd = 1)
+
+# Visualisasi PDF
+x <- seq(-4, 4, length = 200)
+plot(x, dnorm(x, mean = 0, sd = 1),
+     type = "l", lwd = 2, col = "blue",
+     main = "PDF Normal Standar N(0, 1)",
+     xlab = "x", ylab = "f(x)")
+abline(v = 0, col = "red", lty = 2)
+```
+
+#### Uniform Kontinu
+
+```{r filename='R'}
+# X ~ Uniform(a=20, b=105)
+a <- 20
+b <- 105
+
+# PDF
+dunif(50, min = a, max = b)
+
+# CDF: P(X ≤ x)
+punif(50, min = a, max = b)
+
+# Quantile
+qunif(0.5, min = a, max = b)
+
+# Random generation
+random_unif <- runif(1000, min = a, max = b)
+
+# Visualisasi PDF
+x <- seq(a-10, b+10, length = 200)
+plot(x, dunif(x, min = a, max = b),
+     type = "l", lwd = 3, col = "orange",
+     main = "PDF Uniform(20, 105)",
+     xlab = "x", ylab = "f(x)",
+     ylim = c(0, 0.02))
+
+# Histogram dari random generation
+hist(random_unif,
+     breaks = 30,
+     main = "Histogram 1000 sampel dari Uniform(20, 105)",
+     xlab = "Nilai X",
+     col = "lightyellow",
+     probability = TRUE)
+```
+
+:::
+
+---
+
+## 4. Looping dan Distribusi Sampling
+
+### 4.1 Looping di R
+
+**For Loop:**
+
+```{r filename='R'}
+# For loop sederhana
+for (i in 1:5) {
+  print(i * 2)
+}
+
+# Menyimpan hasil
+hasil <- numeric(5)
+for (i in 1:5) {
+  hasil[i] <- i^2
+}
+print(hasil)
+```
+
+**Fungsi replicate:**
+
+Fungsi `replicate` sangat berguna untuk simulasi statistik.
+
+```{r filename='R'}
+# Mengulangi operasi 100 kali
+hasil <- replicate(100, mean(rnorm(10)))
+head(hasil)
+
+# Equivalent dengan for loop
+hasil2 <- numeric(100)
+for (i in 1:100) {
+  hasil2[i] <- mean(rnorm(10))
+}
+```
+
+### 4.2 Distribusi Sampling
+
+**Simulasi Distribusi Sample Mean:**
+
+```{r filename='R'}
+# Populasi
+populasi <- c(1, 2, 3, 4, 5, 6, 7, 8)
+
+# Simulasi 1000 kali, sample size 30
+set.seed(123)
+sample_means <- replicate(1000, {
+  sample_data <- sample(populasi, 30, replace = TRUE)
+  mean(sample_data)
+})
+
+# Visualisasi
+hist(sample_means,
+     main = "Distribution of Sample Means (n=30)",
+     xlab = "Sample Mean",
+     col = "lightblue",
+     breaks = 30,
+     probability = TRUE)
+
+# Overlay normal curve
+curve(dnorm(x, mean = mean(sample_means), sd = sd(sample_means)), 
+      add = TRUE, col = "red", lwd = 2)
+
+# Mean dan SD dari distribusi sample mean
+cat(sprintf("Mean of sample means: %.4f\n", mean(sample_means)))
+cat(sprintf("SD of sample means: %.4f\n", sd(sample_means)))
+```
+
+**Perbandingan Berbagai Ukuran Sampel:**
+
+```{r filename='R'}
+# Simulasi dengan berbagai ukuran sampel
+par(mfrow = c(2, 2))
+
+for (n in c(5, 10, 30, 50)) {
+  sample_means <- replicate(1000, mean(sample(populasi, n, replace = TRUE)))
+  
+  hist(sample_means,
+       main = paste("Sample Size =", n),
+       xlab = "Sample Mean",
+       col = "lightgreen",
+       breaks = 20,
+       probability = TRUE)
+  
+  curve(dnorm(x, mean = mean(populasi), sd = sd(populasi)/sqrt(n)), 
+        add = TRUE, col = "red", lwd = 2)
+}
+
+par(mfrow = c(1, 1))
+```
+
+### 4.3 Central Limit Theorem (CLT)
+
+```{r filename='R'}
+# Parameter populasi
+mu <- 50
+sigma <- 10
+n <- 36
+
+# Mean dan SD dari distribusi sample mean (berdasarkan CLT)
+mu_xbar <- mu
+sigma_xbar <- sigma / sqrt(n)
+
+cat(sprintf("μ_X̄ = %.4f\n", mu_xbar))
+cat(sprintf("σ_X̄ = %.4f\n", sigma_xbar))
+
+# Contoh: P(45 < X̄ < 55)
+prob <- pnorm(55, mean = mu_xbar, sd = sigma_xbar) - 
+        pnorm(45, mean = mu_xbar, sd = sigma_xbar)
+
+cat(sprintf("\nP(45 < X̄ < 55) = %.4f\n", prob))
+```
+
+### 4.4 Distribusi-t
+
+```{r filename='R'}
+# Distribusi-t dengan df = 14
+df <- 14
+
+# PDF
+dt(2, df = df)
+
+# CDF: P(T ≤ t)
+pt(2, df = df)
+
+# Quantile (t-tabel)
+qt(0.975, df = df)  # untuk α=0.025
+
+# Random generation
+rt(100, df = df)
+
+# Visualisasi: Perbandingan t vs Normal
+x <- seq(-4, 4, length = 200)
+plot(x, dnorm(x), type = "l", lwd = 2, col = "blue",
+     main = "Perbandingan Distribusi t vs Normal",
+     xlab = "x", ylab = "Density")
+lines(x, dt(x, df = 5), col = "red", lwd = 2)
+lines(x, dt(x, df = 14), col = "green", lwd = 2)
+legend("topright", 
+       legend = c("Normal", "t(df=5)", "t(df=14)"),
+       col = c("blue", "red", "green"), lwd = 2)
+```
+
+---
+
+## 5. Inferensia Statistika
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+library(distrEx)
+```
+
+### 5.1 Taksiran Titik
+
+```{r filename='R'}
+# Load data
+data(mtcars)
+
+# Taksiran mean
+mean_mpg <- mean(mtcars$mpg)
+cat(sprintf("Taksiran mean mpg: %.4f\n", mean_mpg))
+
+# Taksiran variansi
+var_mpg <- var(mtcars$mpg)
+cat(sprintf("Taksiran variansi mpg: %.4f\n", var_mpg))
+
+# Taksiran proporsi
+prop_matic <- sum(mtcars$am == 0) / nrow(mtcars)
+prop_manual <- sum(mtcars$am == 1) / nrow(mtcars)
+
+cat(sprintf("Proporsi mobil matic: %.4f\n", prop_matic))
+cat(sprintf("Proporsi mobil manual: %.4f\n", prop_manual))
+```
+
+### 5.2 Taksiran Interval (Confidence Intervals)
+
+::: {.panel-tabset}
+
+#### CI Mean (σ diketahui)
+
+```{r filename='R'}
+# Data
+x_bar <- mean(mtcars$mpg)
+sigma <- 6  # variansi diketahui
+n <- nrow(mtcars)
+alpha <- 0.05
+
+# CI 95%
+z_critical <- qnorm(1 - alpha/2)
+margin_error <- z_critical * sigma / sqrt(n)
+
+lower <- x_bar - margin_error
+upper <- x_bar + margin_error
+
+cat(sprintf("CI 95%% untuk mean (σ diketahui): (%.4f, %.4f)\n", lower, upper))
+```
+
+#### CI Mean (σ tidak diketahui)
+
+```{r filename='R'}
+# Data
+x_bar <- mean(mtcars$mpg)
+s <- sd(mtcars$mpg)
+n <- nrow(mtcars)
+alpha <- 0.05
+
+# CI 95% menggunakan t-distribution
+t_critical <- qt(1 - alpha/2, df = n-1)
+margin_error <- t_critical * s / sqrt(n)
+
+lower <- x_bar - margin_error
+upper <- x_bar + margin_error
+
+cat(sprintf("CI 95%% untuk mean (σ tidak diketahui): (%.4f, %.4f)\n", lower, upper))
+```
+
+#### CI Beda Dua Mean
+
+```{r filename='R'}
+data(iris)
+
+# Data
+x1 <- iris$Sepal.Length[iris$Species == "setosa"]
+x2 <- iris$Sepal.Length[iris$Species == "versicolor"]
+
+mean1 <- mean(x1)
+mean2 <- mean(x2)
+var1 <- var(x1)
+var2 <- var(x2)
+n1 <- length(x1)
+n2 <- length(x2)
+
+# Variansi pooled
+var_pooled <- ((n1-1)*var1 + (n2-1)*var2) / (n1 + n2 - 2)
+sd_pooled <- sqrt(var_pooled)
+
+alpha <- 0.05
+
+# CI 95%
+diff <- mean2 - mean1
+t_critical <- qt(1-alpha/2, df = n1+n2-2)
+margin_error <- t_critical * sd_pooled * sqrt(1/n1 + 1/n2)
+
+lower <- diff - margin_error
+upper <- diff + margin_error
+
+cat(sprintf("CI 95%% untuk beda mean: (%.4f, %.4f)\n", lower, upper))
+```
+
+#### CI Sampel Berpasangan
+
+```{r filename='R'}
+data(sleep)
+
+# Hitung perbedaan
+diff <- with(sleep, extra[group == 2] - extra[group == 1])
+
+mean_diff <- mean(diff)
+sd_diff <- sd(diff)
+n <- length(diff)
+alpha <- 0.05
+
+# CI 95%
+t_critical <- qt(1-alpha/2, df = n-1)
+margin_error <- t_critical * sd_diff / sqrt(n)
+
+lower <- mean_diff - margin_error
+upper <- mean_diff + margin_error
+
+cat(sprintf("CI 95%% untuk beda mean (paired): (%.4f, %.4f)\n", lower, upper))
+```
+
+:::
+
+### 5.3 Pengujian Hipotesis
+
+::: {.panel-tabset}
+
+#### Uji-z (Mean)
+
+```{r filename='R'}
+# H0: μ = 250
+# H1: μ ≠ 250
+# α = 0.05
+
+mu_0 <- 250
+alpha <- 0.05
+
+# Statistik uji
+x_bar <- mean(mtcars$disp)
+s <- sd(mtcars$disp)
+n <- nrow(mtcars)
+
+Z <- (x_bar - mu_0) / (s / sqrt(n))
+
+# Daerah penolakan
+Z_lower <- qnorm(alpha/2)
+Z_upper <- qnorm(1 - alpha/2)
+
+# P-value
+p_value <- 2 * (1 - pnorm(abs(Z)))
+
+# Keputusan
+keputusan <- ifelse(Z < Z_lower | Z > Z_upper, "H0 ditolak", "H0 diterima")
+
+cat(sprintf("Statistik uji Z = %.4f\n", Z))
+cat(sprintf("Daerah penolakan: Z < %.4f atau Z > %.4f\n", Z_lower, Z_upper))
+cat(sprintf("P-value = %.6f\n", p_value))
+cat(sprintf("Keputusan: %s\n", keputusan))
+```
+
+#### Uji-t (Mean)
+
+```{r filename='R'}
+# H0: μ = 250
+# H1: μ ≠ 250
+
+result <- t.test(mtcars$disp, mu = 250, alternative = "two.sided")
+
+cat("Hasil Uji-t:\n")
+print(result)
+```
+
+#### Uji-t (Beda Dua Mean)
+
+```{r filename='R'}
+# H0: μ1 = μ2
+# H1: μ1 ≠ μ2
+
+# Variansi sama
+result_equal <- t.test(mtcars$disp[mtcars$am == 0],
+                       mtcars$disp[mtcars$am == 1],
+                       alternative = "two.sided",
+                       var.equal = TRUE)
+
+cat("Hasil Uji-t (Variansi Sama):\n")
+print(result_equal)
+
+# Variansi berbeda
+result_unequal <- t.test(mtcars$disp[mtcars$am == 0],
+                         mtcars$disp[mtcars$am == 1],
+                         alternative = "two.sided",
+                         var.equal = FALSE)
+
+cat("\nHasil Uji-t (Variansi Berbeda):\n")
+print(result_unequal)
+```
+
+#### ANOVA
+
+```{r filename='R'}
+# Membuat data simulasi
+set.seed(123)
+pops.1 <- rnorm(n = 10, mean = 1, sd = 1)
+pops.2 <- rnorm(n = 10, mean = 0.9, sd = 1)
+pops.3 <- rnorm(n = 10, mean = 1.1, sd = 1)
+
+pop.source <- c(rep("pops.1", 10), rep("pops.2", 10), rep("pops.3", 10))
+pops.value <- c(pops.1, pops.2, pops.3)
+data_anova <- data.frame(pop.source, pops.value)
+
+# Uji ANOVA
+# H0: μ1 = μ2 = μ3
+# H1: setidaknya satu mean berbeda
+
+result_anova <- aov(pops.value ~ pop.source, data = data_anova)
+summary(result_anova)
+
+# F-tabel
+k <- 3  # Banyak populasi
+n <- 10  # Ukuran sampel per populasi
+alpha <- 0.05
+F_tabel <- qf(1-alpha, df1 = k-1, df2 = k*(n-1))
+
+cat(sprintf("\nF-tabel = %.4f\n", F_tabel))
+```
+
+#### Chi-Squared (Goodness of Fit)
+
+```{r filename='R'}
+# Menguji apakah dadu seimbang
+set.seed(123)
+dadu <- sample(1:6, 120, replace = TRUE)
+
+# Frekuensi observasi
+obs <- as.numeric(table(dadu))
+
+# Uji Chi-squared
+result_chi <- chisq.test(obs, p = rep(1/6, 6))
+
+cat("Hasil Uji Chi-Squared:\n")
+print(result_chi)
+
+# Chi-squared tabel
+k <- 6
+alpha <- 0.05
+chi_sq_tabel <- qchisq(1-alpha, df = k-1)
+
+cat(sprintf("\nChi-squared tabel = %.4f\n", chi_sq_tabel))
+```
+
+#### Chi-Squared (Independensi)
+
+```{r filename='R'}
+#| eval: false
+
+# Menguji independensi treatment dan improvement
+treatment_url <- "https://raw.githubusercontent.com/selva86/datasets/master/treatment.csv"
+
+treatment <- read.csv(treatment_url)
+
+# Tabel kontingensi
+tabel <- table(treatment$treatment, treatment$improved)
+
+# Uji Chi-squared
+result <- chisq.test(tabel)
+print(result)
+```
+
+:::
+
+---
+
+## 6. Korelasi dan Regresi
+
+### 6.1 Korelasi
+
+**Menghitung Korelasi:**
+
+```{r filename='R'}
+data(mtcars)
+
+# Korelasi semua variabel (Pearson)
+cor_matrix <- cor(mtcars)
+round(cor_matrix, 2)
+
+# Korelasi antara dua variabel
+cor_disp_wt <- cor(mtcars$disp, mtcars$wt)
+cat(sprintf("Korelasi disp dan wt: %.4f\n", cor_disp_wt))
+```
+
+**Visualisasi Korelasi (Heatmap):**
+
+```{r filename='R'}
+#| eval: false
+install.packages("corrplot")
+```
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| output: false
+#| warning: false
+library(corrplot)
+```
+
+```{r filename='R'}
+# Plot heatmap
+corrplot(cor_matrix, method = "color", type = "upper",
+         tl.col = "black", tl.srt = 45,
+         addCoef.col = "black", number.cex = 0.7,
+         title = "Correlation Heatmap",
+         mar = c(0,0,1,0))
+```
+
+**Uji Korelasi:**
+
+```{r filename='R'}
+# H0: ρ = 0 (tidak ada korelasi)
+# H1: ρ ≠ 0 (ada korelasi)
+
+result_cor <- cor.test(mtcars$disp, mtcars$wt)
+
+cat("Hasil Uji Korelasi:\n")
+print(result_cor)
+```
+
+**Visualisasi dengan ggscatter:**
+
+```{r filename='R'}
+#| eval: false
+install.packages("ggpubr")
+```
+
+```{r filename='R'}
+#| eval: true
+#| echo: true
+#| warning: false
+library(ggpubr)
+```
+
+```{r filename='R'}
+ggscatter(mtcars, x = "disp", y = "wt",
+          add = "reg.line",
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "Displacement", ylab = "Weight",
+          title = "Correlation between Displacement and Weight")
+```
+
+### 6.2 Regresi Linear Sederhana
+
+**Membuat Model Regresi:**
+
+```{r filename='R'}
+# Model: wt = β₀ + β₁(disp) + ε
+model <- lm(wt ~ disp, data = mtcars)
+
+# Melihat ringkasan
+summary(model)
+```
+
+**Koefisien Regresi:**
+
+```{r filename='R'}
+# Ekstrak koefisien
+beta_0 <- coef(model)[1]
+beta_1 <- coef(model)[2]
+
+cat(sprintf("Persamaan regresi: wt = %.4f + %.6f × disp\n", beta_0, beta_1))
+cat(sprintf("\nInterpretasi:\n"))
+cat(sprintf("- Intercept (β₀) = %.4f\n", beta_0))
+cat(sprintf("- Slope (β₁) = %.6f\n", beta_1))
+cat(sprintf("- Setiap kenaikan 1 unit displacement, rata-rata weight naik %.6f unit\n", beta_1))
+```
+
+**Visualisasi Regresi:**
+
+```{r filename='R'}
+# Base R
+plot(mtcars$disp, mtcars$wt,
+     main = "Weight vs Displacement",
+     xlab = "Displacement",
+     ylab = "Weight",
+     pch = 19, col = "blue")
+abline(model, col = "red", lwd = 2)
+
+# Menambahkan equation ke plot
+legend("topleft", 
+       legend = sprintf("wt = %.2f + %.4f × disp", beta_0, beta_1),
+       bty = "n", cex = 0.9)
+```
+
+**Dengan ggplot2:**
+
+```{r filename='R'}
+ggplot(mtcars, aes(x = disp, y = wt)) +
+  geom_point(size = 3, color = "blue") +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  labs(title = "Linear Regression: Weight vs Displacement",
+       x = "Displacement (cu.in.)",
+       y = "Weight (1000 lbs)",
+       subtitle = sprintf("wt = %.2f + %.4f × disp", beta_0, beta_1)) +
+  theme_minimal()
+```
+
+**Diagnostik Model:**
+
+```{r filename='R'}
+# Plot diagnostik
+par(mfrow = c(2, 2))
+plot(model)
+par(mfrow = c(1, 1))
+
+# R-squared
+r_squared <- summary(model)$r.squared
+adj_r_squared <- summary(model)$adj.r.squared
+
+cat(sprintf("\nGoodness of Fit:\n"))
+cat(sprintf("R-squared: %.4f\n", r_squared))
+cat(sprintf("Adjusted R-squared: %.4f\n", adj_r_squared))
+cat(sprintf("Interpretasi: %.2f%% variasi weight dijelaskan oleh displacement\n", 
+            r_squared * 100))
+```
+
+**Prediksi:**
+
+```{r filename='R'}
+# Prediksi untuk nilai baru
+new_data <- data.frame(disp = c(150, 200, 250))
+predictions <- predict(model, newdata = new_data, interval = "prediction")
+
+cat("\nPrediksi Weight untuk Displacement baru:\n")
+result_df <- cbind(new_data, predictions)
+print(result_df)
+```
+
+---
+
+## Kesimpulan
+
+Luar biasa! Anda telah menyelesaikan review komprehensif materi R untuk Pengantar Sains Data. Mari kita rangkum perjalanan pembelajaran Anda:
+
+**Keterampilan yang Telah Dikuasai:**
+
+1. **Fundamental Programming** 💻
+   - Operasi dasar, variabel, dan vector di R
+   - Import dan manipulasi data
+   - Subsetting dan filtering data
+   - Perhitungan statistik deskriptif
+
+2. **Data Visualization** 📊
+   - Visualisasi univariat (histogram, bar chart, pie chart)
+   - Visualisasi bivariat (scatter plot, boxplot, line chart)
+   - Visualisasi advanced dengan ggplot2
+   - Interpretasi visual patterns
+
+3. **Probability & Distributions** 🎲
+   - Distribusi diskrit (Bernoulli, Binomial, Poisson)
+   - Distribusi kontinu (Normal, Uniform)
+   - PMF/PDF, CDF, quantile, dan random generation
+   - Package distr untuk manipulasi distribusi
+
+4. **Statistical Inference** 📈
+   - Looping dan simulasi distribusi sampling
+   - Central Limit Theorem dan aplikasinya
+   - Taksiran titik dan interval
+   - Pengujian hipotesis (z-test, t-test, ANOVA, Chi-squared)
+
+5. **Relationship Analysis** 🔗
+   - Korelasi (Pearson, Spearman, Kendall)
+   - Visualisasi korelasi dengan heatmap
+   - Regresi linear sederhana
+   - Interpretasi dan evaluasi model
+
+Selamat! Anda telah menguasai toolkit fundamental R untuk data science. Terus berlatih dan jangan takut untuk bereksperimen! 🎉
+
+---
+
+<a href="../psd2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum PSD 2025
+</a>
