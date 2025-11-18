@@ -4,19 +4,20 @@ image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/eksplorasi_dan
 description: "Data Visualization using R (Part 1)"
 date: 11/18/2024
 page-navigation: true
-jupyter: python3
 format: html
+engine: knitr
 ---
 
- <a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
+<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA 2025
 </a>
 
 # Pendahuluan
 ## Mengambil Data
-
 ```{r}
-install.packages("tidyverse")
+#| message: false
+#| warning: false
+
 library(tidyverse)
 library(palmerpenguins)
 library(ggthemes)
