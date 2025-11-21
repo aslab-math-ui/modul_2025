@@ -3,22 +3,444 @@ title: "Modul 01 Ilmu Data"
 subtitle: "Lifecycle Ilmu Data"
 author: "Muhammad Zaki Zulhamlizar"
 date: "2025-10-28"
-image: ""
+image: "https://miro.medium.com/v2/resize:fit:3388/1*iBCym9gMX1SHOAlcs7JLUQ.png"
 ---
 
 <a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
 </a>
 
----
+# **Prakata: Mengapa "Lifecycle"?**
 
-<!-- Isi modul -->
+Selamat datang di modul pertama kita. Sebelum kita menyentuh *tools* seperti `scikit-learn` atau `TensorFlow`, kita harus membangun fondasi berpikir.
 
-**BELUM SIAP LOL**
+**1. Penjelasan Intuitif (Analogi Bengkel Kustom)**
 
-<div class="tenor-gif-embed" data-postid="5211926416949197849" data-share-method="host" data-aspect-ratio="1.02469" data-width="50%"><a href="https://tenor.com/view/dr-stone-senkuu-tongue-gif-5211926416949197849">Dr Stone GIF</a>from <a href="https://tenor.com/search/dr-gifs">Dr GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+Bayangkan Anda ingin membangun sebuah mobil balap Formula 1. Apakah Anda akan langsung membeli mesin V6 yang paling kuat dan memasang empat roda padanya? Tentu tidak. Anda akan gagal.
 
----
+Proses yang benar adalah sebuah **siklus**:
+
+1.  **Memahami Tujuan:** Untuk sirkuit apa mobil ini? Apakah sirkuit jalan raya yang sempit (butuh *downforce*) atau sirkuit lurus yang panjang (butuh *top speed*)?
+2.  **Mengumpulkan Bahan:** Sasis apa yang kita butuhkan? Jenis ban apa? Komponen apa yang sudah kita miliki dan apa yang perlu dibuat?
+3.  **Merakit Prototipe:** Kita merakit versi pertama dari mobil tersebut.
+4.  **Menguji Prototipe:** Kita membawanya ke *test track*. Apakah remnya berfungsi? Apakah aerodinamikanya stabil?
+5.  **Evaluasi & Iterasi:** Data dari *test track* (waktu putaran, suhu ban) memberi tahu kita bahwa *spoiler* belakang terlalu besar. Kita kembali ke bengkel, memperbaikinya, dan mengujinya *lagi*.
+6.  **Pengiriman (Deployment):** Mobil itu akhirnya siap untuk balapan.
+7.  **Pemantauan:** Saat balapan, kita terus memantau telemetri. Apakah performa mesin menurun setelah 10 putaran?
+
+*Data science* persis seperti ini. Sebuah model `RandomForest` yang mencapai akurasi 99% di *notebook* Anda tidak ada nilainya jika tidak menjawab pertanyaan bisnis yang tepat, jika datanya salah, atau jika model tersebut tidak pernah bisa digunakan oleh tim lain di perusahaan.
+
+Lifecycle adalah proses sistematis yang memastikan kita membangun "mobil balap" yang tepat, untuk sirkuit yang tepat, dan benar-benar berhasil di hari balapan.
+
+**2. Penjelasan Teknis & Formal: Dari CRISP-DM ke CRISP-ML(Q)**
+
+Secara formal, *lifecycle* yang paling terkenal adalah **CRISP-DM** (*Cross-Industry Standard Process for Data Mining*). Ini adalah kerangka kerja klasik yang menguraikan enam fase:
+
+1.  Business Understanding
+2.  Data Understanding
+3.  Data Preparation
+4.  Modeling
+5.  Evaluation
+6.  Deployment
+
+Namun, di era *machine learning* modern, kerangka kerja ini memiliki kelemahan: ia menganggap *deployment* sebagai "akhir" dan kurang menekankan pada aspek kualitas dan operasionalisasi (*MLOps*).
+
+Di sinilah kita memperkenalkan **CRISP-ML(Q)**, sebuah adaptasi modern yang lebih relevan untuk kita:
+
+* **ML (Machine Learning):** Secara eksplisit menyoroti bahwa *output* kita adalah sistem ML, bukan hanya laporan analitik statis.
+* **Q (Quality Assurance):** Menambahkan lapisan penjaminan mutu yang berkelanjutan di *setiap* fase. Ini mencakup *reproducibility*, pemantauan, dan tata kelola (governance).
+
+Diagram alir CRISP-ML(Q) menunjukkan sifatnya yang **iteratif**:
+
+```{mermaid}
+sequenceDiagram
+  participant Alice
+  participant Bob
+  Alice->>John: Hello John, how are you?
+  loop Healthcheck
+    John->>John: Fight against hypochondria
+  end
+  Note right of John: Rational thoughts <br/>prevail!
+  John-->>Alice: Great!
+  John->>Bob: How about you?
+  Bob-->>John: Jolly good!
+```
+
+```{mermaid}
+graph TD
+    %% 1. Definisikan node & koneksi level atas
+    A[1. Business & Data Understanding] <--> B(2. Data Preparation);
+    B <--> C(3. Modeling);
+    C <--> D(4. Evaluation);
+    D --> E(5. Deployment);
+    D --> A;
+    E <--> F(6. Monitoring & Maintenance);
+    F --> A;
+
+    %% 2. Definisikan subgraph dan node di dalamnya
+    %%    TANPA koneksi ke luar
+    %% subgraph Quality Assurance (QA)
+    %%     direction TB
+        
+    %%     Q1(Data Literacy)
+    %%     Q2(Data Governance)
+    %%     Q3(Reproducibility)
+    %%     Q4(ML Ethics & Fairness)
+        
+    %%     %% KITA HAPUS SEMENTARA KONEKSI DARI SINI:
+    %%     %% A <--> Q1
+    %%     %% B <--> Q2
+    %%     %% C <--> Q3
+    %%     %% D <--> Q4
+    %%     %% E <--> Q3
+    end
+```
+
+```{mermaid}
+graph TD
+    A[Tes] --> B(Berhasil?)
+```
+
+Keenam "Jalur Kompetensi Umum" yang kita bahas dalam modul ini adalah *keterampilan* yang Anda perlukan untuk mengeksekusi *fase-fase* dalam *lifecycle* ini.
+
+Mari kita bedah satu per satu.
+
+# **1. Data Literacy: Memahami Masalah & Data**
+
+Ini adalah fondasi dari fase **1. Business & Data Understanding**.
+
+**1. Penjelasan Intuitif**
+
+*Data Literacy* bukan berarti Anda harus menjadi ahli statistik. Ini berarti Anda bisa "berbahasa data". Anda adalah seorang **detektif**. Ketika klien (misalnya, departemen aktuaria) datang kepada Anda dan berkata, "Saya ingin model untuk memprediksi *fraud* klaim," seorang *data scientist* yang naif akan langsung mengunduh `claims.csv` dan melatih model klasifikasi.
+
+Seorang *data scientist* yang "melek data" akan bertanya:
+
+* "Apa definisi 'fraud' menurut Anda? Apakah yang sudah terbukti di pengadilan, atau yang baru 'dicurigai'?"
+* "Berapa biaya dari *false positive* (mencurigai klaim jujur) vs. *false negative* (melewatkan klaim fraud)?"
+* "Data apa yang *sebenarnya* Anda kumpulkan saat klaim diajukan? Di mana data itu disimpan?"
+* "Apa yang akan Anda lakukan setelah model ini memberi Anda skor 'fraud'? Apakah akan ada intervensi manual?"
+
+*Data Literacy* adalah kemampuan untuk menerjemahkan masalah bisnis yang ambigu menjadi pertanyaan analitis yang tajam dan terukur.
+
+**2. Penjelasan Teknis & Formal**
+
+Secara teknis, ini melibatkan:
+
+* **Formulasi Masalah:** Mengubah masalah bisnis ("Kita kehilangan uang karena fraud") menjadi masalah ML ("Kita perlu membangun model klasifikasi biner untuk memprediksi probabilitas $P(\text{Fraud} | \text{DataKlaim})$").
+* **Definisi KPI (Key Performance Indicator):** Menentukan metrik sukses. Jika biaya *false negative* $1000$ dan biaya *false positive* $10$, maka akurasi sederhana bukanlah metrik yang tepat. Kita mungkin perlu mengoptimalkan **Total Biaya Kerugian yang Diharapkan (Expected Loss Cost)**:
+
+    $$ \text{TotalCost} = \sum_{i} \left( P(\text{FN})_i \times \text{Cost}(\text{FN}) \right) + \sum_{j} \left( P(\text{FP})_j \times \text{Cost}(\text{FP}) \right) $$
+
+* **Katalogisasi Data:** Melakukan audit data mentah. Apa saja fiturnya? Apa tipe datanya (`int`, `string`, `timestamp`)? Apa arti dari setiap kolom?
+
+**3. Konteks Penerapan**
+
+Dalam domain aktuaria, *data literacy* sangat krusial. Seorang aktuaris tidak hanya "memprediksi klaim", mereka perlu memahami:
+
+* **Kredibilitas Data:** Apakah data historis kerugian ini cukup besar ($n$) untuk dipercaya?
+* **Distribusi:** Apakah ini data *frequency* (seberapa sering klaim terjadi, mungkin model Poisson) atau data *severity* (seberapa besar kerugian per klaim, mungkin model Gamma atau Log-Normal)?
+* **Kecukupan Data:** Apakah kita memiliki data yang relevan untuk memprediksi risiko, atau kita hanya memiliki data internal yang bias?
+
+**4. Insight & Pola Berpikir**
+
+Kesalahan terbesar dalam *data science* tidak terjadi di fase *modeling*, tetapi di fase ini. **Sebuah jawaban yang brilian untuk pertanyaan yang salah tidak ada nilainya.** Selalu habiskan setidaknya 25% dari waktu proyek Anda di sini, hanya untuk bertanya "Mengapa?"
+
+# **2. Data Wrangling & Cleaning: Mempersiapkan Bahan**
+
+Ini adalah inti dari fase **2. Data Preparation**. Ini seringkali memakan 60-80% dari waktu proyek.
+
+**1. Penjelasan Intuitif**
+
+Jika *data literacy* adalah memutuskan resep masakan, *data wrangling* adalah **"kitchen prep"**. Anda tidak bisa memasukkan ayam utuh (dengan bulu) dan wortel dari tanah langsung ke dalam panci.
+
+Anda perlu:
+
+* **Membersihkan:** Mencuci wortel, membuang bagian yang busuk. (Menghapus *outlier* atau data duplikat).
+* **Mengupas & Memotong:** Mengupas kulit wortel, memotongnya menjadi dadu. (Melakukan *feature engineering*, mengekstrak 'bulan' dari 'timestamp').
+* **Mengukur:** Menyiapkan 100 gram wortel, 50 ml minyak. (Melakukan *scaling* dan *normalization* data).
+* **Menangani Kekurangan:** Oh, kita kehabisan bawang putih. Apakah kita ganti dengan bawang bombay (imputasi), atau kita hilangkan saja bawang dari resep (menghapus baris)?
+
+Data mentah di dunia nyata *selalu* kotor, tidak lengkap, dan dalam format yang salah. *Wrangling* adalah proses menjinakkannya.
+
+**2. Penjelasan Teknis & Formal**
+
+Tiga pilar teknis dari *wrangling* adalah:
+
+* **Handling Missing Values:**
+    * **Penghapusan (Listwise/Pairwise):** Paling mudah, tapi bisa menimbulkan bias jika data tidak hilang secara acak (Missing Completely At Random - MCAR).
+    * **Imputasi Sederhana:** Mengisi $NaN$ dengan mean, median (untuk data miring), atau modus (untuk data kategorikal).
+    * **Imputasi Lanjut:** Menggunakan model (seperti K-Nearest Neighbors atau bahkan regresi) untuk "memprediksi" nilai yang hilang.
+
+* **Feature Engineering:** Ini adalah seni dan sains.
+    * **Ekstraksi:** `timestamp` $\rightarrow$ `hari_dalam_minggu`, `jam_dalam_hari`.
+    * **Transformasi:** Mengubah fitur miring (skewed) dengan $log(X)$ atau $\sqrt{X}$ agar lebih normal.
+    * **Kombinasi:** `jarak_tempuh` / `waktu_tempuh` $\rightarrow$ `kecepatan_rata_rata`.
+    * **Encoding:** Mengubah data kategorikal (`'Merah'`, `'Biru'`) menjadi angka (`0`, `1`) menggunakan *One-Hot Encoding* atau *Label Encoding*.
+
+* **Feature Scaling:** Banyak model (seperti SVM dan Neural Networks) sangat sensitif terhadap skala fitur.
+    * **Normalization (Min-Max Scaling):** Menskalakan data ke rentang $[0, 1]$. Berguna jika kita tahu batas data.
+        $$ X_{\text{scaled}} = \frac{X - X_{\min}}{X_{\max} - X_{\min}} $$
+    * **Standardization (Z-score Scaling):** Mentransformasi data sehingga memiliki mean $\mu=0$ dan standar deviasi $\sigma=1$. Ini lebih robust terhadap *outlier*.
+        $$ z = \frac{x - \mu}{\sigma} $$
+
+**3. Contoh Kode (Python)**
+
+```{.python filename="data_wrangling.py"}
+import pandas as pd
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
+
+# 1. Muat Data (Asumsikan ada 'data.csv')
+# Misal data = {'umur': [25, 30, np.nan, 45], 'jenis_kelamin': ['P', 'L', 'P', 'L'], 'premi': [100, 120, 80, 200]}
+df = pd.DataFrame(data)
+
+# 2. Handling Missing Values (Imputasi)
+# Kita isi 'umur' yang hilang dengan rata-ratanya
+imputer = SimpleImputer(strategy='mean')
+df['umur'] = imputer.fit_transform(df[['umur']])
+
+# 3. Feature Engineering (Encoding)
+# Ubah 'jenis_kelamin' menjadi kolom numerik
+# 'drop='first' untuk menghindari kolinearitas (dummy variable trap)
+encoder = OneHotEncoder(drop='first', sparse_output=False)
+gender_encoded = encoder.fit_transform(df[['jenis_kelamin']])
+# 'gender_encoded' akan menjadi [0] untuk 'L' dan [1] untuk 'P' (misalnya)
+df['jenis_kelamin_L'] = gender_encoded.flatten()
+df = df.drop('jenis_kelamin', axis=1)
+
+# 4. Feature Scaling
+# Standarisasi fitur 'umur' dan 'premi'
+scaler = StandardScaler()
+df[['umur', 'premi']] = scaler.fit_transform(df[['umur', 'premi']])
+
+print(df)
+```
+
+**4. Insight & Pola Berpikir**
+
+*Garbage In, Garbage Out (GIGO)* adalah hukum universal di *data science*. Kualitas model Anda tidak akan pernah bisa melampaui kualitas data Anda. *Feature engineering* adalah cara terbaik untuk memasukkan "pengetahuan domain" Anda ke dalam model. Seringkali, model yang lebih sederhana dengan fitur yang direkayasa dengan baik akan mengalahkan model yang sangat kompleks dengan data mentah.
+
+# **3. Data Visualization: Melihat Cerita dalam Data**
+
+Kompetensi ini tidak terikat pada satu fase. Ia krusial dalam **Data Understanding (EDA)**, **Data Preparation** (mendiagnosis masalah), dan **Evaluation** (mengkomunikasikan hasil).
+
+**1. Penjelasan Intuitif**
+
+Data visualisasi adalah teleskop sekaligus mikroskop Anda.
+
+* Sebagai **Teleskop (Eksploratif):** Anda menggunakannya di awal untuk melihat "gambaran besar" dari data Anda. Di mana gugusan bintang (kluster)? Apakah ada galaksi aneh (*outlier*)? Bagaimana bintang-bintang terdistribusi (histogram)?
+* Sebagai **Mikroskop (Penjelas):** Anda menggunakannya di akhir untuk menunjukkan temuan spesifik Anda kepada orang lain. "Lihat, tepat di sel ini, ada anomali."
+
+Visualisasi mengubah angka-angka yang 'dingin' dan 'abstrak' menjadi pola yang 'intuitif' dan 'manusiawi'.
+
+**2. Penjelasan Teknis & Formal**
+
+Kita harus membedakan dua mode visualisasi:
+
+* **Exploratory Data Analysis (EDA):** Tujuannya adalah untuk *Anda* memahami data.
+    * **Univariat:** `Histogram` atau `Boxplot` (melihat distribusi, skewness, outlier satu variabel).
+    * **Bivariat:** `Scatter Plot` (melihat hubungan antara dua variabel numerik).
+    * **Multivariat:** `Correlation Heatmap` (melihat korelasi antara *semua* pasangan variabel numerik), `Pair Plot` (kombinasi scatter plot dan histogram).
+* **Explanatory Visualization:** Tujuannya adalah untuk *orang lain* memahami temuan Anda.
+    * Grafik ini harus bersih, minimalis, memiliki judul yang jelas, label sumbu yang tepat, dan satu pesan utama.
+    * Contoh: `Bar Chart` yang menunjukkan perbandingan performa 5 model berbeda.
+
+**3. Contoh Kode (Python - EDA)**
+
+Menggunakan `seaborn` untuk membuat *correlation heatmap* adalah langkah EDA yang sangat umum.
+
+```{.python filename="eda_viz.py"}
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+# Buat data dummy
+np.random.seed(42)
+data = np.random.rand(10, 5)
+# Buat beberapa korelasi
+data[:, 1] = data[:, 0] * 2 + np.random.normal(0, 0.1, 10)
+data[:, 3] = -data[:, 2] + np.random.normal(0, 0.1, 10)
+
+df_corr = pd.DataFrame(data, columns=['Premi', 'Umur', 'Klaim', 'Lama_Kontrak', 'Rating_Kredit'])
+
+# Hitung matriks korelasi
+corr_matrix = df_corr.corr()
+
+# Buat heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Heatmap Korelasi Fitur')
+plt.show()
+```
+* **Apa yang kita cari?** Kotak merah terang (korelasi positif kuat, misal: 'Premi' dan 'Umur') atau biru terang (korelasi negatif kuat, misal: 'Klaim' dan 'Lama_Kontrak'). Korelasi tinggi antar fitur (multikolinearitas) bisa menjadi masalah bagi beberapa model regresi.
+
+**4. Insight & Pola Berpikir**
+
+Jangan pernah memulai *modeling* sebelum Anda memvisualisasikan data Anda. Anscombe's Quartet adalah contoh klasik di mana empat set data memiliki statistik deskriptif (mean, variance, correlation) yang *identik*, namun visualisasinya menunjukkan pola yang *sangat berbeda*. Mata Anda adalah alat pendeteksi pola yang luar biasa—gunakan itu.
+
+# **4. Machine Learning Fundamentals: Memilih Mesin yang Tepat**
+
+Ini adalah inti dari fase **3. Modeling** dan **4. Evaluation**.
+
+**1. Penjelasan Intuitif**
+
+Sekarang kita kembali ke bengkel. Kita memiliki sasis yang bersih (data yang sudah di-*wrangle*) dan kita tahu tujuannya (masalah bisnis). Sekarang saatnya memilih mesin.
+
+* Anda tidak akan menggunakan mesin jet (Deep Learning) untuk mobil go-kart (masalah sederhana).
+* Anda tidak akan menggunakan mesin diesel (model linear) untuk mobil F1 (masalah non-linear kompleks).
+
+Fundamental ML bukan tentang menghafal puluhan algoritma. Ini tentang memahami **kategori** masalah dan **trade-off** fundamental.
+
+* **Kategori Masalah:** Apakah ini *Supervised* (kita punya jawaban, seperti 'fraud'/'tidak fraud') atau *Unsupervised* (kita tidak punya jawaban, kita ingin menemukan grup/kluster)? Apakah ini *Regression* (memprediksi angka, seperti 'jumlah klaim') atau *Classification* (memprediksi label, seperti 'fraud'/'tidak fraud')?
+* **Trade-off:** Anda tidak bisa mendapatkan segalanya. Anda harus menyeimbangkan "kekuatan" model dengan "risiko"-nya.
+
+**2. Penjelasan Teknis & Formal**
+
+Dua konsep fundamental yang harus Anda pahami di level riset adalah:
+
+* **The "No Free Lunch" Theorem:** Tidak ada satu model ML pun yang terbaik untuk *semua* masalah. Model yang berkinerja baik pada satu dataset mungkin berkinerja buruk pada dataset lain. Inilah mengapa kita harus *bereksperimen* dengan beberapa model (misal: Logistic Regression vs. Random Forest vs. XGBoost).
+
+* **The Bias-Variance Trade-off:** Ini adalah konsep paling penting dalam *supervised learning*. Total kesalahan (Error) dari sebuah model dapat diuraikan menjadi tiga komponen:
+
+    $$ E[(y - \hat{f}(x))^2] = (\text{Bias}[\hat{f}(x)])^2 + \text{Var}[\hat{f}(x)] + \sigma^2 $$
+
+    Mari kita bedah:
+    
+    * $y$ adalah nilai sebenarnya.
+    * $\hat{f}(x)$ adalah prediksi model Anda.
+    * **$\sigma^2$ (Irreducible Error):** Ini adalah *noise* acak dalam data. Tidak ada model yang bisa menghilangkannya. Ini adalah batas bawah dari kesalahan.
+    * **$\text{Bias}^2$ (Bias):** Kesalahan dari asumsi yang salah. Model dengan *high bias* terlalu menyederhanakan masalah (misal: menggunakan Regresi Linear untuk data berbentuk 'U'). Ini menyebabkan **Underfitting**. Model Anda bahkan tidak bisa mempelajari pola di data latih.
+    * **$\text{Var}$ (Variance):** Kesalahan dari sensitivitas berlebih terhadap data latih. Model dengan *high variance* terlalu kompleks (misal: Decision Tree dengan kedalaman 50). Model ini "menghafal" data latih, termasuk *noise*-nya. Ini menyebabkan **Overfitting**. Model Anda berkinerja sangat baik di data latih, tetapi hancur di data baru.
+
+    Tujuannya adalah menemukan **titik tengah yang manis** (*sweet spot*): model yang cukup kompleks untuk menangkap pola (low bias) tetapi tidak terlalu kompleks sehingga menghafal noise (low variance).
+
+    ![Gambar klasik: Grafik Bias-Variance vs. Kompleksitas Model](https://cdn.analyticsvidhya.com/wp-content/uploads/2024/07/eba93f5a75070f0fbb9d86bec8a009e9.webp)
+
+**3. Konteks Penerapan**
+
+* **Model Low-Bias, High-Variance:** Decision Trees, K-Nearest Neighbors, SVM. Mereka sangat fleksibel.
+* **Model High-Bias, Low-Variance:** Regresi Linear, Regresi Logistik. Mereka kaku dan memiliki asumsi yang kuat tentang data.
+* **Metode Ensemble (Random Forest, XGBoost):** Ini adalah teknik "ajaib" yang dirancang khusus untuk mengelola *trade-off* ini. Mereka menggabungkan banyak model "lemah" (high bias) atau "tidak stabil" (high variance) untuk menciptakan satu model "kuat" yang memiliki *low bias* dan *low variance*.
+
+**4. Insight & Pola Berpikir**
+
+Fokus Anda sebagai mahasiswa riset seharusnya tidak pada "model apa yang saya gunakan" tetapi pada "di mana model saya berada pada spektrum bias-variance?" Jika model Anda *underfit* (kinerja buruk di data latih & tes), Anda butuh model yang lebih kompleks. Jika model Anda *overfit* (kinerja hebat di data latih, buruk di data tes), Anda perlu menyederhanakan model (regularisasi) atau menambah data. *Cross-Validation* (yang akan kita bahas di modul lain) adalah alat utama Anda untuk *mendiagnosis* ini.
+
+# **5. Deployment & MLOps: Membawa Model ke Dunia Nyata**
+
+Ini adalah inti dari fase **5. Deployment** dan **6. Monitoring & Maintenance**.
+
+**1. Penjelasan Intuitif**
+
+Selamat, prototipe mobil balap Anda memenangkan uji coba di *test track*! (*Notebook* Anda berjalan tanpa *error*). Sekarang... apa?
+
+Proyek itu tidak selesai. Tim balap (perusahaan) perlu *menggunakan* mobil itu.
+
+* **Deployment:** Bagaimana kita memindahkan mobil ini dari bengkel Anda ke sirkuit balap di negara lain? (Bagaimana kita memindahkan model Anda dari *notebook* ke *server* produksi?).
+* **MLOps (Machine Learning Operations):** Ini adalah seluruh kru pit-stop dan logistik.
+    * **Serving:** Bagaimana pembalap (aplikasi lain) "mengemudikan" mobil Anda? (Menyediakan API agar sistem lain bisa mengirim data dan mendapatkan prediksi).
+    * **Monitoring:** Apakah ban kempes? (Apakah akurasi model menurun seiring waktu? Ini disebut **model drift**).
+    * **Retraining:** Kita perlu mengganti ban setiap 20 putaran. (Kita perlu melatih ulang model setiap bulan dengan data baru).
+
+**2. Penjelasan Teknis & Formal**
+
+* **Model Serialization:** Langkah pertama adalah menyimpan model Anda yang sudah "dilatih". Anda tidak bisa melatih ulang model setiap kali ada permintaan prediksi.
+    * Kita menggunakan *library* seperti `pickle` atau `joblib` di Python untuk "membekukan" objek model Anda ke dalam satu file (misal: `model.pkl`).
+
+* **Model Serving:**
+    * **Batch Prediction:** Paling sederhana. Setiap malam, kita jalankan skrip yang memuat `model.pkl`, memprediksi semua data baru sekaligus, dan menyimpan hasilnya di *database*.
+    * **Real-time Inference (via API):** Lebih kompleks. Kita membungkus model kita dalam sebuah *web server* (menggunakan *framework* seperti **FastAPI** atau **Flask**). Aplikasi lain bisa mengirim HTTP request dengan data baru (misal: data klaim) dan langsung mendapatkan respons (skor *fraud*).
+
+* **Containerization (Docker):** Ini adalah solusi untuk masalah "tapi di laptop saya jalan!". **Docker** membungkus model Anda *dan semua dependensinya* (versi Python, versi `sklearn`, dll.) ke dalam satu "kontainer" yang terisolasi. Kontainer ini bisa berjalan di mana saja.
+
+* **Monitoring & Retraining:**
+    * **Data Drift:** Memantau apakah data *live* mulai terlihat berbeda dari data latih (misal: rata-rata premi tiba-tiba naik 50%).
+    * **Concept Drift:** Memantau apakah *hubungan* antara fitur dan target berubah (misal: penipu menemukan trik baru yang tidak ada di data latih).
+    * *Pipeline* otomatis diperlukan untuk melatih ulang, memvalidasi, dan mendeploy ulang model secara berkala.
+
+**3. Contoh Kode (Python - Serialization)**
+
+```{.python filename="deployment_simple.py"}
+import pickle
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
+
+# Asumsikan ini adalah model terbaik Anda setelah fase 'Modeling'
+# 1. Latih model Anda
+X, y = make_classification(n_samples=100, n_features=4, random_state=42)
+model = RandomForestClassifier(random_state=42)
+model.fit(X, y)
+
+# 2. Serialisasi (Simpan model ke file)
+with open('fraud_model.pkl', 'wb') as f:
+    pickle.dump(model, f)
+
+# --- Di server produksi (aplikasi lain) ---
+
+# 3. Deserialisasi (Muat model dari file)
+with open('fraud_model.pkl', 'rb') as f:
+    loaded_model = pickle.load(f)
+
+# 4. Gunakan model untuk prediksi baru
+data_klaim_baru = [[1.2, -0.5, 3.4, 0.1]]  # Data baru
+prediksi = loaded_model.predict(data_klaim_baru)
+probabilitas = loaded_model.predict_proba(data_klaim_baru)
+
+print(f"Prediksi: {prediksi[0]}")
+print(f"Probabilitas Fraud: {probabilitas[0][1]}")
+```
+
+**4. Insight & Pola Berpikir**
+
+*Deployment* dan *MLOps* adalah kompetensi yang membedakan seorang *data scientist* pemula dari seorang profesional *intermediate/senior*. Ini adalah jembatan dari *sains* ke *engineering*. Anda harus mulai memikirkan: "Bagaimana kode saya akan berjalan ketika saya tidak ada di sana untuk menekannya?" Pikirkan tentang *reproducibility* (gunakan *virtual environments*), *robustness* (tangani *error*), dan *scalability* (bisakah ini menangani 1 juta permintaan?).
+
+# **6. Governance & Ethics: Hati Nurani Sang Saintis**
+
+Ini bukan sebuah fase. Ini adalah lapisan **Quality Assurance** yang membungkus *seluruh* siklus.
+
+**1. Penjelasan Intuitif**
+
+Kembali ke mobil F1 kita. Kita telah membangun mobil tercepat. Tapi...
+* Apakah mobil itu legal? (Apakah kita melanggar aturan teknis?)
+* Apakah mobil itu aman untuk pembalap? (Apakah *steering wheel*-nya akan copot?)
+* Apakah desain kita dicuri dari tim lain? (Masalah kepemilikan data).
+
+Etika dan Tata Kelola (Governance) adalah "rem" dan "aturan main" dari *data science*. Di era di mana model kita memutuskan siapa yang mendapat pinjaman, siapa yang mendapat perawatan medis, dan siapa yang ditandai sebagai "penipu", kompetensi ini bukan lagi "opsional"—ini adalah **kewajiban**.
+
+**2. Penjelasan Teknis & Formal**
+
+* **Governance (Tata Kelola):** Siapa yang boleh mengakses data? Di mana data disimpan? (Kepatuhan terhadap regulasi seperti **GDPR**). Bagaimana kita mendokumentasikan model kita? (Data lineage, model versioning).
+* **Ethics & Fairness (FAT/FAccT):**
+    * **Fairness (Keadilan):** Apakah model kita berkinerja lebih buruk untuk satu kelompok demografis daripada kelompok lain? (Misal: model prediksi risiko aktuaria yang secara tidak adil menghukum kelompok minoritas karena bias historis dalam data).
+    * **Accountability (Akuntabilitas):** Jika model membuat kesalahan, siapa yang bertanggung jawab?
+    * **Transparency (Transparansi) / Explainability (XAI):** Bisakah kita menjelaskan *mengapa* model membuat keputusan tertentu? Model *black-box* (seperti Neural Networks) mungkin sangat akurat, tetapi tidak dapat diterima untuk aplikasi kritis (seperti medis atau hukum) jika tidak dapat dijelaskan.
+
+:::{.callout-warning title="Peringatan: Bias Adalah Musuh Tersembunyi"}
+Bias bisa masuk di *setiap* tahap:
+
+* **Business Understanding:** Menanyakan pertanyaan yang salah (misio: "Prediksi 'kriminalitas' di lingkungan" seringkali hanya memprediksi di mana polisi lebih banyak berpatroli).
+* **Data Understanding:** Data yang dikumpulkan secara historis bias terhadap kelompok tertentu.
+* **Data Preparation:** Cara kita mengimputasi nilai yang hilang dapat memperkuat bias.
+* **Modeling:** Model itu sendiri "belajar" dan mengamplifikasi bias yang ada di dalam data.
+* **Evaluation:** Menggunakan metrik akurasi yang salah dapat menyembunyikan kinerja yang buruk pada kelompok minoritas.
+:::
+
+**3. Konteks Penerapan**
+
+Dalam aktuaria, etika sangat penting. Menggunakan fitur seperti `ras` atau `gender` secara langsung untuk menentukan harga premi asuransi adalah ilegal di banyak tempat. Tantangan yang lebih sulit adalah: bagaimana jika model Anda *tidak* menggunakan `ras`, tetapi menggunakan `kode_pos`, yang ternyata berkorelasi kuat dengan `ras`? Ini disebut **proxy variable**, dan mendeteksinya adalah bagian dari analisis etika yang mendalam.
+
+**4. Insight & Pola Berpikir**
+
+Pertanyaan yang harus Anda tanyakan pada diri sendiri bukan lagi "Bisakah kita membangun model ini?" tetapi **"Haruskah kita membangun model ini?"** Dan jika ya, "Bagaimana kita membangunnya secara bertanggung jawab?" Masa depan *data science* bukan hanya tentang akurasi, tetapi tentang kepercayaan. Modul *Machine Learning Explainability* (XAI) akan menjadi sangat penting untuk menjawab tantangan ini.
+
+# **Kesimpulan Modul 01: Mindset Iteratif**
+
+Anda sekarang telah melihat gambaran besarnya. Keenam kompetensi ini—Literacy, Wrangling, Visualization, ML Fundamentals, MLOps, dan Ethics—adalah *skill set* yang Anda butuhkan untuk menavigasi *lifecycle* CRISP-ML(Q).
+
+Pola pikir terpenting untuk dibawa pulang adalah: **Ini adalah SIKLUS, bukan garis lurus.** Anda akan terus-menerus melompat dari *Modeling* kembali ke *Data Preparation* (karena Anda menyadari butuh fitur baru) atau dari *Evaluation* kembali ke *Business Understanding* (karena Anda menyadari metrik evaluasi Anda salah).
+
+Selamat datang di *data science* yang sesungguhnya.
 
 <a href="../ildat2025.qmd" class="btn btn-outline-primary mb-4">
 <i class="fa-solid fa-arrow-left"></i> Kembali ke Praktikum Ilmu Data
