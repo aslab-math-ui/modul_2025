@@ -2,7 +2,7 @@
 title: "Praktikum Eksplorasi dan Visualisasi Data"
 subtitle: "Semester Ganjil 2025"
 author: "Tim Asisten Laboratorium Praktikum"
-date: "today"
+date: 2025-09-24
 toc: false
 listing:
   - id: modul-pertemuan
