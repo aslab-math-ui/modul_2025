@@ -31,7 +31,12 @@ format: html
 -   **Modul 3: Metode Multi-step dan variasinya**
     <br> <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
     <br> <i class="fa-solid fa-location-dot" aria-hidden="true"></i> **Lokasi:** Lab Komputer D.311 
-    <br> <i class="fa-solid fa-book" aria-hidden="true"></i> **Materi:** [Buka Modul 3](./modul3.ipynb)
+    <br> <i class="fa-solid fa-book" aria-hidden="true"></i> **Materi:** [Buka Modul 3](./modul3.qmd)
+
+-   **Modul 4: Sistem PDB dan PDB Orde Tinggi**
+    <br> <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+    <br> <i class="fa-solid fa-location-dot" aria-hidden="true"></i> **Lokasi:** Lab Komputer D.311 
+    <br> <i class="fa-solid fa-book" aria-hidden="true"></i> **Materi:** [Buka Modul 4](./modul4.qmd)
 
 ## Latihan 
 
