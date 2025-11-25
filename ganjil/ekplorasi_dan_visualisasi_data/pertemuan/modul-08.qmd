@@ -1,0 +1,114 @@
+---
+title: "Pertemuan 7 : Data Visualization (R) part 2"
+image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/eksplorasi_dan_visualisasi_data/static/images/plotly.png
+description: "Data Visualization using R (Part 2)"
+date: 11/25/2024
+page-navigation: true
+format: html
+engine: knitr
+---
+
+<a href="../eda2025.qmd" class="btn btn-outline-primary mb-4">
+<i class="fa-solid fa-arrow-left"></i> Kembali ke Arsip Praktikum EVDA 2025
+</a>
+
+# Memvisualisasikan distribusi
+## Variabel  Numeric
+Sebuah variabel bersifat numerik (atau kuantitatif) jika ia dapat mengambil berbagai nilai numerik, dan masuk akal untuk melakukan penambahan, pengurangan, atau mengambil rata-rata dari nilai-nilai tersebut. Variabel numerik dapat bersifat continuous (kontinu) atau discrete (diskrit).
+
+Visualisasi yang umum digunakan untuk distribusi variabel kontinu adalah histogram.
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 200)
+```
+
+## Bins pada histogram
+Anda dapat mengatur lebar interval dalam histogram dengan argumen binwidth, yang diukur dalam satuan variabel x. Anda harus selalu menjelajahi berbagai binwidth saat bekerja dengan histogram, karena binwidth yang berbeda dapat mengungkap pola yang berbeda. Dalam plot di bawah ini, binwidth 20 terlalu sempit, menghasilkan terlalu banyak batang, sehingga menyulitkan untuk menentukan bentuk distribusi. Demikian pula, binwidth 2.000 terlalu besar, mengakibatkan semua data dikelompokkan hanya ke dalam tiga batang, dan juga menyulitkan untuk menentukan bentuk distribusi. binwidth 200 memberikan keseimbangan yang masuk akal.
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 20)
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 2000)
+```
+
+## Smooth histogram (density plot)
+Visualisasi alternatif untuk distribusi variabel numerik adalah plot kepadatan (density plot). Plot kepadatan adalah versi yang dihaluskan dari histogram dan merupakan alternatif yang praktis, khususnya untuk data kontinu yang berasal dari distribusi halus yang mendasarinya. Kami tidak akan membahas bagaimana geom_density() memperkirakan kepadatan (Anda dapat membacanya lebih lanjut di dokumentasi fungsi), tetapi mari kita jelaskan bagaimana kurva kepadatan digambar dengan sebuah analogi. Bayangkan sebuah histogram yang terbuat dari balok kayu. Kemudian, bayangkan Anda menjatuhkan seutas spageti yang sudah dimasak di atasnya. Bentuk yang diambil spageti yang terletak di atas balok dapat dianggap sebagai bentuk kurva kepadatan. Ini menunjukkan lebih sedikit detail daripada histogram tetapi dapat memudahkan untuk dengan cepat memahami bentuk distribusi, terutama terkait modus dan kemiringan (skewness).
+```{r}
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_density()
+```
+
+# Memvisualisasikan hubungan
+## Box plot
+Untuk memvisualisasikan hubungan antara variabel numerik dan kategorikal, kita dapat menggunakan plot kotak bersebelahan (side-by-side box plots). Boxplot adalah jenis singkatan visual untuk ukuran posisi (persentil) yang menggambarkan suatu distribusi. Ini juga berguna untuk mengidentifikasi outlier potensial. 
+```{r}
+
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot()
+```
+
+## Density plot
+Alternatifnya, kita bisa membuat plot kepadatan dengan geom_density().
+```{r}
+ggplot(penguins, aes(x = body_mass_g, color = species)) +
+  geom_density(linewidth = 0.75)
+```
+
+### Mengatur alpha
+Selain itu, kita dapat memetakan species ke estetika color dan fill serta menggunakan estetika alpha untuk menambahkan transparansi pada kurva kepadatan yang diisi. Estetika ini mengambil nilai antara 0 (sepenuhnya transparan) dan 1 (sepenuhnya buram). Dalam plot berikut, nilainya diatur ke 0,5.
+```{r}
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+  geom_density(alpha = 0.5)
+```
+
+## Stacked bar chart
+Kita dapat menggunakan plot batang bertumpuk (stacked bar plots) untuk memvisualisasikan hubungan antara dua variabel kategorikal. Misalnya, kedua plot batang bertumpuk berikut ini menampilkan hubungan antara island dan species, atau secara spesifik, memvisualisasikan distribusi spesies di setiap pulau.
+
+Plot pertama menunjukkan frekuensi setiap spesies penguin di setiap pulau. Plot frekuensi menunjukkan bahwa ada jumlah Adelie yang sama di setiap pulau. Tetapi kita tidak mendapatkan gambaran yang baik tentang persentase keseimbangan di dalam setiap pulau.
+```{r}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar()
+```
+
+## Scaled stacked bar chart based on percentage
+Plot kedua, plot frekuensi relatif yang dibuat dengan menetapkan position = "fill" dalam geom, lebih berguna untuk membandingkan distribusi spesies antar pulau karena tidak dipengaruhi oleh jumlah penguin yang tidak sama di seluruh pulau. Dengan menggunakan plot ini kita dapat melihat bahwa penguin Gentoo semuanya hidup di pulau Biscoe dan membentuk sekitar 75% dari penguin di pulau itu, Chinstrap semuanya hidup di pulau Dream dan membentuk sekitar 50% dari penguin di pulau itu, dan Adelie hidup di ketiga pulau dan membentuk semua penguin di Torgersen.
+```{r}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill")
+```
+
+Dalam membuat bagan batang ini, kami memetakan variabel yang akan dipisahkan menjadi batang ke estetika x, dan variabel yang akan mengubah warna di dalam batang ke estetika fill. Sayangnya, ggplot2 memberi label sumbu-y sebagai "count" secara default, tetapi ini adalah sesuatu yang dapat kita timpa dengan menambahkan layer labs() di mana kita menentukan label sumbu-y sebagai "proportion".
+```{r}
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill") +
+  labs(y = "proportion")
+```
+
+## Dua Variabel Numerik
+
+Sejauh ini Anda telah belajar tentang scatterplot (dibuat dengan geom_point()) dan kurva halus (smooth curves, dibuat dengan geom_smooth()) untuk memvisualisasikan hubungan antara dua variabel numerik. Scatterplot mungkin adalah plot yang paling umum digunakan untuk memvisualisasikan hubungan antara dua variabel numerik.
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+```
+
+## Tiga Variabel atau Lebih
+
+Kita dapat menggabungkan lebih banyak variabel ke dalam plot dengan memetakannya ke estetika tambahan. Misalnya, dalam scatterplot berikut, warna titik mewakili spesies dan bentuk titik mewakili pulau.
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = island))
+```
+
+Namun, menambahkan terlalu banyak pemetaan estetika ke sebuah plot membuatnya berantakan dan sulit dipahami. Cara lain, yang sangat berguna untuk variabel kategorikal, adalah dengan membagi plot Anda menjadi facet, yaitu sub-plot yang masing-masing menampilkan satu subset data.
+
+Untuk memfacet plot Anda berdasarkan satu variabel, gunakan facet_wrap(). Argumen pertama facet_wrap() adalah sebuah formula, yang Anda buat dengan ~ diikuti oleh nama variabel. Variabel yang Anda berikan ke facet_wrap() haruslah kategorikal.
+
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species)) +
+  facet_wrap(~island)
+```
