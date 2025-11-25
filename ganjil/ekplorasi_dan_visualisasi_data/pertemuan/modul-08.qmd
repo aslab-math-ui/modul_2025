@@ -13,11 +13,17 @@ engine: knitr
 </a>
 
 # Memvisualisasikan distribusi
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
 ## Variabel  Numeric
 Sebuah variabel bersifat numerik (atau kuantitatif) jika ia dapat mengambil berbagai nilai numerik, dan masuk akal untuk melakukan penambahan, pengurangan, atau mengambil rata-rata dari nilai-nilai tersebut. Variabel numerik dapat bersifat continuous (kontinu) atau discrete (diskrit).
 
 Visualisasi yang umum digunakan untuk distribusi variabel kontinu adalah histogram.
 ```{r}
+library(ggplot2)
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(binwidth = 200)
 ```
