@@ -1,5 +1,5 @@
 ---
-title: "Pertemuan 7 : Data Visualization (R) part 2"
+title: "Pertemuan 8 : Data Visualization (R) part 2"
 image: https://raw.githubusercontent.com/aslab-math-ui/asset/main/eksplorasi_dan_visualisasi_data/static/images/plotly.png
 description: "Data Visualization using R (Part 2)"
 date: 11/25/2024
