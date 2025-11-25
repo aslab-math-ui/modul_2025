@@ -14,6 +14,9 @@ engine: knitr
 
 # Memvisualisasikan distribusi
 ```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggthemes)
 library(ggplot2)
 library(dplyr)
 ```
@@ -24,6 +27,7 @@ Sebuah variabel bersifat numerik (atau kuantitatif) jika ia dapat mengambil berb
 Visualisasi yang umum digunakan untuk distribusi variabel kontinu adalah histogram.
 ```{r}
 library(ggplot2)
+penguins
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(binwidth = 200)
 ```
