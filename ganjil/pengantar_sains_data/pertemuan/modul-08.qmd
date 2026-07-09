@@ -633,6 +633,7 @@ points(x, dpois(x, lambda = lambda), pch = 19, cex = 2, col = "purple")
 #| output: false
 #| warning: false
 library(distr)
+library(distrEx)
 ```
 
 ```{r filename='R'}
